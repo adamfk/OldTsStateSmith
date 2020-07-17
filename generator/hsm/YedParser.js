@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 "use strict";
 //debug in Chrome!
 //node --inspect --debug-brk YedParser.js

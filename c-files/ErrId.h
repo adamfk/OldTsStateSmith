@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>

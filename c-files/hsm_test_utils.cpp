@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 /*
  This file alleviates the pain of having to create a bunch of global event listeners
  with global data all over the place. Now you can use normal C++ class listeners

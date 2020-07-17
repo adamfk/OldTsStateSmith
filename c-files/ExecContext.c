@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 #include "ExecContext.h"
 
 void Jxc_clear_error(Jxc* jxc)

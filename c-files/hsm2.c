@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 #include "hsm2.h"
 #include <stdbool.h>
 #include "ExecContext.h"

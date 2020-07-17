@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import {MyRegex} from "./MyRegex"
 import { delimiter } from "path";
 import XRegExp = require('xregexp');

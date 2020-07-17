@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import { Compiler, ROOT_STATE_ID } from "./Compiler";
 import { State } from "./State";
 import { StringUtils } from "../ts-utils/StringUtils";

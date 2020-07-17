@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 #pragma once
 #include <stdarg.h>
 #include <stdint.h>

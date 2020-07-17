@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 
 import { InputState, EventHandler, RenderedHsm } from "./Generator";
 import { removeFromArray } from "../ts-utils/Misc";

@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 
 /**
  * Interface that allows specifying types for when using a JS object like a hash map

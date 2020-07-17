@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import { YedParser } from "./hsm/YedParser"
 import { Compiler } from "./hsm/Compiler";
 import { update_text_file } from "./ts-utils/FileUtils";

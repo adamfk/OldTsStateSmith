@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import { Trigger, EventHandler } from "./Generator";
 import { State } from "./State";
 

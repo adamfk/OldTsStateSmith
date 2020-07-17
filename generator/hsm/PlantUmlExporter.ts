@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 /*
 
 Bug. Not recursing into ROOT.SYSTEM_STARTED.REGULAR_SCREENS.NORMAL.HOME_VIEW.RUNNING in view_MainSm

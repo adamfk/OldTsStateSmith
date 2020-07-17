@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 This code generation code is very very very rushed.
 
 It works, but it needs a lot of TLC mainly in restructuring and file organization.

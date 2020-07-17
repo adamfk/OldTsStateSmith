@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import {MyRegex} from "../ts-utils/MyRegex"
 import { State } from "./State"
 import { ROOT_STATE_LABEL, ROOT_STATE_ID } from "./Compiler";

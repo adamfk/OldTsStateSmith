@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 
 
 import { RenderedHsm, StructField, InputHsm, Guard, Action, Trigger, EventHandler } from "./Generator";

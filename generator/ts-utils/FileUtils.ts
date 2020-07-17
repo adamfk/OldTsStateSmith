@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import fs = require("fs");
 import { StringUtils } from "./StringUtils";
 

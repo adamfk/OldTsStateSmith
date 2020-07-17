@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 //ALL CONST EVENT NAMES MUST BE UPPER CASE!

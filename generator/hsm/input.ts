@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import {MyRegex} from "../ts-utils/MyRegex"
 //import XR from "xregexp"
 import XRegExp = require('xregexp');

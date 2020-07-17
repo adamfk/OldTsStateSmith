@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Compiler_1 = require("./Compiler");

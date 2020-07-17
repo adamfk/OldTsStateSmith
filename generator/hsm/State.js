@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Misc_1 = require("../ts-utils/Misc");

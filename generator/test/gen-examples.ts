@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 import { IHashString } from "../ts-utils/Misc";
 import { ToProcess, generateFor as generateStateMachines } from "../runner";
 import assert = require("assert");

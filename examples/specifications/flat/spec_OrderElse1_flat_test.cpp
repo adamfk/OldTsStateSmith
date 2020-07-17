@@ -1,3 +1,4 @@
+// Copyright (c) 2020 JCA Electronics, Winnipeg, MB
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include <string>     // std::string, std::to_string
