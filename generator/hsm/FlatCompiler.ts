@@ -951,8 +951,7 @@ enter_chain(sm, states_to_enter, COUNTOF(states_to_enter));`;
     @brief     State machine "${this.classFullName}"
                Auto generated from file: ${this.hsm.inputHsm.diagramSourceFilePath}
 
-    @copyright Copyright (c) 2019 JCA Electronics, Winnipeg, MB.
-               All rights reserved.
+    @copyright Copyright (c)
     `;
     text  = StringUtils.removeBlankLinesAtTop(text);
     text = StringUtils.deIndent(text);
