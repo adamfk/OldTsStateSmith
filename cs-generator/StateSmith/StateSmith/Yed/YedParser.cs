@@ -12,9 +12,38 @@ namespace StateSmith.Yed
     /// </summary>
     public class YedEdge
     {
-        public YedNode source;
-        public YedNode target;
-        public string label;
+        public string id;
+        public string sourceId;
+        public string targetId;
+        public string label = "";
+
+        #region ctors
+        public YedEdge() { }
+
+        public YedEdge(string id, string sourceId, string targetId, string label)
+        {
+            this.id = id;
+            this.sourceId = sourceId;
+            this.targetId = targetId;
+            this.label = label;
+        }
+        #endregion
+
+        #region equals and hash
+        public override bool Equals(object obj)
+        {
+            return obj is YedEdge edge &&
+                   id == edge.id &&
+                   sourceId == edge.sourceId &&
+                   targetId == edge.targetId &&
+                   label == edge.label;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(id, sourceId, targetId, label);
+        }
+        #endregion equals and hash
     }
 
     /// <summary>
@@ -23,7 +52,7 @@ namespace StateSmith.Yed
     public class YedNode
     {
         public string id;
-        public string label;
+        public string label = "";
         public bool groupIsCollapsed;
         public YedNode parent;
         public List<YedNode> children = new List<YedNode>();
@@ -44,10 +73,11 @@ namespace StateSmith.Yed
     public class YedParser
     {
         public Dictionary<string, YedNode> nodeMap = new Dictionary<string, YedNode>();
-        public Dictionary<string, YedEdge> edgeMap = new Dictionary<string, YedEdge>();
+        public List<YedEdge> edges = new List<YedEdge>();
 
         private XmlTextReader reader;
         private YedNode currentNode = null;
+        private YedEdge currentEdge = null;
 
         private bool groupNodeIsClosed = false;
         private string groupNodeLabel;
@@ -84,7 +114,24 @@ namespace StateSmith.Yed
                 case "NodeLabel": NodeLabelFound(); break;
                 case "GroupNode": GroupNodeEntered(); break;
                 case "State": StateNodeFound(); break;
+                case "edge": EdgeFound(); break;
+                case "EdgeLabel": EdgeLabelFound(); break;
             }
+        }
+
+        private void EdgeLabelFound()
+        {
+            reader.MoveToContent();
+            currentEdge.label = reader.ReadString();
+        }
+
+        private void EdgeFound()
+        {
+            currentEdge = new YedEdge();
+            currentEdge.id = reader.GetAttribute("id");
+            currentEdge.sourceId = reader.GetAttribute("source");
+            currentEdge.targetId = reader.GetAttribute("target");
+            edges.Add(currentEdge);
         }
 
         private void HandleEndElement()
@@ -93,6 +140,7 @@ namespace StateSmith.Yed
             {
                 case "GroupNode": GroupNodeExited(); break;
                 case "node": NodeExited(); break;
+                case "edge": currentEdge = null; break;
             }
         }
 

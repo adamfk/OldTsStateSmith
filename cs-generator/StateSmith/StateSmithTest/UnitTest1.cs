@@ -22,7 +22,7 @@ namespace StateSmithTest
             this.output = output;
         }
 
-        string filepath = "../../../../../../examples/1/ExampleSm.graphml";
+        private string filepath = "../../../../../../examples/1/ExampleSm.graphml";
 
         private YedNode GetAndAssertNode(string id, string label, int childCount, YedNode parent)
         {
@@ -39,6 +39,17 @@ namespace StateSmithTest
             return node;
         }
 
+        private YedEdge BuildEdge(string id, YedNode source, YedNode target, string label)
+        {
+            return new YedEdge()
+            {
+                id = id,
+                sourceId = source.id,
+                targetId = target.id,
+                label = label
+            };
+        }
+
         [Fact]
         public void TestParser()
         {
@@ -51,25 +62,25 @@ namespace StateSmithTest
 
             var root = GetAndAssertNode(id: "n0", label: "$STATEMACHINE: ExampleSm", childCount: 3, parent: null);
 
-            var ortho_repeat = GetAndAssertNode(id: "n0::n0", label: "$ORTHO : REPEAT", childCount: 3, parent: root);
-            var ortho_basic = GetAndAssertNode(id: "n0::n1", label: "$ORTHO 1 : BASIC", childCount: 3, parent: root);
-            var gen_include = GetAndAssertNode(id: "n0::n2", label: "$GEN_INCLUDE : \"./ExampleSm.def\"", childCount: 0, parent: root);
+            var orthoRepeat = GetAndAssertNode(id: "n0::n0", label: "$ORTHO : REPEAT", childCount: 3, parent: root);
+            var orthoBasic = GetAndAssertNode(id: "n0::n1", label: "$ORTHO 1 : BASIC", childCount: 3, parent: root);
+            var genInclude = GetAndAssertNode(id: "n0::n2", label: "$GEN_INCLUDE : \"./ExampleSm.def\"", childCount: 0, parent: root);
 
-            var not_held = GetAndAssertNode(id: "n0::n0::n0", label:"NOT_HELD", childCount: 0, parent: ortho_repeat);
-            var being_held = GetAndAssertNode(id: "n0::n0::n2", label:"BEING_HELD", childCount: 0, parent: ortho_repeat);
-            var repeatInitialState = GetAndAssertNode(id: "n0::n0::n1", label: "$initial_state", childCount: 0, parent: ortho_repeat);
+            var notHeld = GetAndAssertNode(id: "n0::n0::n0", label:"NOT_HELD", childCount: 0, parent: orthoRepeat);
+            var beingHeld = GetAndAssertNode(id: "n0::n0::n2", label:"BEING_HELD", childCount: 0, parent: orthoRepeat);
+            var repeatInitialState = GetAndAssertNode(id: "n0::n0::n1", label: "$initial_state", childCount: 0, parent: orthoRepeat);
 
-            var orthoBasicInitial = GetAndAssertNode(id: "n0::n1::n1", label: "$initial_state", childCount: 0, parent: ortho_basic);
+            var orthoBasicInitial = GetAndAssertNode(id: "n0::n1::n1", label: "$initial_state", childCount: 0, parent: orthoBasic);
 
             var notPressed = GetAndAssertNode(id: "n0::n1::n0", label: @"NOT_PRESSED
 enter / debounced_at_ms = current_time_ms + 100
-enter / time_held = 0", childCount: 0, parent: ortho_basic);
+enter / time_held = 0", childCount: 0, parent: orthoBasic);
 
             var pressed = GetAndAssertNode(id: "n0::n1::n2", label: @"PRESSED
 enter / output_event( PRESSED ); 
 enter / is_pressed = true;
 exit / output_event( RELEASED );
-exit / is_pressed = false;", childCount: 2, parent: ortho_basic);
+exit / is_pressed = false;", childCount: 2, parent: orthoBasic);
 
             var initialPress = GetAndAssertNode(id: "n0::n1::n2::n0", label: @"INITIAL_PRESS
 entry / debounced_at_ms = current_time_ms + 100", childCount: 0, parent: pressed);
@@ -87,6 +98,25 @@ exit / time_held = 0;", childCount: 2, parent: pressed);
 entry / output_event( HELD_LONG );
 entry / is_held_long = true;
 exit   / is_held_long = false;", childCount: 0, parent: held);
+
+            ///////// test expected edges
+
+            var expectedEdges = new List<YedEdge>()
+            {
+                BuildEdge("n0::n0::e0", source: notHeld, target: beingHeld, "[is_held]"),
+                BuildEdge("n0::n0::e1", source: repeatInitialState, target: notHeld, ""),
+                BuildEdge("n0::n0::e2", source: beingHeld, target: notHeld, "[is_not_pressed]"),
+                BuildEdge("n0::n0::e3", source: beingHeld, target: beingHeld, "afterMs( repeat_delay ) / output_event( HELD_REPEAT )"),
+                BuildEdge("n0::n1::e0", source: notPressed, target: initialPress, "[input == 1 && is_debounced( ) ]"),
+                BuildEdge("n0::n1::e1", source: orthoBasicInitial, target: notPressed, ""),
+                BuildEdge("n0::n1::e2", source: pressed, target: notPressed, "[input == 0 && is_debounced( ) ] "),
+                BuildEdge("n0::n1::n2::e0", source: initialPress, target: held, "afterMs(500)"),
+                BuildEdge("n0::n1::e3", source: initialPress, target: notPressed, @"[input == 0 && is_debounced( ) ] 
+/ output_event(PRETAP)"),
+                BuildEdge("n0::n1::n2::n1::e0", source: heldInitialState, target: heldLong, "afterMs(500)"),
+            };
+
+            parser.edges.Should().BeEquivalentTo(expectedEdges);
         }
     }
 
