@@ -5,44 +5,11 @@ using System.Xml.Linq;
 using System.Linq;
 
 
-namespace StateSmith
+namespace StateSmith.Yed
 {
-    public class YedInputParser
-    {
-        public void ReadFile()
-        {
-            var filepath = "../../../../../../examples/1/ExampleSm.graphml";
-
-            var root = XElement.Load(filepath);
-
-            var keys = root.Elements("key");
-
-            XNamespace baseNamespace = "http://graphml.graphdrawing.org/xmlns";
-
-            keys = root.Elements(baseNamespace + "key");
-
-            //((XCData)(root.Descendants(baseNamespace + "data").ToList()[2].FirstNode)).Value
-            //"statemachine_definition"
-
-            //https://stackoverflow.com/questions/5501502/linq-to-xml-accessing-descendants-with-a-prefix
-            XNamespace y = "http://www.yworks.com/xml/graphml";
-            var ynl = root.Descendants(y + "NodeLabel").ToList();
-        }
-
-    }
-
-    public class YedXmlNav
-    {
-        private XElement root;
-
-        public void Load(string filepath)
-        {
-            root = XElement.Load(filepath);
-        }
-
-
-    }
-
+    /// <summary>
+    /// .
+    /// </summary>
     public class YedEdge
     {
         public YedNode source;
@@ -50,6 +17,9 @@ namespace StateSmith
         public string label;
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public class YedNode
     {
         public string id;
@@ -59,35 +29,38 @@ namespace StateSmith
         public List<YedNode> children = new List<YedNode>();
     }
 
+    /// <summary>
+    /// .
+    /// </summary>
     public class YedState
     {
         public bool isInitialState;
         public int orthogonalOrdering;
     }
 
-    public class YedXmlRipper
+    /// <summary>
+    /// .
+    /// </summary>
+    public class YedParser
     {
-        XmlTextReader reader;
-        Dictionary<string, YedNode> nodeMap = new Dictionary<string, YedNode>();
-        Dictionary<string, YedEdge> edgeMap = new Dictionary<string, YedEdge>();
-        YedNode currentNode = null;
+        public Dictionary<string, YedNode> nodeMap = new Dictionary<string, YedNode>();
+        public Dictionary<string, YedEdge> edgeMap = new Dictionary<string, YedEdge>();
 
-        bool groupNodeIsClosed = false;
-        string groupNodeLabel;
-        bool inGroupNode = false;
+        private XmlTextReader reader;
+        private YedNode currentNode = null;
 
-        public void RipIt(string filepath)
+        private bool groupNodeIsClosed = false;
+        private string groupNodeLabel;
+        private bool inGroupNode = false;
+
+        public void Parse(string filepath)
         {
+            //no using statement required
             reader = new XmlTextReader(filepath);
-
-
             while (reader.Read())
             {
                 HandleRead();
             }
-
-            //Close the reader.
-            reader.Close();
         }
 
         private void HandleRead()
@@ -107,7 +80,6 @@ namespace StateSmith
         {
             switch (reader.LocalName)
             {
-                case "graph": GraphFound(); break;
                 case "node": NodeFound(); break;
                 case "NodeLabel": NodeLabelFound(); break;
                 case "GroupNode": GroupNodeEntered(); break;
@@ -120,31 +92,28 @@ namespace StateSmith
             switch (reader.LocalName)
             {
                 case "GroupNode": GroupNodeExited(); break;
-                case "graph": GraphNodeExited(); break;
+                case "node": NodeExited(); break;
             }
         }
 
-        private void GraphFound()
-        {
-            var parentNode = currentNode;
-            currentNode = new YedNode();
-            currentNode.parent = parentNode;
 
-            if (parentNode != null)
-            {
-                parentNode.children.Add(currentNode);
-            }
-        }
-
-        private void GraphNodeExited()
+        private void NodeExited()
         {
-            nodeMap.Add(currentNode.id, currentNode);   //we should have the ID by now. Use it to add to map.
             currentNode = currentNode.parent;
         }
 
         private void NodeFound()
         {
+            var parentNode = currentNode;
+            currentNode = new YedNode();
             currentNode.id = reader.GetAttribute("id");
+            currentNode.parent = parentNode;
+            nodeMap.Add(currentNode.id, currentNode);   //we should have the ID by now. Use it to add to map.
+
+            if (parentNode != null)
+            {
+                parentNode.children.Add(currentNode);
+            }
         }
 
 
@@ -175,7 +144,8 @@ namespace StateSmith
 
         private void NodeLabelFound()
         {
-            var label = reader.Value;
+            reader.MoveToContent();
+            var label = reader.ReadString();
 
             //a regular non-group shape has a simple label
             if (!inGroupNode)
