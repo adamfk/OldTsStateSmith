@@ -1,9 +1,5 @@
-﻿using StateSmith;
-using StateSmith.Yed;
-using System;
-using System.IO;
+﻿using System.IO;
 using System.Text;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace StateSmithTest

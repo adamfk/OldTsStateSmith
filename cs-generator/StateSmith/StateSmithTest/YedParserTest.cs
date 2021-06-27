@@ -1,5 +1,6 @@
 using StateSmith;
-using StateSmith.Yed;
+using StateSmith.Input.Yed;
+using StateSmith.Input;
 using System;
 using System.IO;
 using System.Text;
@@ -10,21 +11,21 @@ using System.Collections.Generic;
 
 namespace StateSmithTest
 {
-    public class UnitTest1
+    public class YedParserTest
     {
         ITestOutputHelper output;
-        Dictionary<string, YedNode> nodeMap;
+        Dictionary<string, DiagramNode> nodeMap;
         YedParser parser = new YedParser();
 
 
-        public UnitTest1(ITestOutputHelper output)
+        public YedParserTest(ITestOutputHelper output)
         {
             this.output = output;
         }
 
         private string filepath = "../../../../../../examples/1/ExampleSm.graphml";
 
-        private YedNode GetAndAssertNode(string id, string label, int childCount, YedNode parent)
+        private DiagramNode GetAndAssertNode(string id, string label, int childCount, DiagramNode parent)
         {
             var node = nodeMap[id];
             node.label.Trim().Should().Be(label);
@@ -39,13 +40,13 @@ namespace StateSmithTest
             return node;
         }
 
-        private YedEdge BuildEdge(string id, YedNode source, YedNode target, string label)
+        private DiagramEdge BuildEdge(string id, DiagramNode source, DiagramNode target, string label)
         {
-            return new YedEdge()
+            return new DiagramEdge()
             {
                 id = id,
-                sourceId = source.id,
-                targetId = target.id,
+                source = source,
+                target = target,
                 label = label
             };
         }
@@ -101,7 +102,7 @@ exit   / is_held_long = false;", childCount: 0, parent: held);
 
             ///////// test expected edges
 
-            var expectedEdges = new List<YedEdge>()
+            var expectedEdges = new List<DiagramEdge>()
             {
                 BuildEdge("n0::n0::e0", source: notHeld, target: beingHeld, "[is_held]"),
                 BuildEdge("n0::n0::e1", source: repeatInitialState, target: notHeld, ""),

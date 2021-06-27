@@ -5,79 +5,20 @@ using System.Xml.Linq;
 using System.Linq;
 
 
-namespace StateSmith.Yed
+namespace StateSmith.Input.Yed
 {
-    /// <summary>
-    /// .
-    /// </summary>
-    public class YedEdge
-    {
-        public string id;
-        public string sourceId;
-        public string targetId;
-        public string label = "";
-
-        #region ctors
-        public YedEdge() { }
-
-        public YedEdge(string id, string sourceId, string targetId, string label)
-        {
-            this.id = id;
-            this.sourceId = sourceId;
-            this.targetId = targetId;
-            this.label = label;
-        }
-        #endregion
-
-        #region equals and hash
-        public override bool Equals(object obj)
-        {
-            return obj is YedEdge edge &&
-                   id == edge.id &&
-                   sourceId == edge.sourceId &&
-                   targetId == edge.targetId &&
-                   label == edge.label;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(id, sourceId, targetId, label);
-        }
-        #endregion equals and hash
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    public class YedNode
-    {
-        public string id;
-        public string label = "";
-        public bool groupIsCollapsed;
-        public YedNode parent;
-        public List<YedNode> children = new List<YedNode>();
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    public class YedState
-    {
-        public bool isInitialState;
-        public int orthogonalOrdering;
-    }
 
     /// <summary>
     /// .
     /// </summary>
     public class YedParser
     {
-        public Dictionary<string, YedNode> nodeMap = new Dictionary<string, YedNode>();
-        public List<YedEdge> edges = new List<YedEdge>();
+        public Dictionary<string, DiagramNode> nodeMap = new Dictionary<string, DiagramNode>();
+        public List<DiagramEdge> edges = new List<DiagramEdge>();
 
         private XmlTextReader reader;
-        private YedNode currentNode = null;
-        private YedEdge currentEdge = null;
+        private DiagramNode currentNode = null;
+        private DiagramEdge currentEdge = null;
 
         private bool groupNodeIsClosed = false;
         private string groupNodeLabel;
@@ -125,12 +66,17 @@ namespace StateSmith.Yed
             currentEdge.label = reader.ReadString();
         }
 
+        public DiagramNode GetDiagramNodeById(string id)
+        {
+            return nodeMap[id];
+        }
+
         private void EdgeFound()
         {
-            currentEdge = new YedEdge();
+            currentEdge = new DiagramEdge();
             currentEdge.id = reader.GetAttribute("id");
-            currentEdge.sourceId = reader.GetAttribute("source");
-            currentEdge.targetId = reader.GetAttribute("target");
+            currentEdge.source = GetDiagramNodeById(reader.GetAttribute("source"));
+            currentEdge.target = GetDiagramNodeById(reader.GetAttribute("target"));
             edges.Add(currentEdge);
         }
 
@@ -153,7 +99,7 @@ namespace StateSmith.Yed
         private void NodeFound()
         {
             var parentNode = currentNode;
-            currentNode = new YedNode();
+            currentNode = new DiagramNode();
             currentNode.id = reader.GetAttribute("id");
             currentNode.parent = parentNode;
             nodeMap.Add(currentNode.id, currentNode);   //we should have the ID by now. Use it to add to map.
