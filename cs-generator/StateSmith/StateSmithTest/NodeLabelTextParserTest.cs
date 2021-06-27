@@ -9,15 +9,37 @@ namespace StateSmithTest
 {
     public class NodeLabelTextParserTest
     {
+        NodeLabelTextParser parser = new NodeLabelTextParser();
+
         [Fact]
-        public void TestStatemachineParse()
+        public void Good()
         {
-            var parser = new NodeLabelTextParser();
-            var possibleMatch = parser.TryMatchStatemachine("$STATEMACHINE:BurritoSm");
-            possibleMatch.HasValue.Should().BeTrue();
-            var (statemachineName, nextParseIndex) = possibleMatch.Value;
-            statemachineName.Should().Be("BurritoSm");
-            nextParseIndex.Should().Be(23);
+            var match = parser.TryMatchStatemachine("$STATEMACHINE:BurritoSm");
+            match.statemachineName.Should().Be("BurritoSm");
+            match.nextParseIndex.Should().Be(23);
         }
+
+        [Fact]
+        public void GoodWhiteSpaceAndFollowingText()
+        {
+            const string label = @"
+            $STATEMACHINE
+            :
+            SomeName
+            This is the rest";
+            var match = parser.TryMatchStatemachine(label);
+            match.statemachineName.Should().Be("SomeName");
+            label.Substring(match.nextParseIndex).Trim().Should().Be("This is the rest");
+        }
+
+        [Fact]
+        public void BadSpaceAfterDollarSign()
+        {
+            var match = parser.TryMatchStatemachine("$ STATEMACHINE:BurritoSm");
+            match.statemachineName.Should().BeNull();
+            match.nextParseIndex.Should().Be(0);
+        }
+
+
     }
 }

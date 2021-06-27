@@ -40,15 +40,15 @@ namespace StateSmith
             (?:$|\r|\n)
         ", RegexOptions.IgnorePatternWhitespace);
 
-        public (string statemachineName, int nextParseIndex)? TryMatchStatemachine(string nodeLabelText)
+        public (string statemachineName, int nextParseIndex) TryMatchStatemachine(string nodeLabelText)
         {
             Match match = statemachineRegex.Match(nodeLabelText);
             if (!match.Success)
             {
-                return null;
+                return default;
             }
 
-            return (match.Groups["statemachine_name"].Value, match.Length);
+            return (statemachineName: match.Groups["statemachine_name"].Value, nextParseIndex: match.Length);
         }
     }
 
