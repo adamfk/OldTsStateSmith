@@ -6,6 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace StateSmith.Input
 {
+
+    public struct DirectiveMatchStruct
+    {
+        public string directiveName;
+        public string followingText;
+    }
+
     /// <summary>
     /// GenIncludes
     /// </summary>
@@ -23,16 +30,29 @@ namespace StateSmith.Input
             (?:$|\r\n|\r|\n) # end of input or line
         ", RegexOptions.IgnorePatternWhitespace);
 
+        private static readonly Regex colonWordEndRegex = new Regex(@"
+            (?i)
+            ^\s*
+            :
+            \s*
+            (?<word> \w+ )
+            \s*
+            (?:$|\r\n|\r|\n)             # end of input or line
+            (?<following_text> [\s\S]*)  # optional
+        ", RegexOptions.IgnorePatternWhitespace);
 
         private static readonly Regex directiveRegex = new Regex(@"
             ^
             \s*
-            (?<directive_name> [$] \w+ )    # includes the $ to make searching for it easier in code
+            (?<directive_name> [$] \w+ )  # includes the $ to make searching for it easier in code
             \b
-            (?<following_text> [\s\S]*)  # optional
+            (?<following_text> [\s\S]*)   # optional
         ", RegexOptions.IgnorePatternWhitespace);
 
-        public static (string directiveName, string followingText) TryMatchDirective(string nodeLabelText)
+
+
+
+        public static DirectiveMatchStruct TryMatchDirective(string nodeLabelText)
         {
             Match match = directiveRegex.Match(nodeLabelText);
             if (!match.Success)
@@ -40,7 +60,22 @@ namespace StateSmith.Input
                 return default;
             }
 
-            return (directiveName: match.Groups["directive_name"].Value,
+            return new DirectiveMatchStruct()
+            {
+                directiveName = match.Groups["directive_name"].Value,
+                followingText = nodeLabelText.Substring(match.Length)
+            };
+        }
+
+        public static (string matchedWord, string followingText) TryParseColonWordEnd(string nodeLabelText)
+        {
+            Match match = colonWordEndRegex.Match(nodeLabelText);
+            if (!match.Success)
+            {
+                return default;
+            }
+
+            return (matchedWord: match.Groups["word"].Value,
                     followingText: nodeLabelText.Substring(match.Length));
         }
 
