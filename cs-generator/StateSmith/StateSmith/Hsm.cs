@@ -23,42 +23,4 @@ namespace StateSmith
         public HsmState rootState;
     }
 
-
-
-    public class NodeLabelTextParser
-    {
-        //Find state machine nodes
-        public static readonly Regex statemachineRegex = new Regex(@"
-            (?i)
-            ^\s*
-            [$]STATEMACHINE
-            \s*
-            :
-            \s*
-            (?<statemachine_name> \w+ )
-            \s*
-            (?:$|\r|\n)
-        ", RegexOptions.IgnorePatternWhitespace);
-
-        public (string statemachineName, int nextParseIndex) TryMatchStatemachine(string nodeLabelText)
-        {
-            Match match = statemachineRegex.Match(nodeLabelText);
-            if (!match.Success)
-            {
-                return default;
-            }
-
-            return (statemachineName: match.Groups["statemachine_name"].Value, nextParseIndex: match.Length);
-        }
-    }
-
-    class DiagramToHsmConverter
-    {
-        public List<Hsm> Convert(List<DiagramNode> diagramNodes)
-        {
-            //need to parse trees from each root
-            return null;
-        }
-    }
-
 }
