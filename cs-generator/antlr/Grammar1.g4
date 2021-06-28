@@ -1,6 +1,6 @@
 grammar Grammar1;
 
-WORD: [a-z]+ ;
+WORD: [a-zA-Z_0-9]+ ;
 
 LINE_ENDER: [\r\n]+ | EOF ;
 
