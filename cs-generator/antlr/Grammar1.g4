@@ -1,8 +1,23 @@
 grammar Grammar1;
 
+/*
+
+Things we need to parse out:
+- state name
+- behaviors
+
+expansions:
+expansions should be expanded fully beforehand so we can expand as needed easily during listening.
+
+- expansion_var_candidates
+    - name
+- expansion_function_candidates
+    - name, arguments
+*/
+
 WORD: [a-zA-Z_0-9]+ ;
 
-LINE_ENDER: [\r\n]+ | EOF ;
+LINE_ENDER: [\r\n]+ ;
 
 state_name: WORD LINE_ENDER ;
 
