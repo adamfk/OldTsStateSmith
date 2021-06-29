@@ -71,6 +71,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitBehavior([NotNull] Grammar1Parser.BehaviorContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.trigger_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTrigger_id([NotNull] Grammar1Parser.Trigger_idContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.trigger_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTrigger_id([NotNull] Grammar1Parser.Trigger_idContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.triggers"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -80,6 +90,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitTriggers([NotNull] Grammar1Parser.TriggersContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.order_number"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOrder_number([NotNull] Grammar1Parser.Order_numberContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.order_number"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOrder_number([NotNull] Grammar1Parser.Order_numberContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.order"/>.
 	/// </summary>
@@ -111,25 +131,15 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitAction([NotNull] Grammar1Parser.ActionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.braced_action"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.action_code"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterBraced_action([NotNull] Grammar1Parser.Braced_actionContext context);
+	void EnterAction_code([NotNull] Grammar1Parser.Action_codeContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.braced_action"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.action_code"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitBraced_action([NotNull] Grammar1Parser.Braced_actionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.naked_action"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterNaked_action([NotNull] Grammar1Parser.Naked_actionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.naked_action"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitNaked_action([NotNull] Grammar1Parser.Naked_actionContext context);
+	void ExitAction_code([NotNull] Grammar1Parser.Action_codeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.group_expression"/>.
 	/// </summary>

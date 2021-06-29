@@ -47,6 +47,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitBehavior(Grammar1Parser.BehaviorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#trigger_id}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrigger_id(Grammar1Parser.Trigger_idContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#trigger_id}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrigger_id(Grammar1Parser.Trigger_idContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#triggers}.
 	 * @param ctx the parse tree
 	 */
@@ -56,6 +66,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTriggers(Grammar1Parser.TriggersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#order_number}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrder_number(Grammar1Parser.Order_numberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#order_number}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrder_number(Grammar1Parser.Order_numberContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#order}.
 	 * @param ctx the parse tree
@@ -87,25 +107,15 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitAction(Grammar1Parser.ActionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#braced_action}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#action_code}.
 	 * @param ctx the parse tree
 	 */
-	void enterBraced_action(Grammar1Parser.Braced_actionContext ctx);
+	void enterAction_code(Grammar1Parser.Action_codeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#braced_action}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#action_code}.
 	 * @param ctx the parse tree
 	 */
-	void exitBraced_action(Grammar1Parser.Braced_actionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#naked_action}.
-	 * @param ctx the parse tree
-	 */
-	void enterNaked_action(Grammar1Parser.Naked_actionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#naked_action}.
-	 * @param ctx the parse tree
-	 */
-	void exitNaked_action(Grammar1Parser.Naked_actionContext ctx);
+	void exitAction_code(Grammar1Parser.Action_codeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#group_expression}.
 	 * @param ctx the parse tree

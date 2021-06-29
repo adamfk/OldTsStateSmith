@@ -63,6 +63,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTrigger_id(Grammar1Parser.Trigger_idContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrigger_id(Grammar1Parser.Trigger_idContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTriggers(Grammar1Parser.TriggersContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -70,6 +82,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTriggers(Grammar1Parser.TriggersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOrder_number(Grammar1Parser.Order_numberContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOrder_number(Grammar1Parser.Order_numberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -111,25 +135,13 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBraced_action(Grammar1Parser.Braced_actionContext ctx) { }
+	@Override public void enterAction_code(Grammar1Parser.Action_codeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBraced_action(Grammar1Parser.Braced_actionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNaked_action(Grammar1Parser.Naked_actionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNaked_action(Grammar1Parser.Naked_actionContext ctx) { }
+	@Override public void exitAction_code(Grammar1Parser.Action_codeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

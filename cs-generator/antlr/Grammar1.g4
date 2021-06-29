@@ -26,14 +26,16 @@ state_name: IDENTIFIER ;
 behaviors: LINE_ENDER behavior ( LINE_ENDER behavior )*;   //LINE_ENDER here because it is optional for state_definition. could just be `<statename>`.
 behavior: order? triggers? guard? action? ;
 
-triggers: IDENTIFIER | trigger_list ;
-order: DIGIT+ '.' ;
+trigger_id: IDENTIFIER ;
+triggers: trigger_id | trigger_list ;
+order_number: DIGIT+ ;
+order: order_number '.' ;
 
 guard: '[' code_elements* ']' ;
 
-action: braced_action | naked_action ;
-braced_action: '/' '{' code_elements* '}' ;
-naked_action:  '/' code_elements* ;
+action: '/' action_code ;
+action_code:  code_elements* ;
+// braced_action: '{' code_elements* '}' ;
 
 //#func_call: CODE_IDENTIFIER group_expression ;
 //#var_name: CODE_IDENTIFIER ;
