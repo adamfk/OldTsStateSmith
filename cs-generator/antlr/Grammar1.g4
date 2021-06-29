@@ -26,13 +26,8 @@ state_name: IDENTIFIER ;
 behaviors: LINE_ENDER behavior ( LINE_ENDER behavior ) *;   //LINE_ENDER here because it is optional for state_definition. could just be `<statename>`.
 behavior: order? triggers? guard? action? LINE_ENDER ;
 
-TRIGGER_LIST: '('
-                (
-                    IDENTIFIER | ( ',' IDENTIFIER )*
-                )
-              ')' ;
 triggers: IDENTIFIER | TRIGGER_LIST ;
-order: Digit+ '.' ;
+order: DIGIT+ '.' ;
 
 guard: '[' code_elements ']' ;
 
@@ -40,21 +35,8 @@ action: braced_action | naked_action ;
 braced_action: '/' '{' code_elements* '}' ;
 naked_action:  '/' code_elements* ;
 
-
-fragment NOT_NL_CR: ~[\n\r];
-LINE_COMMENT: '//' NOT_NL_CR* LINE_ENDER ;
-ML_COMMENT: '/*' .*? '*/' ;
-fragment ESCAPED_CHAR: '\\' . ;
-CHAR_LITERAL: [']
-      ( ESCAPED_CHAR | ~['] )
-      ['] ;
-
-fragment NON_QUOTE_CHAR: ~["] ;
-fragment STRING_CHAR: ESCAPED_CHAR | NON_QUOTE_CHAR ;
-STRING: '"' STRING_CHAR* '"' ;
 //#func_call: CODE_IDENTIFIER group_expression ;
 //#var_name: CODE_IDENTIFIER ;
-CODE_SYMBOLS: [-~!%^&*+=:;/,.<>?|] ;    //don't include braces/parenthesis as those need to be grouped
 group_expression: '(' code_elements* ')' ;
 square_brace_expression: '[' code_elements* ']' ;
 braced_expression: '{' code_elements* '}' ;
@@ -77,10 +59,28 @@ LINE_ENDER: [\r\n]+ ;
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-IDENTIFIER  :   IdentifierNondigit   (   IdentifierNondigit | Digit  )*  ;
+IDENTIFIER  :   IDENTIFIER_NON_DIGIT   (   IDENTIFIER_NON_DIGIT | DIGIT  )*  ;
 
-fragment IdentifierNondigit :  Nondigit ;
+fragment IDENTIFIER_NON_DIGIT :  [$a-zA-Z_] ;
 
-fragment Nondigit :   [$a-zA-Z_]   ;
+DIGIT :   [0-9]  ;
+TRIGGER_LIST: '('
+                (
+                    IDENTIFIER | ( ',' IDENTIFIER )*
+                )
+              ')' ;
 
-Digit :   [0-9]  ;
+fragment NOT_NL_CR: ~[\n\r];
+LINE_COMMENT: '//' NOT_NL_CR* LINE_ENDER ;
+ML_COMMENT: '/*' .*? '*/' ;
+
+fragment ESCAPED_CHAR: '\\' . ;
+CHAR_LITERAL: [']
+      ( ESCAPED_CHAR | ~['] )
+      ['] ;
+
+fragment NON_QUOTE_CHAR: ~["] ;
+fragment STRING_CHAR: ESCAPED_CHAR | NON_QUOTE_CHAR ;
+STRING: '"' STRING_CHAR* '"' ;
+
+CODE_SYMBOLS: [-~!%^&*+=:;/,.<>?|] ;    //don't include braces/parenthesis as those need to be grouped

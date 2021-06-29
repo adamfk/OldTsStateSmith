@@ -16,9 +16,9 @@ public class Grammar1Parser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, TRIGGER_LIST=9, 
-		LINE_COMMENT=10, ML_COMMENT=11, CHAR_LITERAL=12, STRING=13, CODE_SYMBOLS=14, 
-		LINE_ENDER=15, WS=16, IDENTIFIER=17, Digit=18;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, LINE_ENDER=9, 
+		WS=10, IDENTIFIER=11, DIGIT=12, TRIGGER_LIST=13, LINE_COMMENT=14, ML_COMMENT=15, 
+		CHAR_LITERAL=16, STRING=17, CODE_SYMBOLS=18;
 	public static final int
 		RULE_state_defn = 0, RULE_state_name = 1, RULE_behaviors = 2, RULE_behavior = 3, 
 		RULE_triggers = 4, RULE_order = 5, RULE_guard = 6, RULE_action = 7, RULE_braced_action = 8, 
@@ -41,9 +41,9 @@ public class Grammar1Parser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, "TRIGGER_LIST", 
-			"LINE_COMMENT", "ML_COMMENT", "CHAR_LITERAL", "STRING", "CODE_SYMBOLS", 
-			"LINE_ENDER", "WS", "IDENTIFIER", "Digit"
+			null, null, null, null, null, null, null, null, null, "LINE_ENDER", "WS", 
+			"IDENTIFIER", "DIGIT", "TRIGGER_LIST", "LINE_COMMENT", "ML_COMMENT", 
+			"CHAR_LITERAL", "STRING", "CODE_SYMBOLS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -293,7 +293,7 @@ public class Grammar1Parser extends Parser {
 			setState(48);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==Digit) {
+			if (_la==DIGIT) {
 				{
 				setState(47);
 				order();
@@ -303,7 +303,7 @@ public class Grammar1Parser extends Parser {
 			setState(51);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==TRIGGER_LIST || _la==IDENTIFIER) {
+			if (_la==IDENTIFIER || _la==TRIGGER_LIST) {
 				{
 				setState(50);
 				triggers();
@@ -371,7 +371,7 @@ public class Grammar1Parser extends Parser {
 			{
 			setState(61);
 			_la = _input.LA(1);
-			if ( !(_la==TRIGGER_LIST || _la==IDENTIFIER) ) {
+			if ( !(_la==IDENTIFIER || _la==TRIGGER_LIST) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -393,9 +393,9 @@ public class Grammar1Parser extends Parser {
 	}
 
 	public static class OrderContext extends ParserRuleContext {
-		public List<TerminalNode> Digit() { return getTokens(Grammar1Parser.Digit); }
-		public TerminalNode Digit(int i) {
-			return getToken(Grammar1Parser.Digit, i);
+		public List<TerminalNode> DIGIT() { return getTokens(Grammar1Parser.DIGIT); }
+		public TerminalNode DIGIT(int i) {
+			return getToken(Grammar1Parser.DIGIT, i);
 		}
 		public OrderContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -425,13 +425,13 @@ public class Grammar1Parser extends Parser {
 				{
 				{
 				setState(63);
-				match(Digit);
+				match(DIGIT);
 				}
 				}
 				setState(66); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( _la==Digit );
+			} while ( _la==DIGIT );
 			setState(68);
 			match(T__0);
 			}
@@ -580,7 +580,7 @@ public class Grammar1Parser extends Parser {
 			setState(83);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS) | (1L << IDENTIFIER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS))) != 0)) {
 				{
 				{
 				setState(80);
@@ -639,7 +639,7 @@ public class Grammar1Parser extends Parser {
 			setState(92);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS) | (1L << IDENTIFIER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS))) != 0)) {
 				{
 				{
 				setState(89);
@@ -696,7 +696,7 @@ public class Grammar1Parser extends Parser {
 			setState(99);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS) | (1L << IDENTIFIER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS))) != 0)) {
 				{
 				{
 				setState(96);
@@ -755,7 +755,7 @@ public class Grammar1Parser extends Parser {
 			setState(108);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS) | (1L << IDENTIFIER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS))) != 0)) {
 				{
 				{
 				setState(105);
@@ -814,7 +814,7 @@ public class Grammar1Parser extends Parser {
 			setState(117);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS) | (1L << IDENTIFIER))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__4) | (1L << T__6) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << ML_COMMENT) | (1L << CHAR_LITERAL) | (1L << STRING) | (1L << CODE_SYMBOLS))) != 0)) {
 				{
 				{
 				setState(114);
@@ -1021,32 +1021,32 @@ public class Grammar1Parser extends Parser {
 		"\f\3\f\7\fd\n\f\f\f\16\fg\13\f\3\f\3\f\3\r\3\r\7\rm\n\r\f\r\16\rp\13\r"+
 		"\3\r\3\r\3\16\3\16\7\16v\n\16\f\16\16\16y\13\16\3\16\3\16\3\17\6\17~\n"+
 		"\17\r\17\16\17\177\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u008b"+
-		"\n\20\3\20\2\2\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2\3\4\2\13\13"+
-		"\23\23\2\u0093\2 \3\2\2\2\4&\3\2\2\2\6(\3\2\2\2\b\62\3\2\2\2\n?\3\2\2"+
-		"\2\fB\3\2\2\2\16H\3\2\2\2\20N\3\2\2\2\22P\3\2\2\2\24Z\3\2\2\2\26a\3\2"+
-		"\2\2\30j\3\2\2\2\32s\3\2\2\2\34}\3\2\2\2\36\u008a\3\2\2\2 \"\5\4\3\2!"+
-		"#\5\6\4\2\"!\3\2\2\2\"#\3\2\2\2#$\3\2\2\2$%\7\2\2\3%\3\3\2\2\2&\'\7\23"+
-		"\2\2\'\5\3\2\2\2()\7\21\2\2).\5\b\5\2*+\7\21\2\2+-\5\b\5\2,*\3\2\2\2-"+
-		"\60\3\2\2\2.,\3\2\2\2./\3\2\2\2/\7\3\2\2\2\60.\3\2\2\2\61\63\5\f\7\2\62"+
-		"\61\3\2\2\2\62\63\3\2\2\2\63\65\3\2\2\2\64\66\5\n\6\2\65\64\3\2\2\2\65"+
-		"\66\3\2\2\2\668\3\2\2\2\679\5\16\b\28\67\3\2\2\289\3\2\2\29;\3\2\2\2:"+
-		"<\5\20\t\2;:\3\2\2\2;<\3\2\2\2<=\3\2\2\2=>\7\21\2\2>\t\3\2\2\2?@\t\2\2"+
-		"\2@\13\3\2\2\2AC\7\24\2\2BA\3\2\2\2CD\3\2\2\2DB\3\2\2\2DE\3\2\2\2EF\3"+
-		"\2\2\2FG\7\3\2\2G\r\3\2\2\2HI\7\4\2\2IJ\5\34\17\2JK\7\5\2\2K\17\3\2\2"+
-		"\2LO\5\22\n\2MO\5\24\13\2NL\3\2\2\2NM\3\2\2\2O\21\3\2\2\2PQ\7\6\2\2QU"+
-		"\7\7\2\2RT\5\34\17\2SR\3\2\2\2TW\3\2\2\2US\3\2\2\2UV\3\2\2\2VX\3\2\2\2"+
-		"WU\3\2\2\2XY\7\b\2\2Y\23\3\2\2\2Z^\7\6\2\2[]\5\34\17\2\\[\3\2\2\2]`\3"+
-		"\2\2\2^\\\3\2\2\2^_\3\2\2\2_\25\3\2\2\2`^\3\2\2\2ae\7\t\2\2bd\5\34\17"+
-		"\2cb\3\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2fh\3\2\2\2ge\3\2\2\2hi\7\n\2"+
-		"\2i\27\3\2\2\2jn\7\4\2\2km\5\34\17\2lk\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3"+
-		"\2\2\2oq\3\2\2\2pn\3\2\2\2qr\7\5\2\2r\31\3\2\2\2sw\7\7\2\2tv\5\34\17\2"+
-		"ut\3\2\2\2vy\3\2\2\2wu\3\2\2\2wx\3\2\2\2xz\3\2\2\2yw\3\2\2\2z{\7\b\2\2"+
-		"{\33\3\2\2\2|~\5\36\20\2}|\3\2\2\2~\177\3\2\2\2\177}\3\2\2\2\177\u0080"+
-		"\3\2\2\2\u0080\35\3\2\2\2\u0081\u008b\7\f\2\2\u0082\u008b\7\r\2\2\u0083"+
-		"\u008b\7\16\2\2\u0084\u008b\7\17\2\2\u0085\u008b\7\23\2\2\u0086\u008b"+
-		"\7\20\2\2\u0087\u008b\5\26\f\2\u0088\u008b\5\30\r\2\u0089\u008b\5\32\16"+
-		"\2\u008a\u0081\3\2\2\2\u008a\u0082\3\2\2\2\u008a\u0083\3\2\2\2\u008a\u0084"+
-		"\3\2\2\2\u008a\u0085\3\2\2\2\u008a\u0086\3\2\2\2\u008a\u0087\3\2\2\2\u008a"+
+		"\n\20\3\20\2\2\21\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36\2\3\4\2\r\r\17"+
+		"\17\2\u0093\2 \3\2\2\2\4&\3\2\2\2\6(\3\2\2\2\b\62\3\2\2\2\n?\3\2\2\2\f"+
+		"B\3\2\2\2\16H\3\2\2\2\20N\3\2\2\2\22P\3\2\2\2\24Z\3\2\2\2\26a\3\2\2\2"+
+		"\30j\3\2\2\2\32s\3\2\2\2\34}\3\2\2\2\36\u008a\3\2\2\2 \"\5\4\3\2!#\5\6"+
+		"\4\2\"!\3\2\2\2\"#\3\2\2\2#$\3\2\2\2$%\7\2\2\3%\3\3\2\2\2&\'\7\r\2\2\'"+
+		"\5\3\2\2\2()\7\13\2\2).\5\b\5\2*+\7\13\2\2+-\5\b\5\2,*\3\2\2\2-\60\3\2"+
+		"\2\2.,\3\2\2\2./\3\2\2\2/\7\3\2\2\2\60.\3\2\2\2\61\63\5\f\7\2\62\61\3"+
+		"\2\2\2\62\63\3\2\2\2\63\65\3\2\2\2\64\66\5\n\6\2\65\64\3\2\2\2\65\66\3"+
+		"\2\2\2\668\3\2\2\2\679\5\16\b\28\67\3\2\2\289\3\2\2\29;\3\2\2\2:<\5\20"+
+		"\t\2;:\3\2\2\2;<\3\2\2\2<=\3\2\2\2=>\7\13\2\2>\t\3\2\2\2?@\t\2\2\2@\13"+
+		"\3\2\2\2AC\7\16\2\2BA\3\2\2\2CD\3\2\2\2DB\3\2\2\2DE\3\2\2\2EF\3\2\2\2"+
+		"FG\7\3\2\2G\r\3\2\2\2HI\7\4\2\2IJ\5\34\17\2JK\7\5\2\2K\17\3\2\2\2LO\5"+
+		"\22\n\2MO\5\24\13\2NL\3\2\2\2NM\3\2\2\2O\21\3\2\2\2PQ\7\6\2\2QU\7\7\2"+
+		"\2RT\5\34\17\2SR\3\2\2\2TW\3\2\2\2US\3\2\2\2UV\3\2\2\2VX\3\2\2\2WU\3\2"+
+		"\2\2XY\7\b\2\2Y\23\3\2\2\2Z^\7\6\2\2[]\5\34\17\2\\[\3\2\2\2]`\3\2\2\2"+
+		"^\\\3\2\2\2^_\3\2\2\2_\25\3\2\2\2`^\3\2\2\2ae\7\t\2\2bd\5\34\17\2cb\3"+
+		"\2\2\2dg\3\2\2\2ec\3\2\2\2ef\3\2\2\2fh\3\2\2\2ge\3\2\2\2hi\7\n\2\2i\27"+
+		"\3\2\2\2jn\7\4\2\2km\5\34\17\2lk\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3\2\2\2"+
+		"oq\3\2\2\2pn\3\2\2\2qr\7\5\2\2r\31\3\2\2\2sw\7\7\2\2tv\5\34\17\2ut\3\2"+
+		"\2\2vy\3\2\2\2wu\3\2\2\2wx\3\2\2\2xz\3\2\2\2yw\3\2\2\2z{\7\b\2\2{\33\3"+
+		"\2\2\2|~\5\36\20\2}|\3\2\2\2~\177\3\2\2\2\177}\3\2\2\2\177\u0080\3\2\2"+
+		"\2\u0080\35\3\2\2\2\u0081\u008b\7\20\2\2\u0082\u008b\7\21\2\2\u0083\u008b"+
+		"\7\22\2\2\u0084\u008b\7\23\2\2\u0085\u008b\7\r\2\2\u0086\u008b\7\24\2"+
+		"\2\u0087\u008b\5\26\f\2\u0088\u008b\5\30\r\2\u0089\u008b\5\32\16\2\u008a"+
+		"\u0081\3\2\2\2\u008a\u0082\3\2\2\2\u008a\u0083\3\2\2\2\u008a\u0084\3\2"+
+		"\2\2\u008a\u0085\3\2\2\2\u008a\u0086\3\2\2\2\u008a\u0087\3\2\2\2\u008a"+
 		"\u0088\3\2\2\2\u008a\u0089\3\2\2\2\u008b\37\3\2\2\2\21\".\62\658;DNU^"+
 		"enw\177\u008a";
 	public static final ATN _ATN =
