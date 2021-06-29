@@ -1,1 +1,3 @@
-/ my_action("la 1. la la");
+            SOME_SM_STATE_NAME
+            
+            MY_EVENT [some_guard("my str with spaces")] / my_action();

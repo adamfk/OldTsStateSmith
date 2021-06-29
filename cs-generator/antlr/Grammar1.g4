@@ -23,13 +23,13 @@ expansions should be expanded fully beforehand so we can expand as needed easily
 
 state_defn: state_name behaviors? EOF ;
 state_name: IDENTIFIER ;
-behaviors: LINE_ENDER behavior ( LINE_ENDER behavior ) *;   //LINE_ENDER here because it is optional for state_definition. could just be `<statename>`.
-behavior: order? triggers? guard? action? LINE_ENDER ;
+behaviors: LINE_ENDER behavior ( LINE_ENDER behavior )*;   //LINE_ENDER here because it is optional for state_definition. could just be `<statename>`.
+behavior: order? triggers? guard? action? ;
 
-triggers: IDENTIFIER | TRIGGER_LIST ;
+triggers: IDENTIFIER | trigger_list ;
 order: DIGIT+ '.' ;
 
-guard: '[' code_elements ']' ;
+guard: '[' code_elements* ']' ;
 
 action: braced_action | naked_action ;
 braced_action: '/' '{' code_elements* '}' ;
@@ -55,16 +55,15 @@ code_element:
         braced_expression
     ) ;
 
-LINE_ENDER: [\r\n]+ ;
-
-WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
+fragment FOLLOWING_WS: [ \t\r\n] ;
+LINE_ENDER: [\r\n]+ FOLLOWING_WS* ;
 
 IDENTIFIER  :   IDENTIFIER_NON_DIGIT   (   IDENTIFIER_NON_DIGIT | DIGIT  )*  ;
 
 fragment IDENTIFIER_NON_DIGIT :  [$a-zA-Z_] ;
 
 DIGIT :   [0-9]  ;
-TRIGGER_LIST: '('
+trigger_list: '('
                 (
                     IDENTIFIER | ( ',' IDENTIFIER )*
                 )
@@ -84,3 +83,5 @@ fragment STRING_CHAR: ESCAPED_CHAR | NON_QUOTE_CHAR ;
 STRING: '"' STRING_CHAR* '"' ;
 
 CODE_SYMBOLS: [-~!%^&*+=:;/,.<>?|] ;    //don't include braces/parenthesis as those need to be grouped
+
+HWS : [ \t]+ -> skip; // skip horizontal white space. !!!DO NOT!!! include `\r\n` here because then WS will override LINE_ENDER. Perhaps largest token wins? I thought higher lexer rule would win, but it doesn't.

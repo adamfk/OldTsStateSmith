@@ -180,4 +180,14 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitCode_element([NotNull] Grammar1Parser.Code_elementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context);
 }

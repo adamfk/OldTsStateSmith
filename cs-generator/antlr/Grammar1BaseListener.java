@@ -190,6 +190,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCode_element(Grammar1Parser.Code_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTrigger_list(Grammar1Parser.Trigger_listContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrigger_list(Grammar1Parser.Trigger_listContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

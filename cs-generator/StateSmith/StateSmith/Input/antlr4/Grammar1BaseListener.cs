@@ -215,6 +215,18 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitCode_element([NotNull] Grammar1Parser.Code_elementContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

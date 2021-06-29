@@ -156,4 +156,14 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCode_element(Grammar1Parser.Code_elementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#trigger_list}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrigger_list(Grammar1Parser.Trigger_listContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#trigger_list}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrigger_list(Grammar1Parser.Trigger_listContext ctx);
 }
