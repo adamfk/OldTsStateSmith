@@ -7,6 +7,16 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface Grammar1Listener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#state_defn}.
+	 * @param ctx the parse tree
+	 */
+	void enterState_defn(Grammar1Parser.State_defnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#state_defn}.
+	 * @param ctx the parse tree
+	 */
+	void exitState_defn(Grammar1Parser.State_defnContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#state_name}.
 	 * @param ctx the parse tree
 	 */
@@ -17,25 +27,25 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitState_name(Grammar1Parser.State_nameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#trigger_list}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#behaviors}.
 	 * @param ctx the parse tree
 	 */
-	void enterTrigger_list(Grammar1Parser.Trigger_listContext ctx);
+	void enterBehaviors(Grammar1Parser.BehaviorsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#trigger_list}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#behaviors}.
 	 * @param ctx the parse tree
 	 */
-	void exitTrigger_list(Grammar1Parser.Trigger_listContext ctx);
+	void exitBehaviors(Grammar1Parser.BehaviorsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#triggers}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#behavior}.
 	 * @param ctx the parse tree
 	 */
-	void enterTriggers(Grammar1Parser.TriggersContext ctx);
+	void enterBehavior(Grammar1Parser.BehaviorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#triggers}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#behavior}.
 	 * @param ctx the parse tree
 	 */
-	void exitTriggers(Grammar1Parser.TriggersContext ctx);
+	void exitBehavior(Grammar1Parser.BehaviorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#guard}.
 	 * @param ctx the parse tree
@@ -77,26 +87,6 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitNaked_action(Grammar1Parser.Naked_actionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#behavior}.
-	 * @param ctx the parse tree
-	 */
-	void enterBehavior(Grammar1Parser.BehaviorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#behavior}.
-	 * @param ctx the parse tree
-	 */
-	void exitBehavior(Grammar1Parser.BehaviorContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#string}.
-	 * @param ctx the parse tree
-	 */
-	void enterString(Grammar1Parser.StringContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#string}.
-	 * @param ctx the parse tree
-	 */
-	void exitString(Grammar1Parser.StringContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#group_expression}.
 	 * @param ctx the parse tree
 	 */
@@ -127,13 +117,23 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitBraced_expression(Grammar1Parser.Braced_expressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#code_expression}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#code_elements}.
 	 * @param ctx the parse tree
 	 */
-	void enterCode_expression(Grammar1Parser.Code_expressionContext ctx);
+	void enterCode_elements(Grammar1Parser.Code_elementsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#code_expression}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#code_elements}.
 	 * @param ctx the parse tree
 	 */
-	void exitCode_expression(Grammar1Parser.Code_expressionContext ctx);
+	void exitCode_elements(Grammar1Parser.Code_elementsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#code_element}.
+	 * @param ctx the parse tree
+	 */
+	void enterCode_element(Grammar1Parser.Code_elementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#code_element}.
+	 * @param ctx the parse tree
+	 */
+	void exitCode_element(Grammar1Parser.Code_elementContext ctx);
 }

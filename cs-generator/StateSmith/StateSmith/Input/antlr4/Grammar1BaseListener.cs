@@ -36,6 +36,18 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CLSCompliant(false)]
 public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterState_defn([NotNull] Grammar1Parser.State_defnContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.state_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitState_defn([NotNull] Grammar1Parser.State_defnContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_name"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -48,29 +60,29 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitState_name([NotNull] Grammar1Parser.State_nameContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.behaviors"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context) { }
+	public virtual void EnterBehaviors([NotNull] Grammar1Parser.BehaviorsContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.trigger_list"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.behaviors"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTrigger_list([NotNull] Grammar1Parser.Trigger_listContext context) { }
+	public virtual void ExitBehaviors([NotNull] Grammar1Parser.BehaviorsContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.triggers"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.behavior"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterTriggers([NotNull] Grammar1Parser.TriggersContext context) { }
+	public virtual void EnterBehavior([NotNull] Grammar1Parser.BehaviorContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.triggers"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.behavior"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitTriggers([NotNull] Grammar1Parser.TriggersContext context) { }
+	public virtual void ExitBehavior([NotNull] Grammar1Parser.BehaviorContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.guard"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -120,30 +132,6 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitNaked_action([NotNull] Grammar1Parser.Naked_actionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.behavior"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterBehavior([NotNull] Grammar1Parser.BehaviorContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.behavior"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitBehavior([NotNull] Grammar1Parser.BehaviorContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.string"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterString([NotNull] Grammar1Parser.StringContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.string"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitString([NotNull] Grammar1Parser.StringContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.group_expression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -180,17 +168,29 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitBraced_expression([NotNull] Grammar1Parser.Braced_expressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_expression"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_elements"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCode_expression([NotNull] Grammar1Parser.Code_expressionContext context) { }
+	public virtual void EnterCode_elements([NotNull] Grammar1Parser.Code_elementsContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.code_expression"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.code_elements"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCode_expression([NotNull] Grammar1Parser.Code_expressionContext context) { }
+	public virtual void ExitCode_elements([NotNull] Grammar1Parser.Code_elementsContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_element"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCode_element([NotNull] Grammar1Parser.Code_elementContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.code_element"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCode_element([NotNull] Grammar1Parser.Code_elementContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

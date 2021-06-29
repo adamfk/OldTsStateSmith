@@ -25,21 +25,22 @@ namespace StateSmithTest
             Console.SetOut(new ConsoleCaptureConverter(output));
 
             //https://github.com/antlr/antlr4/blob/master/doc/csharp-target.md
-            String input = "SOME_SM_STATE_NAME";
+            String input = @"
+                SOME_SM_STATE_NAME
+                MY_EVENT [some_guard()] / my_action();
+            ";
             ICharStream stream = CharStreams.fromString(input);
             ITokenSource lexer = new Grammar1Lexer(stream);
             ITokenStream tokens = new CommonTokenStream(lexer);
             Grammar1Parser parser = new Grammar1Parser(tokens);
             parser.BuildParseTree = true;
-            IParseTree tree = parser.state_name();
+            IParseTree tree = parser.state_defn();
             KeyPrinter printer = new KeyPrinter();
             ParseTreeWalker.Default.Walk(printer, tree);
         }
 
         class KeyPrinter : Grammar1BaseListener
         {
-
-
             public override void EnterEveryRule([NotNull] ParserRuleContext context)
             {
                 Console.WriteLine("EnterEveryRule: " + context);

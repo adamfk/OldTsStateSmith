@@ -15,6 +15,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterState_defn(Grammar1Parser.State_defnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitState_defn(Grammar1Parser.State_defnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterState_name(Grammar1Parser.State_nameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -27,25 +39,25 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTrigger_list(Grammar1Parser.Trigger_listContext ctx) { }
+	@Override public void enterBehaviors(Grammar1Parser.BehaviorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTrigger_list(Grammar1Parser.Trigger_listContext ctx) { }
+	@Override public void exitBehaviors(Grammar1Parser.BehaviorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTriggers(Grammar1Parser.TriggersContext ctx) { }
+	@Override public void enterBehavior(Grammar1Parser.BehaviorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTriggers(Grammar1Parser.TriggersContext ctx) { }
+	@Override public void exitBehavior(Grammar1Parser.BehaviorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -99,30 +111,6 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBehavior(Grammar1Parser.BehaviorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBehavior(Grammar1Parser.BehaviorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterString(Grammar1Parser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitString(Grammar1Parser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterGroup_expression(Grammar1Parser.Group_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -159,13 +147,25 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCode_expression(Grammar1Parser.Code_expressionContext ctx) { }
+	@Override public void enterCode_elements(Grammar1Parser.Code_elementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCode_expression(Grammar1Parser.Code_expressionContext ctx) { }
+	@Override public void exitCode_elements(Grammar1Parser.Code_elementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCode_element(Grammar1Parser.Code_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCode_element(Grammar1Parser.Code_elementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
