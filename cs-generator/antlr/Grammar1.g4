@@ -15,21 +15,24 @@ expansions should be expanded fully beforehand so we can expand as needed easily
     - name, arguments
 */
 
+/*
+    NOTES!
+    Lexing rules are very important and should be used with care!
+
+ */
+
 state_defn: state_name behaviors? EOF ;
-state_name: WORD ;
+state_name: IDENTIFIER ;
 behaviors: LINE_ENDER behavior ( LINE_ENDER behavior ) *;   //LINE_ENDER here because it is optional for state_definition. could just be `<statename>`.
-behavior: ORDER? Triggers? guard? action? LINE_ENDER ;
+behavior: order? triggers? guard? action? LINE_ENDER ;
 
-
-
-fragment TRIGGER_SIMPLE: [a-zA-Z_0-9]+ ;
-Trigger_list: '('
+TRIGGER_LIST: '('
                 (
-                    TRIGGER_SIMPLE | ( ',' TRIGGER_SIMPLE )*
+                    IDENTIFIER | ( ',' IDENTIFIER )*
                 )
               ')' ;
-Triggers: TRIGGER_SIMPLE | Trigger_list ;
-ORDER: [0-9]+ '.' ;
+triggers: IDENTIFIER | TRIGGER_LIST ;
+order: Digit+ '.' ;
 
 guard: '[' code_elements ']' ;
 
@@ -41,7 +44,6 @@ naked_action:  '/' code_elements* ;
 fragment NOT_NL_CR: ~[\n\r];
 LINE_COMMENT: '//' NOT_NL_CR* LINE_ENDER ;
 ML_COMMENT: '/*' .*? '*/' ;
-CODE_IDENTIFIER: ('$' | [a-zA-Z_0-9])+ ; // variable, function name, "if", "true", ...
 fragment ESCAPED_CHAR: '\\' . ;
 CHAR_LITERAL: [']
       ( ESCAPED_CHAR | ~['] )
@@ -64,7 +66,7 @@ code_element:
         ML_COMMENT |
         CHAR_LITERAL |
         STRING |
-        CODE_IDENTIFIER |
+        IDENTIFIER |
         CODE_SYMBOLS |
         group_expression |
         square_brace_expression |
@@ -75,5 +77,10 @@ LINE_ENDER: [\r\n]+ ;
 
 WS : [ \t\r\n]+ -> skip ; // skip spaces, tabs, newlines
 
-WORD: [a-zA-Z_0-9]+ ;
+IDENTIFIER  :   IdentifierNondigit   (   IdentifierNondigit | Digit  )*  ;
 
+fragment IdentifierNondigit :  Nondigit ;
+
+fragment Nondigit :   [$a-zA-Z_]   ;
+
+Digit :   [0-9]  ;

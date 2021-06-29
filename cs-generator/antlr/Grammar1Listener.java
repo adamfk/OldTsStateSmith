@@ -47,6 +47,26 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitBehavior(Grammar1Parser.BehaviorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#triggers}.
+	 * @param ctx the parse tree
+	 */
+	void enterTriggers(Grammar1Parser.TriggersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#triggers}.
+	 * @param ctx the parse tree
+	 */
+	void exitTriggers(Grammar1Parser.TriggersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#order}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrder(Grammar1Parser.OrderContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#order}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrder(Grammar1Parser.OrderContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#guard}.
 	 * @param ctx the parse tree
 	 */

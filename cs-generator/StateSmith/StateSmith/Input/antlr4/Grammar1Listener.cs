@@ -71,6 +71,26 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitBehavior([NotNull] Grammar1Parser.BehaviorContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.triggers"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTriggers([NotNull] Grammar1Parser.TriggersContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.triggers"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTriggers([NotNull] Grammar1Parser.TriggersContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.order"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOrder([NotNull] Grammar1Parser.OrderContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.order"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOrder([NotNull] Grammar1Parser.OrderContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.guard"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
