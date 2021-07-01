@@ -76,7 +76,7 @@ triggers:
 
 trigger_id:
     ohs
-    IDENTIFIER
+    expandable_identifier
     ;
 
 /*
@@ -169,12 +169,12 @@ member_access:
         //no expansion checking here because this belongs to something else. `foo->bar`. `foo` should be checked for expansion though.
         IDENTIFIER
         |
-        simple_function_call
+        member_function_call
     )
     ;
 
-//checked for expansions unless inside an `member_access`
-identifier:
+//checked for expansions
+expandable_identifier:
     ohs IDENTIFIER
     ;
 
@@ -203,14 +203,27 @@ function_arg:
     code_element+
     ;
 
-//be a bit strict on whitespace as there is a lot of state machine specific syntax here already
-// `foo (123)` will not be allowed, but `foo(123)` will be.
-simple_function_call:
-    ohs IDENTIFIER '('
+braced_function_args:
+    '('
     optional_any_space
     function_args?
     optional_any_space
     ')'
+    ;
+
+//be a bit strict on whitespace as there is a lot of state machine specific syntax here already
+// `foo (123)` will not be allowed, but `foo(123)` will be.
+expandable_function_call:
+    ohs 
+    expandable_identifier
+    braced_function_args
+    ;
+
+//NON expandable
+member_function_call:
+    ohs 
+    IDENTIFIER
+    braced_function_args
     ;
 
 any_code: 
@@ -228,9 +241,9 @@ code_line_element:
     line_comment |
     star_comment |
     string |
-    simple_function_call |
+    expandable_function_call |
     member_access | //must come before identifier to prevent bad expansions: `obj.no_expand_here`
-    identifier |
+    expandable_identifier |
     number |
     CODE_SYMBOL |
     group_expression |

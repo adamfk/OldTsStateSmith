@@ -177,15 +177,15 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitMember_access(Grammar1Parser.Member_accessContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#identifier}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#expandable_identifier}.
 	 * @param ctx the parse tree
 	 */
-	void enterIdentifier(Grammar1Parser.IdentifierContext ctx);
+	void enterExpandable_identifier(Grammar1Parser.Expandable_identifierContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#identifier}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#expandable_identifier}.
 	 * @param ctx the parse tree
 	 */
-	void exitIdentifier(Grammar1Parser.IdentifierContext ctx);
+	void exitExpandable_identifier(Grammar1Parser.Expandable_identifierContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#group_expression}.
 	 * @param ctx the parse tree
@@ -257,15 +257,35 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitFunction_arg(Grammar1Parser.Function_argContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#simple_function_call}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#braced_function_args}.
 	 * @param ctx the parse tree
 	 */
-	void enterSimple_function_call(Grammar1Parser.Simple_function_callContext ctx);
+	void enterBraced_function_args(Grammar1Parser.Braced_function_argsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#simple_function_call}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#braced_function_args}.
 	 * @param ctx the parse tree
 	 */
-	void exitSimple_function_call(Grammar1Parser.Simple_function_callContext ctx);
+	void exitBraced_function_args(Grammar1Parser.Braced_function_argsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#expandable_function_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpandable_function_call(Grammar1Parser.Expandable_function_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#expandable_function_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpandable_function_call(Grammar1Parser.Expandable_function_callContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#member_function_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterMember_function_call(Grammar1Parser.Member_function_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#member_function_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitMember_function_call(Grammar1Parser.Member_function_callContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#any_code}.
 	 * @param ctx the parse tree

@@ -219,13 +219,13 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIdentifier(Grammar1Parser.IdentifierContext ctx) { }
+	@Override public void enterExpandable_identifier(Grammar1Parser.Expandable_identifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIdentifier(Grammar1Parser.IdentifierContext ctx) { }
+	@Override public void exitExpandable_identifier(Grammar1Parser.Expandable_identifierContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -315,13 +315,37 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSimple_function_call(Grammar1Parser.Simple_function_callContext ctx) { }
+	@Override public void enterBraced_function_args(Grammar1Parser.Braced_function_argsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSimple_function_call(Grammar1Parser.Simple_function_callContext ctx) { }
+	@Override public void exitBraced_function_args(Grammar1Parser.Braced_function_argsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpandable_function_call(Grammar1Parser.Expandable_function_callContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpandable_function_call(Grammar1Parser.Expandable_function_callContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMember_function_call(Grammar1Parser.Member_function_callContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMember_function_call(Grammar1Parser.Member_function_callContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
