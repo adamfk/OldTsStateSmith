@@ -39,7 +39,7 @@ namespace StateSmithTest
         [Fact]
         public void StateNameOnly()
         {
-            String input = @"
+            string input = @"
                 SOME_SM_STATE_NAME
             ";
             var textState = Parse(input);
@@ -52,7 +52,7 @@ namespace StateSmithTest
         {
             //Console.SetOut(new ConsoleCaptureConverter(output));
 
-            String input = @"
+            string input = @"
                 SOME_SM_STATE_NAME
                 11. MY_EVENT [some_guard( ""my }str with spaces"" ) && blah] / my_action();
             ";
@@ -61,15 +61,15 @@ namespace StateSmithTest
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be("11");
             textState.behaviors[0].triggers.Should().BeEquivalentTo(new string[] { "MY_EVENT" });
-            textState.behaviors[0].guardCode.Should().Be(@"some_guard(""my }str with spaces"")&&blah");
-            textState.behaviors[0].actionCode.Should().Be(@"my_action();");
+            textState.behaviors[0].guardCode.Should().Be(@"some_guard( ""my }str with spaces"" ) && blah");
+            textState.behaviors[0].actionCode.Should().Be("my_action();");
         }
 
 
         [Fact]
         public void MultipleBehaviors()
         {
-            String input = @"
+            string input = @"
                 a_lowercase_state_name
                 [ true ] / { }
                 event / { action_code(123); }
@@ -80,18 +80,18 @@ namespace StateSmithTest
             textState.behaviors[0].order.Should().Be(null);
             textState.behaviors[0].triggers.Count.Should().Be(0);
             textState.behaviors[0].guardCode.Should().Be(@"true");
-            textState.behaviors[0].actionCode.Should().Be(@"{}");
+            textState.behaviors[0].actionCode.Trim().Should().Be(@"");
 
             textState.behaviors[1].order.Should().Be(null);
             textState.behaviors[1].triggers.Should().BeEquivalentTo(new string[] { "event" });
             textState.behaviors[1].guardCode.Should().Be(null);
-            textState.behaviors[1].actionCode.Should().Be(@"{action_code(123);}");
+            textState.behaviors[1].actionCode.Trim().Should().Be(@"action_code(123);");
         }
 
         [Fact]
         public void MultilineAction()
         {
-            String input = @"
+            string input = @"
                 $ORTHO_STATE
                 event / { 
                   action_code(123);
@@ -99,16 +99,11 @@ namespace StateSmithTest
             ";
             var textState = Parse(input);
             textState.stateName.Should().Be("$ORTHO_STATE");
-            textState.behaviors.Count.Should().Be(2);
+            textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
-            textState.behaviors[0].triggers.Count.Should().Be(0);
-            textState.behaviors[0].guardCode.Should().Be(@"true");
-            textState.behaviors[0].actionCode.Should().Be(@"{}");
-
-            textState.behaviors[1].order.Should().Be(null);
-            textState.behaviors[1].triggers.Should().BeEquivalentTo(new string[] { "event" });
-            textState.behaviors[1].guardCode.Should().Be(null);
-            textState.behaviors[1].actionCode.Should().Be(@"{action_code(123);}");
+            textState.behaviors[0].triggers.Count.Should().Be(1);
+            textState.behaviors[0].guardCode.Should().Be(null);
+            textState.behaviors[0].actionCode.Trim().Should().Be("action_code(123);");
         }
 
         public class TextState
@@ -148,6 +143,8 @@ namespace StateSmithTest
                 textState.stateName = context.IDENTIFIER().GetText();
             }
 
+
+
             public override void EnterBehavior([NotNull] Grammar1Parser.BehaviorContext context)
             {
                 // Skip empty behaviors which may occur because the grammar is allowed to be fully optional: `behavior: order? triggers? guard? action? ;`
@@ -157,15 +154,32 @@ namespace StateSmithTest
                 }
 
                 currentBehavior = new TextBehavior();
-                currentBehavior.order = context.order()?.order_number()?.GetText();
-                currentBehavior.guardCode = context.guard()?.guard_code()?.GetText();
-                currentBehavior.actionCode = context.action()?.action_code()?.GetText();
+                currentBehavior.order = context.order()?.number()?.GetText();
+                currentBehavior.guardCode = context.guard()?.guard_code()?.GetText().Trim();
+                currentBehavior.actionCode = GetActionCodeText(context.action()?.action_code());
                 textState.behaviors.Add(currentBehavior);
+            }
+
+            private string GetActionCodeText(Grammar1Parser.Action_codeContext action_codeContext)
+            {
+                if (action_codeContext == null || action_codeContext.ChildCount == 0)
+                {
+                    return null;
+                }
+
+                var code = TryGetBracedActionCode(action_codeContext) ?? action_codeContext.GetText();
+
+                return code;
+            }
+
+            private static string TryGetBracedActionCode(Grammar1Parser.Action_codeContext action_codeContext)
+            {
+                return action_codeContext.braced_expression()?.any_code()?.GetText();
             }
 
             public override void EnterTrigger_id([NotNull] Grammar1Parser.Trigger_idContext context)
             {
-                currentBehavior.triggers.Add(context.IDENTIFIER().GetText());
+                currentBehavior.triggers.Add(context.expandable_identifier().GetText());
             }
 
             public override void ExitBehavior([NotNull] Grammar1Parser.BehaviorContext context)

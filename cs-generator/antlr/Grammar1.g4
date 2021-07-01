@@ -2,6 +2,8 @@ grammar Grammar1;
 
 /*
 
+Why are we capturing horizontal white space?
+
 Things we need to parse out:
 - state name
 - behaviors
@@ -119,21 +121,25 @@ action:
     ohs
     '/'
     ohs
-    code_line_element+
+    action_code
     ;
 
-oneline_action: 
-    ohs
-    code_line
+/*
+ Note: we cannot just use `any_code` because then it would be legal to do things like:
+    MY_STATE
+    [true] / func(); { code...} { code... }
+
+That just looks too weird.
+ */
+action_code:
+    naked_action_code // event / do_something();
+    |
+    braced_expression // event / { do_something(); }
     ;
 
-// action_code:
-//     ohs
-//     any_code  //allow to be empty in the parsing phase. Maybe warn later.
-//     ;
-
-// braced_action: '{' maybe_code '}' ;
-
+naked_action_code:
+    naked_action_code_elements+
+    ;
 
 /*
 For expansions, we need to ensure not part of a member access.
@@ -235,6 +241,18 @@ code_element:
     LINE_ENDER
     ;
 
+
+naked_action_code_elements:
+    star_comment |
+    string |
+    expandable_function_call |
+    member_access | //must come before identifier to prevent bad expansions: `obj.no_expand_here`
+    expandable_identifier |
+    number |
+    CODE_SYMBOL |
+    group_expression |
+    HWS
+    ;
 
 //does not include newlines except when inside other expressions
 code_line_element:

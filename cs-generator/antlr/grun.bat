@@ -1,5 +1,7 @@
 :: REMEBER TO RUN IN CMD prompt and not POWERSHELL!
 
+@echo off
+
 :: javac *.java
 :: usage `grun.bat Grammar1 <rule-name> -gui`
 SET CLASSPATH=.;C:\libs\antlr-4.9.2-complete.jar;%CLASSPATH%

@@ -171,15 +171,25 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitAction([NotNull] Grammar1Parser.ActionContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.oneline_action"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.action_code"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterOneline_action([NotNull] Grammar1Parser.Oneline_actionContext context);
+	void EnterAction_code([NotNull] Grammar1Parser.Action_codeContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.oneline_action"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.action_code"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitOneline_action([NotNull] Grammar1Parser.Oneline_actionContext context);
+	void ExitAction_code([NotNull] Grammar1Parser.Action_codeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.naked_action_code"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNaked_action_code([NotNull] Grammar1Parser.Naked_action_codeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.naked_action_code"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNaked_action_code([NotNull] Grammar1Parser.Naked_action_codeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.member_access_operator"/>.
 	/// </summary>
@@ -330,6 +340,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitCode_element([NotNull] Grammar1Parser.Code_elementContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.naked_action_code_elements"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNaked_action_code_elements([NotNull] Grammar1Parser.Naked_action_code_elementsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.naked_action_code_elements"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNaked_action_code_elements([NotNull] Grammar1Parser.Naked_action_code_elementsContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_line_element"/>.
 	/// </summary>

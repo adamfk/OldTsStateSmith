@@ -183,13 +183,25 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOneline_action(Grammar1Parser.Oneline_actionContext ctx) { }
+	@Override public void enterAction_code(Grammar1Parser.Action_codeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitOneline_action(Grammar1Parser.Oneline_actionContext ctx) { }
+	@Override public void exitAction_code(Grammar1Parser.Action_codeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNaked_action_code(Grammar1Parser.Naked_action_codeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNaked_action_code(Grammar1Parser.Naked_action_codeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -370,6 +382,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCode_element(Grammar1Parser.Code_elementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNaked_action_code_elements(Grammar1Parser.Naked_action_code_elementsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNaked_action_code_elements(Grammar1Parser.Naked_action_code_elementsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

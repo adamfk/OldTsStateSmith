@@ -147,15 +147,25 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitAction(Grammar1Parser.ActionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#oneline_action}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#action_code}.
 	 * @param ctx the parse tree
 	 */
-	void enterOneline_action(Grammar1Parser.Oneline_actionContext ctx);
+	void enterAction_code(Grammar1Parser.Action_codeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#oneline_action}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#action_code}.
 	 * @param ctx the parse tree
 	 */
-	void exitOneline_action(Grammar1Parser.Oneline_actionContext ctx);
+	void exitAction_code(Grammar1Parser.Action_codeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#naked_action_code}.
+	 * @param ctx the parse tree
+	 */
+	void enterNaked_action_code(Grammar1Parser.Naked_action_codeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#naked_action_code}.
+	 * @param ctx the parse tree
+	 */
+	void exitNaked_action_code(Grammar1Parser.Naked_action_codeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#member_access_operator}.
 	 * @param ctx the parse tree
@@ -306,6 +316,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCode_element(Grammar1Parser.Code_elementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#naked_action_code_elements}.
+	 * @param ctx the parse tree
+	 */
+	void enterNaked_action_code_elements(Grammar1Parser.Naked_action_code_elementsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#naked_action_code_elements}.
+	 * @param ctx the parse tree
+	 */
+	void exitNaked_action_code_elements(Grammar1Parser.Naked_action_code_elementsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#code_line_element}.
 	 * @param ctx the parse tree
