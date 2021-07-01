@@ -165,10 +165,15 @@ member_access:
     member_access_operator
 
     ohs
-    IDENTIFIER  //no expansion checking here because this belongs to something else. `foo->bar`. `foo` should be checked for expansion though.
+    (
+        //no expansion checking here because this belongs to something else. `foo->bar`. `foo` should be checked for expansion though.
+        IDENTIFIER
+        |
+        simple_function_call
+    )
     ;
 
-//checked for expansions
+//checked for expansions unless inside an `member_access`
 identifier:
     ohs IDENTIFIER
     ;

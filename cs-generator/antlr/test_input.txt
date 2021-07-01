@@ -2,7 +2,7 @@
     1. MY_EVENT [true] / {
         my_action(3*6, 
             [this] {
-                an_action(12, "weee")
+                this->an_action(12, "weee")
             }
         );
     }
