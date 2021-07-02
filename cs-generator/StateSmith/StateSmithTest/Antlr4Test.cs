@@ -22,32 +22,13 @@ namespace StateSmithTest
             this.output = output;
         }
 
-        public TextState Parse(string stateLabel)
-        {
-            //https://github.com/antlr/antlr4/blob/master/doc/csharp-target.md
-
-            ICharStream stream = CharStreams.fromString(stateLabel);
-            ITokenSource lexer = new Grammar1Lexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            Grammar1Parser parser = new Grammar1Parser(tokens);
-            parser.BuildParseTree = true;
-            IParseTree tree = parser.state_defn();
-            TextStateWalker walker = new TextStateWalker();
-            ParseTreeWalker.Default.Walk(walker, tree);
-            walker.textState.tree = tree;
-            
-
-            return walker.textState;
-        }
-
-
         [Fact]
         public void StateNameOnly()
         {
             string input = @"
                 SOME_SM_STATE_NAME
             ";
-            var textState = Parse(input);
+            var textState = StateParser.Parse(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(0);
         }
@@ -61,7 +42,7 @@ namespace StateSmithTest
                 SOME_SM_STATE_NAME
                 11. MY_EVENT [some_guard( ""my }str with spaces"" ) && blah] / my_action();
             ";
-            var textState = Parse(input);
+            var textState = StateParser.Parse(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be("11");
@@ -79,7 +60,7 @@ namespace StateSmithTest
                 [ true ] / { }
                 event / { action_code(123); }
             ";
-            var textState = Parse(input);
+            var textState = StateParser.Parse(input);
             textState.stateName.Should().Be("a_lowercase_state_name");
             textState.behaviors.Count.Should().Be(2);
             textState.behaviors[0].order.Should().Be(null);
@@ -102,7 +83,7 @@ namespace StateSmithTest
                   action_code(123);
                 }
             ";
-            var textState = Parse(input);
+            var textState = StateParser.Parse(input);
             textState.stateName.Should().Be("$ORTHO_STATE");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
@@ -121,7 +102,7 @@ namespace StateSmithTest
                         stuff( func(8 * 2) );
                 }
             ";
-            var textState = Parse(input);
+            var textState = StateParser.Parse(input);
             textState.stateName.Should().Be("$ORTHO_STATE");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);

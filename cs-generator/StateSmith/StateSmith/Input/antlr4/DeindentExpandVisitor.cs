@@ -25,8 +25,10 @@ namespace StateSmith.Input.antlr4
 
         public override string VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
         {
-            //TODO
-            return base.VisitExpandable_identifier(context);
+            Append(context.ohs()?.GetText() ?? "");
+            Append(context.IDENTIFIER().GetText()); //FIXME put int expansions here
+
+            return "";
         }
 
         public string deindent(string str)
