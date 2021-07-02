@@ -8,8 +8,8 @@ namespace StateSmith.Input.Expansions
 
     public class Expander
     {
-        public Dictionary<string, string> variableExpansions = new Dictionary<string, string>();
-        public Dictionary<string, string> methodExpansions = new Dictionary<string, string>();
+        private Dictionary<string, string> variableExpansions = new Dictionary<string, string>();
+        private Dictionary<string, ExpansionMethod> methodExpansions = new Dictionary<string, ExpansionMethod>();
 
         private void ThrowIfExpansionNameAlreadyUsed(string expansionName)
         {
@@ -25,7 +25,7 @@ namespace StateSmith.Input.Expansions
             }
         }
 
-        private string ExpandCode(string name, string code)
+        private string ExpandCodeSpecialTokens(string name, string code)
         {
             code = code.Replace(UserExpansionScriptBase.AutoNameToken, name);
             return code;
@@ -34,8 +34,51 @@ namespace StateSmith.Input.Expansions
         public void AddVariableExpansion(string name, string code)
         {
             ThrowIfExpansionNameAlreadyUsed(name);
-            code = ExpandCode(name, code);
+            code = ExpandCodeSpecialTokens(name, code);
             variableExpansions.Add(name, code);
+        }
+
+        public void AddExpansionMethod(string name, object userObject, MethodInfo method)
+        {
+            ThrowIfExpansionNameAlreadyUsed(name);
+            methodExpansions.Add(name, new ExpansionMethod(name, userObject, method));
+        }
+
+        public string TryExpandVariableExpansion(string name)
+        {
+            if (variableExpansions.ContainsKey(name) == false)
+            {
+                return name;
+            }
+
+            return variableExpansions[name];
+        }
+
+        public string TryExpandMethodExpansion(string name, string[] arguments)
+        {
+            if (methodExpansions.ContainsKey(name) == false)
+            {
+                return name;
+            }
+
+            var method = methodExpansions[name];
+            var code = method.Evaluate(arguments);
+            code = ExpandCodeSpecialTokens(name, code);
+            return code;
+        }
+
+        public string[] GetVariableNames()
+        {
+            var keys = new string[variableExpansions.Count];
+            variableExpansions.Keys.CopyTo(keys, 0);
+            return keys;
+        }
+
+        public string[] GetMethodNames()
+        {
+            var keys = new string[methodExpansions.Count];
+            methodExpansions.Keys.CopyTo(keys, 0);
+            return keys;
         }
     }
 }

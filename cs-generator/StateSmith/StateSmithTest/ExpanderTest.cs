@@ -24,6 +24,11 @@ namespace StateSmithTest
             static string time3 = time2;
     */
 
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable IDE0051 // Remove unused private members
+#pragma warning disable RCS1018 // Add accessibility modifiers (or vice versa).
+#pragma warning disable RCS1213 // Remove unused member declaration.
+#pragma warning disable IDE0044 // Add readonly modifier
     class ExpansionsExample : UserExpansionScriptBase
     {
         string time => get_time_;
@@ -34,12 +39,18 @@ namespace StateSmithTest
         string get_time_ => "system_get_time()";
 
         string set_mode(string enum_name) => $"set_mode(ENUM_PREFIX_{enum_name})";
-        
+
         string hit_count = "sm->vars." + AutoNameToken;   //`AutoNameToken` maps to name of field. Result: "sm->vars.hit_count"
         string jump_count => AutoVarName;
 
         string func() => "123";
     }
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore IDE0051 // Remove unused private members
+#pragma warning restore IDE0044 // Add readonly modifier
+#pragma warning restore RCS1018 // Add accessibility modifiers (or vice versa).
+#pragma warning restore RCS1213 // Remove unused member declaration.
+
 
     public class ExpanderTest
     {
@@ -52,8 +63,20 @@ namespace StateSmithTest
 
             expanderFileReflection.AddAllExpansions(userExpansions);
 
-            expander.variableExpansions.Count.Should().Be(1);
-            expander.variableExpansions["hit_count"].Should().Be("sm->vars.hit_count");
+            string[] variableKeys = expander.GetVariableNames();
+            expander.GetVariableNames().Should().BeEquivalentTo(new string[] { 
+                "time",
+                "get_time",
+                "hit_count",
+                "jump_count",
+
+            });
+            expander.TryExpandVariableExpansion("time").Should().Be("system_get_time()");
+            expander.TryExpandVariableExpansion("get_time").Should().Be("system_get_time()");
+            expander.TryExpandVariableExpansion("hit_count").Should().Be("sm->vars.hit_count");
+            expander.TryExpandVariableExpansion("jump_count").Should().Be("sm->vars.jump_count");
+
+            var names = expander.GetMethodNames();
         }
     }
 }
