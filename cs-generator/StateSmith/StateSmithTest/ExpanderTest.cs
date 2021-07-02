@@ -63,20 +63,24 @@ namespace StateSmithTest
 
             expanderFileReflection.AddAllExpansions(userExpansions);
 
-            string[] variableKeys = expander.GetVariableNames();
             expander.GetVariableNames().Should().BeEquivalentTo(new string[] { 
                 "time",
                 "get_time",
                 "hit_count",
                 "jump_count",
-
             });
             expander.TryExpandVariableExpansion("time").Should().Be("system_get_time()");
             expander.TryExpandVariableExpansion("get_time").Should().Be("system_get_time()");
             expander.TryExpandVariableExpansion("hit_count").Should().Be("sm->vars.hit_count");
             expander.TryExpandVariableExpansion("jump_count").Should().Be("sm->vars.jump_count");
 
-            var names = expander.GetMethodNames();
+            expander.GetMethodNames().Should().BeEquivalentTo(new string[] {
+                "set_mode",
+                "func",
+            });
+            expander.TryExpandMethodExpansion("set_mode", new string[] { "GRUNKLE" }).Should().Be("set_mode(ENUM_PREFIX_GRUNKLE)");
+            expander.TryExpandMethodExpansion("set_mode", new string[] { "STAN" }).Should().Be("set_mode(ENUM_PREFIX_STAN)");
+            expander.TryExpandMethodExpansion("func", new string[] { }).Should().Be("123");
         }
     }
 }

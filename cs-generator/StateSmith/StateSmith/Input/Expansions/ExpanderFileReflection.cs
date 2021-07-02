@@ -88,6 +88,11 @@ namespace StateSmith.Input.Expansions
                 return; //we don't want compiler generated methods for properties like `get_get_time`
             }
 
+            if (method.DeclaringType == typeof(System.Object))
+            {
+                return;
+            }
+
             string expansionName = method.Name;
             var expansionNameAttributes = method.GetCustomAttributes(typeof(ExpansionNameAttribute), inherit: false);
 
