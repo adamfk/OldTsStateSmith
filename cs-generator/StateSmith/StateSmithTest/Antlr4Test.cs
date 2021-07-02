@@ -93,7 +93,7 @@ namespace StateSmithTest
         }
 
         [Fact]
-        public void DeindentMultilineAction()
+        public void DeIndentMultilineAction()
         {
             string input = @"
                 $ORTHO_STATE

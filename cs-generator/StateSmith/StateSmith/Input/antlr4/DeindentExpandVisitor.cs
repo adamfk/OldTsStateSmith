@@ -6,32 +6,39 @@ using System.Text;
 
 namespace StateSmith.Input.antlr4
 {
-    public class DeindentExpandVisitor : Grammar1BaseVisitor<string>
+
+    public class DeIndentExpandVisitor : Grammar1BaseVisitor<int>
     {
+        /// <summary>
+        /// It is more efficient to just use a StringBuilder field rather than
+        /// returning a string from the visit method and appending them to larger strings.
+        /// </summary>
+        private const int UNUSED = 0;
+
         private bool firstLineEndingFound = false;
 
         private int deIndentSize = 0;
 
         public StringBuilder stringBuilder = new StringBuilder();
 
-        public override string VisitTerminal(ITerminalNode node)
+        public override int VisitTerminal(ITerminalNode node)
         {
             if (node.Symbol != null)
             {
                 Append(node.Symbol.Text);
             }
-            return "";
+            return UNUSED;
         }
 
-        public override string VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
+        public override int VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
         {
             Append(context.ohs()?.GetText() ?? "");
             Append(context.IDENTIFIER().GetText()); //FIXME put int expansions here
 
-            return "";
+            return UNUSED;
         }
 
-        public string deindent(string str)
+        public string DeIndent(string str)
         {
             if (str.Length < deIndentSize)
             {
@@ -41,7 +48,7 @@ namespace StateSmith.Input.antlr4
             return str.Substring(deIndentSize);
         }
 
-        public override string VisitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context)
+        public override int VisitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context)
         {
             var trailingSpace = context.ohs()?.GetText() ?? "";
 
@@ -52,9 +59,9 @@ namespace StateSmith.Input.antlr4
             }
 
             Append(context.LINE_ENDER().GetText());
-            Append(deindent(trailingSpace));
+            Append(DeIndent(trailingSpace));
 
-            return "";
+            return UNUSED;
         }
 
         private void Append(string str)

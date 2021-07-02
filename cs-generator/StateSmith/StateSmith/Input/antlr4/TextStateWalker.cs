@@ -81,7 +81,7 @@ namespace StateSmith.Input.antlr4
                 return null;
             }
 
-            var visitor = new DeindentExpandVisitor();
+            var visitor = new DeIndentExpandVisitor();
 
             foreach (var item in any_code.code_element())
             {
