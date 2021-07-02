@@ -100,6 +100,9 @@ namespace StateSmithTest
                 event / { var += 3;
                     if (func(123))
                         stuff( func(8 * 2) );
+                    if (true) {
+                        a = ""hello there"";
+                    }
                 }
             ";
             var textState = StateParser.Parse(input);
@@ -110,7 +113,11 @@ namespace StateSmithTest
             textState.behaviors[0].guardCode.Should().Be(null);
             textState.behaviors[0].actionCode.Should().Be("var += 3;\r\n" +
                                                           "if (func(123))\r\n" +
-                                                          "    stuff( func(8 * 2) );");
+                                                          "    stuff( func(8 * 2) );\r\n" +
+                                                          "if (true) {\r\n" +
+                                                          "    a = \"hello there\";\r\n" +
+                                                          "}"
+                                                          );
         }
 
     }
