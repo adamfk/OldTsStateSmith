@@ -11,6 +11,7 @@ namespace StateSmith.Input.antlr4
         private bool firstLineEndingFound = false;
 
         private int deIndentSize = 0;
+
         public StringBuilder stringBuilder = new StringBuilder();
 
         public override string VisitTerminal(ITerminalNode node)
@@ -54,9 +55,12 @@ namespace StateSmith.Input.antlr4
             return "";
         }
 
-        void Append(string str)
+        private void Append(string str)
         {
             stringBuilder.Append(str);
         }
     }
+
+
+
 }
