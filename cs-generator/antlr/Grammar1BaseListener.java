@@ -423,6 +423,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLine_end_with_hs(Grammar1Parser.Line_end_with_hsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLine_end_with_hs(Grammar1Parser.Line_end_with_hsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumber(Grammar1Parser.NumberContext ctx) { }
 	/**
 	 * {@inheritDoc}

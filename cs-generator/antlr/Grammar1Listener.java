@@ -347,6 +347,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitCode_line(Grammar1Parser.Code_lineContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#line_end_with_hs}.
+	 * @param ctx the parse tree
+	 */
+	void enterLine_end_with_hs(Grammar1Parser.Line_end_with_hsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#line_end_with_hs}.
+	 * @param ctx the parse tree
+	 */
+	void exitLine_end_with_hs(Grammar1Parser.Line_end_with_hsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#number}.
 	 * @param ctx the parse tree
 	 */

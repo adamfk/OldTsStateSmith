@@ -371,6 +371,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitCode_line([NotNull] Grammar1Parser.Code_lineContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.line_end_with_hs"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.line_end_with_hs"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.number"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

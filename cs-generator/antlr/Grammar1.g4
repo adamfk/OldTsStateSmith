@@ -22,7 +22,7 @@ expansions should be expanded fully beforehand so we can expand as needed easily
     Lexing rules are very important and should be used with care!
 
  */
-optional_any_space: (HWS | LINE_ENDER)*;
+optional_any_space: (HWS | line_end_with_hs)*;
 ohs: HWS? ;
 
 state_defn:
@@ -45,7 +45,7 @@ nl_behaviors:
     nl_behavior+ ;
 
 nl_behavior:
-    LINE_ENDER
+    line_end_with_hs
     optional_any_space
     behavior 
     ;
@@ -190,9 +190,12 @@ group_expression:
     ;
 
 square_brace_expression: '[' any_code ']' ;
-braced_expression: '{' any_code '}' ;
+braced_expression: '{' ohs any_code '}' ;   //ohs here to help with indent formatting
 
-line_comment: LINE_COMMENT;
+line_comment: 
+    LINE_COMMENT 
+    ( line_end_with_hs | EOF )
+    ;
 star_comment: STAR_COMMENT;
 
 function_args:
@@ -238,7 +241,7 @@ any_code:
 code_element: 
     code_line_element
     |
-    LINE_ENDER
+    line_end_with_hs
     ;
 
 
@@ -275,6 +278,7 @@ code_line:
 
 
 LINE_ENDER: [\r\n]+;
+line_end_with_hs: LINE_ENDER ohs;
 
 IDENTIFIER  :   IDENTIFIER_NON_DIGIT   (   IDENTIFIER_NON_DIGIT | DIGIT  )*  ;
 
@@ -293,7 +297,7 @@ number :
 
 
 fragment NOT_NL_CR: ~[\n\r];
-LINE_COMMENT: '//' NOT_NL_CR* LINE_ENDER ;
+LINE_COMMENT: '//' NOT_NL_CR*;
 STAR_COMMENT: '/*' .*? '*/' ;
 
 // CHAR_LITERAL: [']
@@ -322,6 +326,3 @@ CODE_SYMBOL:
     //don't include comma because we need to be able to parse function arguments
 
 HWS : [ \t]+ ;
-
-
-// HWS : [ \t]+ -> skip; // skip horizontal white space. !!!DO NOT!!! include `\r\n` here because then WS will override LINE_ENDER. Perhaps largest token wins? I thought higher lexer rule would win, but it doesn't.

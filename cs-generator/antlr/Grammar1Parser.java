@@ -31,7 +31,7 @@ public class Grammar1Parser extends Parser {
 		RULE_function_arg = 25, RULE_braced_function_args = 26, RULE_expandable_function_call = 27, 
 		RULE_member_function_call = 28, RULE_any_code = 29, RULE_code_element = 30, 
 		RULE_naked_action_code_elements = 31, RULE_code_line_element = 32, RULE_code_line = 33, 
-		RULE_number = 34, RULE_string = 35;
+		RULE_line_end_with_hs = 34, RULE_number = 35, RULE_string = 36;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"optional_any_space", "ohs", "state_defn", "state_name", "nl_behaviors", 
@@ -41,7 +41,7 @@ public class Grammar1Parser extends Parser {
 			"square_brace_expression", "braced_expression", "line_comment", "star_comment", 
 			"function_args", "function_arg", "braced_function_args", "expandable_function_call", 
 			"member_function_call", "any_code", "code_element", "naked_action_code_elements", 
-			"code_line_element", "code_line", "number", "string"
+			"code_line_element", "code_line", "line_end_with_hs", "number", "string"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -117,9 +117,11 @@ public class Grammar1Parser extends Parser {
 		public TerminalNode HWS(int i) {
 			return getToken(Grammar1Parser.HWS, i);
 		}
-		public List<TerminalNode> LINE_ENDER() { return getTokens(Grammar1Parser.LINE_ENDER); }
-		public TerminalNode LINE_ENDER(int i) {
-			return getToken(Grammar1Parser.LINE_ENDER, i);
+		public List<Line_end_with_hsContext> line_end_with_hs() {
+			return getRuleContexts(Line_end_with_hsContext.class);
+		}
+		public Line_end_with_hsContext line_end_with_hs(int i) {
+			return getRuleContext(Line_end_with_hsContext.class,i);
 		}
 		public Optional_any_spaceContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -138,34 +140,39 @@ public class Grammar1Parser extends Parser {
 	public final Optional_any_spaceContext optional_any_space() throws RecognitionException {
 		Optional_any_spaceContext _localctx = new Optional_any_spaceContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_optional_any_space);
-		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(75);
+			setState(78);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
-					{
-					setState(72);
-					_la = _input.LA(1);
-					if ( !(_la==LINE_ENDER || _la==HWS) ) {
-					_errHandler.recoverInline(this);
-					}
-					else {
-						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-						_errHandler.reportMatch(this);
-						consume();
-					}
+					setState(76);
+					_errHandler.sync(this);
+					switch (_input.LA(1)) {
+					case HWS:
+						{
+						setState(74);
+						match(HWS);
+						}
+						break;
+					case LINE_ENDER:
+						{
+						setState(75);
+						line_end_with_hs();
+						}
+						break;
+					default:
+						throw new NoViableAltException(this);
 					}
 					} 
 				}
-				setState(77);
+				setState(80);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			}
 			}
 		}
@@ -202,12 +209,12 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(79);
+			setState(82);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				{
-				setState(78);
+				setState(81);
 				match(HWS);
 				}
 				break;
@@ -262,31 +269,31 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(81);
+			setState(84);
 			optional_any_space();
-			setState(82);
+			setState(85);
 			state_name();
-			setState(83);
-			ohs();
 			setState(86);
+			ohs();
+			setState(89);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				{
-				setState(84);
+				setState(87);
 				nl_behaviors();
 				}
 				break;
 			case 2:
 				{
-				setState(85);
+				setState(88);
 				optional_any_space();
 				}
 				break;
 			}
-			setState(88);
+			setState(91);
 			optional_any_space();
-			setState(89);
+			setState(92);
 			match(EOF);
 			}
 		}
@@ -323,7 +330,7 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(94);
 			match(IDENTIFIER);
 			}
 		}
@@ -366,7 +373,7 @@ public class Grammar1Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(94); 
+			setState(97); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -374,7 +381,7 @@ public class Grammar1Parser extends Parser {
 				case 1:
 					{
 					{
-					setState(93);
+					setState(96);
 					nl_behavior();
 					}
 					}
@@ -382,9 +389,9 @@ public class Grammar1Parser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(96); 
+				setState(99); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,3,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
@@ -400,7 +407,9 @@ public class Grammar1Parser extends Parser {
 	}
 
 	public static class Nl_behaviorContext extends ParserRuleContext {
-		public TerminalNode LINE_ENDER() { return getToken(Grammar1Parser.LINE_ENDER, 0); }
+		public Line_end_with_hsContext line_end_with_hs() {
+			return getRuleContext(Line_end_with_hsContext.class,0);
+		}
 		public Optional_any_spaceContext optional_any_space() {
 			return getRuleContext(Optional_any_spaceContext.class,0);
 		}
@@ -427,11 +436,11 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98);
-			match(LINE_ENDER);
-			setState(99);
+			setState(101);
+			line_end_with_hs();
+			setState(102);
 			optional_any_space();
-			setState(100);
+			setState(103);
 			behavior();
 			}
 		}
@@ -479,37 +488,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(103);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
-			case 1:
-				{
-				setState(102);
-				order();
-				}
-				break;
-			}
-			setState(110);
+			setState(106);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				{
 				setState(105);
-				triggers();
-				setState(106);
-				guard();
-				}
-				break;
-			case 2:
-				{
-				setState(108);
-				triggers();
-				}
-				break;
-			case 3:
-				{
-				setState(109);
-				guard();
+				order();
 				}
 				break;
 			}
@@ -518,7 +503,31 @@ public class Grammar1Parser extends Parser {
 			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 			case 1:
 				{
+				setState(108);
+				triggers();
+				setState(109);
+				guard();
+				}
+				break;
+			case 2:
+				{
+				setState(111);
+				triggers();
+				}
+				break;
+			case 3:
+				{
 				setState(112);
+				guard();
+				}
+				break;
+			}
+			setState(116);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				{
+				setState(115);
 				action();
 				}
 				break;
@@ -567,13 +576,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(115);
-			ohs();
-			setState(116);
-			number();
-			setState(117);
-			ohs();
 			setState(118);
+			ohs();
+			setState(119);
+			number();
+			setState(120);
+			ohs();
+			setState(121);
 			match(PERIOD);
 			}
 		}
@@ -613,20 +622,20 @@ public class Grammar1Parser extends Parser {
 		TriggersContext _localctx = new TriggersContext(_ctx, getState());
 		enterRule(_localctx, 16, RULE_triggers);
 		try {
-			setState(122);
+			setState(125);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(120);
+				setState(123);
 				trigger_id();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(121);
+				setState(124);
 				trigger_list();
 				}
 				break;
@@ -670,9 +679,9 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124);
+			setState(127);
 			ohs();
-			setState(125);
+			setState(128);
 			expandable_identifier();
 			}
 		}
@@ -731,39 +740,39 @@ public class Grammar1Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(127);
-			ohs();
-			setState(128);
-			match(T__0);
-			setState(129);
-			optional_any_space();
 			setState(130);
+			ohs();
+			setState(131);
+			match(T__0);
+			setState(132);
+			optional_any_space();
+			setState(133);
 			trigger_id();
-			setState(138);
+			setState(141);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(131);
-					optional_any_space();
-					setState(132);
-					match(COMMA);
-					setState(133);
-					optional_any_space();
 					setState(134);
+					optional_any_space();
+					setState(135);
+					match(COMMA);
+					setState(136);
+					optional_any_space();
+					setState(137);
 					trigger_id();
 					}
 					} 
 				}
-				setState(140);
+				setState(143);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,8,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,9,_ctx);
 			}
-			setState(141);
+			setState(144);
 			ohs();
-			setState(142);
+			setState(145);
 			match(T__1);
 			}
 		}
@@ -805,13 +814,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(144);
-			ohs();
-			setState(145);
-			match(T__2);
-			setState(146);
-			guard_code();
 			setState(147);
+			ohs();
+			setState(148);
+			match(T__2);
+			setState(149);
+			guard_code();
+			setState(150);
 			match(T__3);
 			}
 		}
@@ -853,9 +862,9 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149);
+			setState(152);
 			ohs();
-			setState(150);
+			setState(153);
 			any_code();
 			}
 		}
@@ -900,13 +909,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(152);
-			ohs();
-			setState(153);
-			match(T__4);
-			setState(154);
-			ohs();
 			setState(155);
+			ohs();
+			setState(156);
+			match(T__4);
+			setState(157);
+			ohs();
+			setState(158);
 			action_code();
 			}
 		}
@@ -946,7 +955,7 @@ public class Grammar1Parser extends Parser {
 		Action_codeContext _localctx = new Action_codeContext(_ctx, getState());
 		enterRule(_localctx, 28, RULE_action_code);
 		try {
-			setState(159);
+			setState(162);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -964,14 +973,14 @@ public class Grammar1Parser extends Parser {
 			case HWS:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(157);
+				setState(160);
 				naked_action_code();
 				}
 				break;
 			case T__7:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(158);
+				setState(161);
 				braced_expression();
 				}
 				break;
@@ -1018,7 +1027,7 @@ public class Grammar1Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(162); 
+			setState(165); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1026,7 +1035,7 @@ public class Grammar1Parser extends Parser {
 				case 1:
 					{
 					{
-					setState(161);
+					setState(164);
 					naked_action_code_elements();
 					}
 					}
@@ -1034,9 +1043,9 @@ public class Grammar1Parser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(164); 
+				setState(167); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,11,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
@@ -1074,7 +1083,7 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(166);
+			setState(169);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__5) | (1L << T__6) | (1L << PERIOD))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1131,24 +1140,24 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(168);
+			setState(171);
 			ohs();
-			setState(169);
+			setState(172);
 			member_access_operator();
-			setState(170);
-			ohs();
 			setState(173);
+			ohs();
+			setState(176);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 			case 1:
 				{
-				setState(171);
+				setState(174);
 				match(IDENTIFIER);
 				}
 				break;
 			case 2:
 				{
-				setState(172);
+				setState(175);
 				member_function_call();
 				}
 				break;
@@ -1191,9 +1200,9 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(175);
+			setState(178);
 			ohs();
-			setState(176);
+			setState(179);
 			match(IDENTIFIER);
 			}
 		}
@@ -1235,13 +1244,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(178);
-			ohs();
-			setState(179);
-			match(T__0);
-			setState(180);
-			any_code();
 			setState(181);
+			ohs();
+			setState(182);
+			match(T__0);
+			setState(183);
+			any_code();
+			setState(184);
 			match(T__1);
 			}
 		}
@@ -1280,11 +1289,11 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(183);
+			setState(186);
 			match(T__2);
-			setState(184);
+			setState(187);
 			any_code();
-			setState(185);
+			setState(188);
 			match(T__3);
 			}
 		}
@@ -1300,6 +1309,9 @@ public class Grammar1Parser extends Parser {
 	}
 
 	public static class Braced_expressionContext extends ParserRuleContext {
+		public OhsContext ohs() {
+			return getRuleContext(OhsContext.class,0);
+		}
 		public Any_codeContext any_code() {
 			return getRuleContext(Any_codeContext.class,0);
 		}
@@ -1323,11 +1335,13 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(187);
+			setState(190);
 			match(T__7);
-			setState(188);
+			setState(191);
+			ohs();
+			setState(192);
 			any_code();
-			setState(189);
+			setState(193);
 			match(T__8);
 			}
 		}
@@ -1344,6 +1358,10 @@ public class Grammar1Parser extends Parser {
 
 	public static class Line_commentContext extends ParserRuleContext {
 		public TerminalNode LINE_COMMENT() { return getToken(Grammar1Parser.LINE_COMMENT, 0); }
+		public Line_end_with_hsContext line_end_with_hs() {
+			return getRuleContext(Line_end_with_hsContext.class,0);
+		}
+		public TerminalNode EOF() { return getToken(Grammar1Parser.EOF, 0); }
 		public Line_commentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1364,8 +1382,26 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(191);
+			setState(195);
 			match(LINE_COMMENT);
+			setState(198);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case LINE_ENDER:
+				{
+				setState(196);
+				line_end_with_hs();
+				}
+				break;
+			case EOF:
+				{
+				setState(197);
+				match(EOF);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -1401,7 +1437,7 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(193);
+			setState(200);
 			match(STAR_COMMENT);
 			}
 		}
@@ -1454,27 +1490,27 @@ public class Grammar1Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(195);
-			function_arg();
 			setState(202);
+			function_arg();
+			setState(209);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(196);
+					setState(203);
 					optional_any_space();
-					setState(197);
+					setState(204);
 					match(COMMA);
-					setState(198);
+					setState(205);
 					function_arg();
 					}
 					} 
 				}
-				setState(204);
+				setState(211);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,14,_ctx);
 			}
 			}
 		}
@@ -1520,9 +1556,9 @@ public class Grammar1Parser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(205);
+			setState(212);
 			optional_any_space();
-			setState(207); 
+			setState(214); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1530,7 +1566,7 @@ public class Grammar1Parser extends Parser {
 				case 1:
 					{
 					{
-					setState(206);
+					setState(213);
 					code_element();
 					}
 					}
@@ -1538,9 +1574,9 @@ public class Grammar1Parser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(209); 
+				setState(216); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
@@ -1585,23 +1621,23 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(211);
+			setState(218);
 			match(T__0);
-			setState(212);
+			setState(219);
 			optional_any_space();
-			setState(214);
+			setState(221);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				{
-				setState(213);
+				setState(220);
 				function_args();
 				}
 				break;
 			}
-			setState(216);
+			setState(223);
 			optional_any_space();
-			setState(217);
+			setState(224);
 			match(T__1);
 			}
 		}
@@ -1646,11 +1682,11 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(219);
+			setState(226);
 			ohs();
-			setState(220);
+			setState(227);
 			expandable_identifier();
-			setState(221);
+			setState(228);
 			braced_function_args();
 			}
 		}
@@ -1693,11 +1729,11 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(223);
+			setState(230);
 			ohs();
-			setState(224);
+			setState(231);
 			match(IDENTIFIER);
-			setState(225);
+			setState(232);
 			braced_function_args();
 			}
 		}
@@ -1740,17 +1776,17 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(230);
+			setState(237);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__2) | (1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__9) | (1L << T__10) | (1L << LINE_ENDER) | (1L << IDENTIFIER) | (1L << LINE_COMMENT) | (1L << STAR_COMMENT) | (1L << STRING) | (1L << TICK_STRING) | (1L << DIGIT) | (1L << PERIOD) | (1L << CODE_SYMBOL) | (1L << HWS))) != 0)) {
 				{
 				{
-				setState(227);
+				setState(234);
 				code_element();
 				}
 				}
-				setState(232);
+				setState(239);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1771,7 +1807,9 @@ public class Grammar1Parser extends Parser {
 		public Code_line_elementContext code_line_element() {
 			return getRuleContext(Code_line_elementContext.class,0);
 		}
-		public TerminalNode LINE_ENDER() { return getToken(Grammar1Parser.LINE_ENDER, 0); }
+		public Line_end_with_hsContext line_end_with_hs() {
+			return getRuleContext(Line_end_with_hsContext.class,0);
+		}
 		public Code_elementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1790,7 +1828,7 @@ public class Grammar1Parser extends Parser {
 		Code_elementContext _localctx = new Code_elementContext(_ctx, getState());
 		enterRule(_localctx, 60, RULE_code_element);
 		try {
-			setState(235);
+			setState(242);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
@@ -1811,15 +1849,15 @@ public class Grammar1Parser extends Parser {
 			case HWS:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(233);
+				setState(240);
 				code_line_element();
 				}
 				break;
 			case LINE_ENDER:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(234);
-				match(LINE_ENDER);
+				setState(241);
+				line_end_with_hs();
 				}
 				break;
 			default:
@@ -1879,69 +1917,69 @@ public class Grammar1Parser extends Parser {
 		Naked_action_code_elementsContext _localctx = new Naked_action_code_elementsContext(_ctx, getState());
 		enterRule(_localctx, 62, RULE_naked_action_code_elements);
 		try {
-			setState(246);
+			setState(253);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(237);
+				setState(244);
 				star_comment();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(238);
+				setState(245);
 				string();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(239);
+				setState(246);
 				expandable_function_call();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(240);
+				setState(247);
 				member_access();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(241);
+				setState(248);
 				expandable_identifier();
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(242);
+				setState(249);
 				number();
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(243);
+				setState(250);
 				match(CODE_SYMBOL);
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(244);
+				setState(251);
 				group_expression();
 				}
 				break;
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(245);
+				setState(252);
 				match(HWS);
 				}
 				break;
@@ -2009,90 +2047,90 @@ public class Grammar1Parser extends Parser {
 		Code_line_elementContext _localctx = new Code_line_elementContext(_ctx, getState());
 		enterRule(_localctx, 64, RULE_code_line_element);
 		try {
-			setState(260);
+			setState(267);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(248);
+				setState(255);
 				line_comment();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(249);
+				setState(256);
 				star_comment();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(250);
+				setState(257);
 				string();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(251);
+				setState(258);
 				expandable_function_call();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(252);
+				setState(259);
 				member_access();
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(253);
+				setState(260);
 				expandable_identifier();
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(254);
+				setState(261);
 				number();
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(255);
+				setState(262);
 				match(CODE_SYMBOL);
 				}
 				break;
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(256);
+				setState(263);
 				group_expression();
 				}
 				break;
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(257);
+				setState(264);
 				square_brace_expression();
 				}
 				break;
 			case 11:
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(258);
+				setState(265);
 				braced_expression();
 				}
 				break;
 			case 12:
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(259);
+				setState(266);
 				match(HWS);
 				}
 				break;
@@ -2133,7 +2171,49 @@ public class Grammar1Parser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(262);
+			setState(269);
+			ohs();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class Line_end_with_hsContext extends ParserRuleContext {
+		public TerminalNode LINE_ENDER() { return getToken(Grammar1Parser.LINE_ENDER, 0); }
+		public OhsContext ohs() {
+			return getRuleContext(OhsContext.class,0);
+		}
+		public Line_end_with_hsContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_line_end_with_hs; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof Grammar1Listener ) ((Grammar1Listener)listener).enterLine_end_with_hs(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof Grammar1Listener ) ((Grammar1Listener)listener).exitLine_end_with_hs(this);
+		}
+	}
+
+	public final Line_end_with_hsContext line_end_with_hs() throws RecognitionException {
+		Line_end_with_hsContext _localctx = new Line_end_with_hsContext(_ctx, getState());
+		enterRule(_localctx, 68, RULE_line_end_with_hs);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(271);
+			match(LINE_ENDER);
+			setState(272);
 			ohs();
 			}
 		}
@@ -2170,18 +2250,18 @@ public class Grammar1Parser extends Parser {
 
 	public final NumberContext number() throws RecognitionException {
 		NumberContext _localctx = new NumberContext(_ctx, getState());
-		enterRule(_localctx, 68, RULE_number);
+		enterRule(_localctx, 70, RULE_number);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(265);
+			setState(275);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__9 || _la==T__10) {
 				{
-				setState(264);
+				setState(274);
 				_la = _input.LA(1);
 				if ( !(_la==T__9 || _la==T__10) ) {
 				_errHandler.recoverInline(this);
@@ -2194,7 +2274,7 @@ public class Grammar1Parser extends Parser {
 				}
 			}
 
-			setState(268); 
+			setState(278); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -2202,7 +2282,7 @@ public class Grammar1Parser extends Parser {
 				case 1:
 					{
 					{
-					setState(267);
+					setState(277);
 					match(DIGIT);
 					}
 					}
@@ -2210,18 +2290,18 @@ public class Grammar1Parser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(270); 
+				setState(280); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,22,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
-			setState(278);
+			setState(288);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				{
-				setState(272);
+				setState(282);
 				match(PERIOD);
-				setState(274); 
+				setState(284); 
 				_errHandler.sync(this);
 				_alt = 1;
 				do {
@@ -2229,7 +2309,7 @@ public class Grammar1Parser extends Parser {
 					case 1:
 						{
 						{
-						setState(273);
+						setState(283);
 						match(DIGIT);
 						}
 						}
@@ -2237,21 +2317,21 @@ public class Grammar1Parser extends Parser {
 					default:
 						throw new NoViableAltException(this);
 					}
-					setState(276); 
+					setState(286); 
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,21,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
 				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 				}
 				break;
 			}
-			setState(286);
+			setState(296);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__11) {
 				{
-				setState(280);
+				setState(290);
 				match(T__11);
-				setState(282); 
+				setState(292); 
 				_errHandler.sync(this);
 				_alt = 1;
 				do {
@@ -2259,7 +2339,7 @@ public class Grammar1Parser extends Parser {
 					case 1:
 						{
 						{
-						setState(281);
+						setState(291);
 						match(DIGIT);
 						}
 						}
@@ -2267,9 +2347,9 @@ public class Grammar1Parser extends Parser {
 					default:
 						throw new NoViableAltException(this);
 					}
-					setState(284); 
+					setState(294); 
 					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,23,_ctx);
+					_alt = getInterpreter().adaptivePredict(_input,25,_ctx);
 				} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 				}
 			}
@@ -2306,12 +2386,12 @@ public class Grammar1Parser extends Parser {
 
 	public final StringContext string() throws RecognitionException {
 		StringContext _localctx = new StringContext(_ctx, getState());
-		enterRule(_localctx, 70, RULE_string);
+		enterRule(_localctx, 72, RULE_string);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(288);
+			setState(298);
 			_la = _input.LA(1);
 			if ( !(_la==STRING || _la==TICK_STRING) ) {
 			_errHandler.recoverInline(this);
@@ -2335,103 +2415,106 @@ public class Grammar1Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\31\u0125\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\31\u012f\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
 		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \4!"+
-		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\3\2\7\2L\n\2\f\2\16\2O\13\2\3\3\5\3R\n\3"+
-		"\3\4\3\4\3\4\3\4\3\4\5\4Y\n\4\3\4\3\4\3\4\3\5\3\5\3\6\6\6a\n\6\r\6\16"+
-		"\6b\3\7\3\7\3\7\3\7\3\b\5\bj\n\b\3\b\3\b\3\b\3\b\3\b\5\bq\n\b\3\b\5\b"+
-		"t\n\b\3\t\3\t\3\t\3\t\3\t\3\n\3\n\5\n}\n\n\3\13\3\13\3\13\3\f\3\f\3\f"+
-		"\3\f\3\f\3\f\3\f\3\f\3\f\7\f\u008b\n\f\f\f\16\f\u008e\13\f\3\f\3\f\3\f"+
-		"\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3\17\3\17\3\20\3\20"+
-		"\5\20\u00a2\n\20\3\21\6\21\u00a5\n\21\r\21\16\21\u00a6\3\22\3\22\3\23"+
-		"\3\23\3\23\3\23\3\23\5\23\u00b0\n\23\3\24\3\24\3\24\3\25\3\25\3\25\3\25"+
-		"\3\25\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\3\30\3\30\3\31\3\31\3\32"+
-		"\3\32\3\32\3\32\3\32\7\32\u00cb\n\32\f\32\16\32\u00ce\13\32\3\33\3\33"+
-		"\6\33\u00d2\n\33\r\33\16\33\u00d3\3\34\3\34\3\34\5\34\u00d9\n\34\3\34"+
-		"\3\34\3\34\3\35\3\35\3\35\3\35\3\36\3\36\3\36\3\36\3\37\7\37\u00e7\n\37"+
-		"\f\37\16\37\u00ea\13\37\3 \3 \5 \u00ee\n \3!\3!\3!\3!\3!\3!\3!\3!\3!\5"+
-		"!\u00f9\n!\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\3\"\5\"\u0107\n"+
-		"\"\3#\3#\3$\5$\u010c\n$\3$\6$\u010f\n$\r$\16$\u0110\3$\3$\6$\u0115\n$"+
-		"\r$\16$\u0116\5$\u0119\n$\3$\3$\6$\u011d\n$\r$\16$\u011e\5$\u0121\n$\3"+
-		"%\3%\3%\2\2&\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64"+
-		"\668:<>@BDFH\2\6\4\2\17\17\31\31\4\2\b\t\26\26\3\2\f\r\3\2\23\24\2\u012b"+
-		"\2M\3\2\2\2\4Q\3\2\2\2\6S\3\2\2\2\b]\3\2\2\2\n`\3\2\2\2\fd\3\2\2\2\16"+
-		"i\3\2\2\2\20u\3\2\2\2\22|\3\2\2\2\24~\3\2\2\2\26\u0081\3\2\2\2\30\u0092"+
-		"\3\2\2\2\32\u0097\3\2\2\2\34\u009a\3\2\2\2\36\u00a1\3\2\2\2 \u00a4\3\2"+
-		"\2\2\"\u00a8\3\2\2\2$\u00aa\3\2\2\2&\u00b1\3\2\2\2(\u00b4\3\2\2\2*\u00b9"+
-		"\3\2\2\2,\u00bd\3\2\2\2.\u00c1\3\2\2\2\60\u00c3\3\2\2\2\62\u00c5\3\2\2"+
-		"\2\64\u00cf\3\2\2\2\66\u00d5\3\2\2\28\u00dd\3\2\2\2:\u00e1\3\2\2\2<\u00e8"+
-		"\3\2\2\2>\u00ed\3\2\2\2@\u00f8\3\2\2\2B\u0106\3\2\2\2D\u0108\3\2\2\2F"+
-		"\u010b\3\2\2\2H\u0122\3\2\2\2JL\t\2\2\2KJ\3\2\2\2LO\3\2\2\2MK\3\2\2\2"+
-		"MN\3\2\2\2N\3\3\2\2\2OM\3\2\2\2PR\7\31\2\2QP\3\2\2\2QR\3\2\2\2R\5\3\2"+
-		"\2\2ST\5\2\2\2TU\5\b\5\2UX\5\4\3\2VY\5\n\6\2WY\5\2\2\2XV\3\2\2\2XW\3\2"+
-		"\2\2YZ\3\2\2\2Z[\5\2\2\2[\\\7\2\2\3\\\7\3\2\2\2]^\7\20\2\2^\t\3\2\2\2"+
-		"_a\5\f\7\2`_\3\2\2\2ab\3\2\2\2b`\3\2\2\2bc\3\2\2\2c\13\3\2\2\2de\7\17"+
-		"\2\2ef\5\2\2\2fg\5\16\b\2g\r\3\2\2\2hj\5\20\t\2ih\3\2\2\2ij\3\2\2\2jp"+
-		"\3\2\2\2kl\5\22\n\2lm\5\30\r\2mq\3\2\2\2nq\5\22\n\2oq\5\30\r\2pk\3\2\2"+
-		"\2pn\3\2\2\2po\3\2\2\2qs\3\2\2\2rt\5\34\17\2sr\3\2\2\2st\3\2\2\2t\17\3"+
-		"\2\2\2uv\5\4\3\2vw\5F$\2wx\5\4\3\2xy\7\26\2\2y\21\3\2\2\2z}\5\24\13\2"+
-		"{}\5\26\f\2|z\3\2\2\2|{\3\2\2\2}\23\3\2\2\2~\177\5\4\3\2\177\u0080\5&"+
-		"\24\2\u0080\25\3\2\2\2\u0081\u0082\5\4\3\2\u0082\u0083\7\3\2\2\u0083\u0084"+
-		"\5\2\2\2\u0084\u008c\5\24\13\2\u0085\u0086\5\2\2\2\u0086\u0087\7\27\2"+
-		"\2\u0087\u0088\5\2\2\2\u0088\u0089\5\24\13\2\u0089\u008b\3\2\2\2\u008a"+
-		"\u0085\3\2\2\2\u008b\u008e\3\2\2\2\u008c\u008a\3\2\2\2\u008c\u008d\3\2"+
-		"\2\2\u008d\u008f\3\2\2\2\u008e\u008c\3\2\2\2\u008f\u0090\5\4\3\2\u0090"+
-		"\u0091\7\4\2\2\u0091\27\3\2\2\2\u0092\u0093\5\4\3\2\u0093\u0094\7\5\2"+
-		"\2\u0094\u0095\5\32\16\2\u0095\u0096\7\6\2\2\u0096\31\3\2\2\2\u0097\u0098"+
-		"\5\4\3\2\u0098\u0099\5<\37\2\u0099\33\3\2\2\2\u009a\u009b\5\4\3\2\u009b"+
-		"\u009c\7\7\2\2\u009c\u009d\5\4\3\2\u009d\u009e\5\36\20\2\u009e\35\3\2"+
-		"\2\2\u009f\u00a2\5 \21\2\u00a0\u00a2\5,\27\2\u00a1\u009f\3\2\2\2\u00a1"+
-		"\u00a0\3\2\2\2\u00a2\37\3\2\2\2\u00a3\u00a5\5@!\2\u00a4\u00a3\3\2\2\2"+
-		"\u00a5\u00a6\3\2\2\2\u00a6\u00a4\3\2\2\2\u00a6\u00a7\3\2\2\2\u00a7!\3"+
-		"\2\2\2\u00a8\u00a9\t\3\2\2\u00a9#\3\2\2\2\u00aa\u00ab\5\4\3\2\u00ab\u00ac"+
-		"\5\"\22\2\u00ac\u00af\5\4\3\2\u00ad\u00b0\7\20\2\2\u00ae\u00b0\5:\36\2"+
-		"\u00af\u00ad\3\2\2\2\u00af\u00ae\3\2\2\2\u00b0%\3\2\2\2\u00b1\u00b2\5"+
-		"\4\3\2\u00b2\u00b3\7\20\2\2\u00b3\'\3\2\2\2\u00b4\u00b5\5\4\3\2\u00b5"+
-		"\u00b6\7\3\2\2\u00b6\u00b7\5<\37\2\u00b7\u00b8\7\4\2\2\u00b8)\3\2\2\2"+
-		"\u00b9\u00ba\7\5\2\2\u00ba\u00bb\5<\37\2\u00bb\u00bc\7\6\2\2\u00bc+\3"+
-		"\2\2\2\u00bd\u00be\7\n\2\2\u00be\u00bf\5<\37\2\u00bf\u00c0\7\13\2\2\u00c0"+
-		"-\3\2\2\2\u00c1\u00c2\7\21\2\2\u00c2/\3\2\2\2\u00c3\u00c4\7\22\2\2\u00c4"+
-		"\61\3\2\2\2\u00c5\u00cc\5\64\33\2\u00c6\u00c7\5\2\2\2\u00c7\u00c8\7\27"+
-		"\2\2\u00c8\u00c9\5\64\33\2\u00c9\u00cb\3\2\2\2\u00ca\u00c6\3\2\2\2\u00cb"+
-		"\u00ce\3\2\2\2\u00cc\u00ca\3\2\2\2\u00cc\u00cd\3\2\2\2\u00cd\63\3\2\2"+
-		"\2\u00ce\u00cc\3\2\2\2\u00cf\u00d1\5\2\2\2\u00d0\u00d2\5> \2\u00d1\u00d0"+
-		"\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3\u00d1\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4"+
-		"\65\3\2\2\2\u00d5\u00d6\7\3\2\2\u00d6\u00d8\5\2\2\2\u00d7\u00d9\5\62\32"+
-		"\2\u00d8\u00d7\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9\u00da\3\2\2\2\u00da\u00db"+
-		"\5\2\2\2\u00db\u00dc\7\4\2\2\u00dc\67\3\2\2\2\u00dd\u00de\5\4\3\2\u00de"+
-		"\u00df\5&\24\2\u00df\u00e0\5\66\34\2\u00e09\3\2\2\2\u00e1\u00e2\5\4\3"+
-		"\2\u00e2\u00e3\7\20\2\2\u00e3\u00e4\5\66\34\2\u00e4;\3\2\2\2\u00e5\u00e7"+
-		"\5> \2\u00e6\u00e5\3\2\2\2\u00e7\u00ea\3\2\2\2\u00e8\u00e6\3\2\2\2\u00e8"+
-		"\u00e9\3\2\2\2\u00e9=\3\2\2\2\u00ea\u00e8\3\2\2\2\u00eb\u00ee\5B\"\2\u00ec"+
-		"\u00ee\7\17\2\2\u00ed\u00eb\3\2\2\2\u00ed\u00ec\3\2\2\2\u00ee?\3\2\2\2"+
-		"\u00ef\u00f9\5\60\31\2\u00f0\u00f9\5H%\2\u00f1\u00f9\58\35\2\u00f2\u00f9"+
-		"\5$\23\2\u00f3\u00f9\5&\24\2\u00f4\u00f9\5F$\2\u00f5\u00f9\7\30\2\2\u00f6"+
-		"\u00f9\5(\25\2\u00f7\u00f9\7\31\2\2\u00f8\u00ef\3\2\2\2\u00f8\u00f0\3"+
-		"\2\2\2\u00f8\u00f1\3\2\2\2\u00f8\u00f2\3\2\2\2\u00f8\u00f3\3\2\2\2\u00f8"+
-		"\u00f4\3\2\2\2\u00f8\u00f5\3\2\2\2\u00f8\u00f6\3\2\2\2\u00f8\u00f7\3\2"+
-		"\2\2\u00f9A\3\2\2\2\u00fa\u0107\5.\30\2\u00fb\u0107\5\60\31\2\u00fc\u0107"+
-		"\5H%\2\u00fd\u0107\58\35\2\u00fe\u0107\5$\23\2\u00ff\u0107\5&\24\2\u0100"+
-		"\u0107\5F$\2\u0101\u0107\7\30\2\2\u0102\u0107\5(\25\2\u0103\u0107\5*\26"+
-		"\2\u0104\u0107\5,\27\2\u0105\u0107\7\31\2\2\u0106\u00fa\3\2\2\2\u0106"+
-		"\u00fb\3\2\2\2\u0106\u00fc\3\2\2\2\u0106\u00fd\3\2\2\2\u0106\u00fe\3\2"+
-		"\2\2\u0106\u00ff\3\2\2\2\u0106\u0100\3\2\2\2\u0106\u0101\3\2\2\2\u0106"+
-		"\u0102\3\2\2\2\u0106\u0103\3\2\2\2\u0106\u0104\3\2\2\2\u0106\u0105\3\2"+
-		"\2\2\u0107C\3\2\2\2\u0108\u0109\5\4\3\2\u0109E\3\2\2\2\u010a\u010c\t\4"+
-		"\2\2\u010b\u010a\3\2\2\2\u010b\u010c\3\2\2\2\u010c\u010e\3\2\2\2\u010d"+
-		"\u010f\7\25\2\2\u010e\u010d\3\2\2\2\u010f\u0110\3\2\2\2\u0110\u010e\3"+
-		"\2\2\2\u0110\u0111\3\2\2\2\u0111\u0118\3\2\2\2\u0112\u0114\7\26\2\2\u0113"+
-		"\u0115\7\25\2\2\u0114\u0113\3\2\2\2\u0115\u0116\3\2\2\2\u0116\u0114\3"+
-		"\2\2\2\u0116\u0117\3\2\2\2\u0117\u0119\3\2\2\2\u0118\u0112\3\2\2\2\u0118"+
-		"\u0119\3\2\2\2\u0119\u0120\3\2\2\2\u011a\u011c\7\16\2\2\u011b\u011d\7"+
-		"\25\2\2\u011c\u011b\3\2\2\2\u011d\u011e\3\2\2\2\u011e\u011c\3\2\2\2\u011e"+
-		"\u011f\3\2\2\2\u011f\u0121\3\2\2\2\u0120\u011a\3\2\2\2\u0120\u0121\3\2"+
-		"\2\2\u0121G\3\2\2\2\u0122\u0123\t\5\2\2\u0123I\3\2\2\2\33MQXbips|\u008c"+
-		"\u00a1\u00a6\u00af\u00cc\u00d3\u00d8\u00e8\u00ed\u00f8\u0106\u010b\u0110"+
-		"\u0116\u0118\u011e\u0120";
+		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\4&\t&\3\2\3\2\7\2O\n\2\f\2\16\2R\13\2\3"+
+		"\3\5\3U\n\3\3\4\3\4\3\4\3\4\3\4\5\4\\\n\4\3\4\3\4\3\4\3\5\3\5\3\6\6\6"+
+		"d\n\6\r\6\16\6e\3\7\3\7\3\7\3\7\3\b\5\bm\n\b\3\b\3\b\3\b\3\b\3\b\5\bt"+
+		"\n\b\3\b\5\bw\n\b\3\t\3\t\3\t\3\t\3\t\3\n\3\n\5\n\u0080\n\n\3\13\3\13"+
+		"\3\13\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\7\f\u008e\n\f\f\f\16\f\u0091"+
+		"\13\f\3\f\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\16\3\16\3\16\3\17\3\17\3\17\3"+
+		"\17\3\17\3\20\3\20\5\20\u00a5\n\20\3\21\6\21\u00a8\n\21\r\21\16\21\u00a9"+
+		"\3\22\3\22\3\23\3\23\3\23\3\23\3\23\5\23\u00b3\n\23\3\24\3\24\3\24\3\25"+
+		"\3\25\3\25\3\25\3\25\3\26\3\26\3\26\3\26\3\27\3\27\3\27\3\27\3\27\3\30"+
+		"\3\30\3\30\5\30\u00c9\n\30\3\31\3\31\3\32\3\32\3\32\3\32\3\32\7\32\u00d2"+
+		"\n\32\f\32\16\32\u00d5\13\32\3\33\3\33\6\33\u00d9\n\33\r\33\16\33\u00da"+
+		"\3\34\3\34\3\34\5\34\u00e0\n\34\3\34\3\34\3\34\3\35\3\35\3\35\3\35\3\36"+
+		"\3\36\3\36\3\36\3\37\7\37\u00ee\n\37\f\37\16\37\u00f1\13\37\3 \3 \5 \u00f5"+
+		"\n \3!\3!\3!\3!\3!\3!\3!\3!\3!\5!\u0100\n!\3\"\3\"\3\"\3\"\3\"\3\"\3\""+
+		"\3\"\3\"\3\"\3\"\3\"\5\"\u010e\n\"\3#\3#\3$\3$\3$\3%\5%\u0116\n%\3%\6"+
+		"%\u0119\n%\r%\16%\u011a\3%\3%\6%\u011f\n%\r%\16%\u0120\5%\u0123\n%\3%"+
+		"\3%\6%\u0127\n%\r%\16%\u0128\5%\u012b\n%\3&\3&\3&\2\2\'\2\4\6\b\n\f\16"+
+		"\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJ\2\5\4\2\b\t\26"+
+		"\26\3\2\f\r\3\2\23\24\2\u0136\2P\3\2\2\2\4T\3\2\2\2\6V\3\2\2\2\b`\3\2"+
+		"\2\2\nc\3\2\2\2\fg\3\2\2\2\16l\3\2\2\2\20x\3\2\2\2\22\177\3\2\2\2\24\u0081"+
+		"\3\2\2\2\26\u0084\3\2\2\2\30\u0095\3\2\2\2\32\u009a\3\2\2\2\34\u009d\3"+
+		"\2\2\2\36\u00a4\3\2\2\2 \u00a7\3\2\2\2\"\u00ab\3\2\2\2$\u00ad\3\2\2\2"+
+		"&\u00b4\3\2\2\2(\u00b7\3\2\2\2*\u00bc\3\2\2\2,\u00c0\3\2\2\2.\u00c5\3"+
+		"\2\2\2\60\u00ca\3\2\2\2\62\u00cc\3\2\2\2\64\u00d6\3\2\2\2\66\u00dc\3\2"+
+		"\2\28\u00e4\3\2\2\2:\u00e8\3\2\2\2<\u00ef\3\2\2\2>\u00f4\3\2\2\2@\u00ff"+
+		"\3\2\2\2B\u010d\3\2\2\2D\u010f\3\2\2\2F\u0111\3\2\2\2H\u0115\3\2\2\2J"+
+		"\u012c\3\2\2\2LO\7\31\2\2MO\5F$\2NL\3\2\2\2NM\3\2\2\2OR\3\2\2\2PN\3\2"+
+		"\2\2PQ\3\2\2\2Q\3\3\2\2\2RP\3\2\2\2SU\7\31\2\2TS\3\2\2\2TU\3\2\2\2U\5"+
+		"\3\2\2\2VW\5\2\2\2WX\5\b\5\2X[\5\4\3\2Y\\\5\n\6\2Z\\\5\2\2\2[Y\3\2\2\2"+
+		"[Z\3\2\2\2\\]\3\2\2\2]^\5\2\2\2^_\7\2\2\3_\7\3\2\2\2`a\7\20\2\2a\t\3\2"+
+		"\2\2bd\5\f\7\2cb\3\2\2\2de\3\2\2\2ec\3\2\2\2ef\3\2\2\2f\13\3\2\2\2gh\5"+
+		"F$\2hi\5\2\2\2ij\5\16\b\2j\r\3\2\2\2km\5\20\t\2lk\3\2\2\2lm\3\2\2\2ms"+
+		"\3\2\2\2no\5\22\n\2op\5\30\r\2pt\3\2\2\2qt\5\22\n\2rt\5\30\r\2sn\3\2\2"+
+		"\2sq\3\2\2\2sr\3\2\2\2tv\3\2\2\2uw\5\34\17\2vu\3\2\2\2vw\3\2\2\2w\17\3"+
+		"\2\2\2xy\5\4\3\2yz\5H%\2z{\5\4\3\2{|\7\26\2\2|\21\3\2\2\2}\u0080\5\24"+
+		"\13\2~\u0080\5\26\f\2\177}\3\2\2\2\177~\3\2\2\2\u0080\23\3\2\2\2\u0081"+
+		"\u0082\5\4\3\2\u0082\u0083\5&\24\2\u0083\25\3\2\2\2\u0084\u0085\5\4\3"+
+		"\2\u0085\u0086\7\3\2\2\u0086\u0087\5\2\2\2\u0087\u008f\5\24\13\2\u0088"+
+		"\u0089\5\2\2\2\u0089\u008a\7\27\2\2\u008a\u008b\5\2\2\2\u008b\u008c\5"+
+		"\24\13\2\u008c\u008e\3\2\2\2\u008d\u0088\3\2\2\2\u008e\u0091\3\2\2\2\u008f"+
+		"\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0092\3\2\2\2\u0091\u008f\3\2"+
+		"\2\2\u0092\u0093\5\4\3\2\u0093\u0094\7\4\2\2\u0094\27\3\2\2\2\u0095\u0096"+
+		"\5\4\3\2\u0096\u0097\7\5\2\2\u0097\u0098\5\32\16\2\u0098\u0099\7\6\2\2"+
+		"\u0099\31\3\2\2\2\u009a\u009b\5\4\3\2\u009b\u009c\5<\37\2\u009c\33\3\2"+
+		"\2\2\u009d\u009e\5\4\3\2\u009e\u009f\7\7\2\2\u009f\u00a0\5\4\3\2\u00a0"+
+		"\u00a1\5\36\20\2\u00a1\35\3\2\2\2\u00a2\u00a5\5 \21\2\u00a3\u00a5\5,\27"+
+		"\2\u00a4\u00a2\3\2\2\2\u00a4\u00a3\3\2\2\2\u00a5\37\3\2\2\2\u00a6\u00a8"+
+		"\5@!\2\u00a7\u00a6\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9\u00a7\3\2\2\2\u00a9"+
+		"\u00aa\3\2\2\2\u00aa!\3\2\2\2\u00ab\u00ac\t\2\2\2\u00ac#\3\2\2\2\u00ad"+
+		"\u00ae\5\4\3\2\u00ae\u00af\5\"\22\2\u00af\u00b2\5\4\3\2\u00b0\u00b3\7"+
+		"\20\2\2\u00b1\u00b3\5:\36\2\u00b2\u00b0\3\2\2\2\u00b2\u00b1\3\2\2\2\u00b3"+
+		"%\3\2\2\2\u00b4\u00b5\5\4\3\2\u00b5\u00b6\7\20\2\2\u00b6\'\3\2\2\2\u00b7"+
+		"\u00b8\5\4\3\2\u00b8\u00b9\7\3\2\2\u00b9\u00ba\5<\37\2\u00ba\u00bb\7\4"+
+		"\2\2\u00bb)\3\2\2\2\u00bc\u00bd\7\5\2\2\u00bd\u00be\5<\37\2\u00be\u00bf"+
+		"\7\6\2\2\u00bf+\3\2\2\2\u00c0\u00c1\7\n\2\2\u00c1\u00c2\5\4\3\2\u00c2"+
+		"\u00c3\5<\37\2\u00c3\u00c4\7\13\2\2\u00c4-\3\2\2\2\u00c5\u00c8\7\21\2"+
+		"\2\u00c6\u00c9\5F$\2\u00c7\u00c9\7\2\2\3\u00c8\u00c6\3\2\2\2\u00c8\u00c7"+
+		"\3\2\2\2\u00c9/\3\2\2\2\u00ca\u00cb\7\22\2\2\u00cb\61\3\2\2\2\u00cc\u00d3"+
+		"\5\64\33\2\u00cd\u00ce\5\2\2\2\u00ce\u00cf\7\27\2\2\u00cf\u00d0\5\64\33"+
+		"\2\u00d0\u00d2\3\2\2\2\u00d1\u00cd\3\2\2\2\u00d2\u00d5\3\2\2\2\u00d3\u00d1"+
+		"\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4\63\3\2\2\2\u00d5\u00d3\3\2\2\2\u00d6"+
+		"\u00d8\5\2\2\2\u00d7\u00d9\5> \2\u00d8\u00d7\3\2\2\2\u00d9\u00da\3\2\2"+
+		"\2\u00da\u00d8\3\2\2\2\u00da\u00db\3\2\2\2\u00db\65\3\2\2\2\u00dc\u00dd"+
+		"\7\3\2\2\u00dd\u00df\5\2\2\2\u00de\u00e0\5\62\32\2\u00df\u00de\3\2\2\2"+
+		"\u00df\u00e0\3\2\2\2\u00e0\u00e1\3\2\2\2\u00e1\u00e2\5\2\2\2\u00e2\u00e3"+
+		"\7\4\2\2\u00e3\67\3\2\2\2\u00e4\u00e5\5\4\3\2\u00e5\u00e6\5&\24\2\u00e6"+
+		"\u00e7\5\66\34\2\u00e79\3\2\2\2\u00e8\u00e9\5\4\3\2\u00e9\u00ea\7\20\2"+
+		"\2\u00ea\u00eb\5\66\34\2\u00eb;\3\2\2\2\u00ec\u00ee\5> \2\u00ed\u00ec"+
+		"\3\2\2\2\u00ee\u00f1\3\2\2\2\u00ef\u00ed\3\2\2\2\u00ef\u00f0\3\2\2\2\u00f0"+
+		"=\3\2\2\2\u00f1\u00ef\3\2\2\2\u00f2\u00f5\5B\"\2\u00f3\u00f5\5F$\2\u00f4"+
+		"\u00f2\3\2\2\2\u00f4\u00f3\3\2\2\2\u00f5?\3\2\2\2\u00f6\u0100\5\60\31"+
+		"\2\u00f7\u0100\5J&\2\u00f8\u0100\58\35\2\u00f9\u0100\5$\23\2\u00fa\u0100"+
+		"\5&\24\2\u00fb\u0100\5H%\2\u00fc\u0100\7\30\2\2\u00fd\u0100\5(\25\2\u00fe"+
+		"\u0100\7\31\2\2\u00ff\u00f6\3\2\2\2\u00ff\u00f7\3\2\2\2\u00ff\u00f8\3"+
+		"\2\2\2\u00ff\u00f9\3\2\2\2\u00ff\u00fa\3\2\2\2\u00ff\u00fb\3\2\2\2\u00ff"+
+		"\u00fc\3\2\2\2\u00ff\u00fd\3\2\2\2\u00ff\u00fe\3\2\2\2\u0100A\3\2\2\2"+
+		"\u0101\u010e\5.\30\2\u0102\u010e\5\60\31\2\u0103\u010e\5J&\2\u0104\u010e"+
+		"\58\35\2\u0105\u010e\5$\23\2\u0106\u010e\5&\24\2\u0107\u010e\5H%\2\u0108"+
+		"\u010e\7\30\2\2\u0109\u010e\5(\25\2\u010a\u010e\5*\26\2\u010b\u010e\5"+
+		",\27\2\u010c\u010e\7\31\2\2\u010d\u0101\3\2\2\2\u010d\u0102\3\2\2\2\u010d"+
+		"\u0103\3\2\2\2\u010d\u0104\3\2\2\2\u010d\u0105\3\2\2\2\u010d\u0106\3\2"+
+		"\2\2\u010d\u0107\3\2\2\2\u010d\u0108\3\2\2\2\u010d\u0109\3\2\2\2\u010d"+
+		"\u010a\3\2\2\2\u010d\u010b\3\2\2\2\u010d\u010c\3\2\2\2\u010eC\3\2\2\2"+
+		"\u010f\u0110\5\4\3\2\u0110E\3\2\2\2\u0111\u0112\7\17\2\2\u0112\u0113\5"+
+		"\4\3\2\u0113G\3\2\2\2\u0114\u0116\t\3\2\2\u0115\u0114\3\2\2\2\u0115\u0116"+
+		"\3\2\2\2\u0116\u0118\3\2\2\2\u0117\u0119\7\25\2\2\u0118\u0117\3\2\2\2"+
+		"\u0119\u011a\3\2\2\2\u011a\u0118\3\2\2\2\u011a\u011b\3\2\2\2\u011b\u0122"+
+		"\3\2\2\2\u011c\u011e\7\26\2\2\u011d\u011f\7\25\2\2\u011e\u011d\3\2\2\2"+
+		"\u011f\u0120\3\2\2\2\u0120\u011e\3\2\2\2\u0120\u0121\3\2\2\2\u0121\u0123"+
+		"\3\2\2\2\u0122\u011c\3\2\2\2\u0122\u0123\3\2\2\2\u0123\u012a\3\2\2\2\u0124"+
+		"\u0126\7\16\2\2\u0125\u0127\7\25\2\2\u0126\u0125\3\2\2\2\u0127\u0128\3"+
+		"\2\2\2\u0128\u0126\3\2\2\2\u0128\u0129\3\2\2\2\u0129\u012b\3\2\2\2\u012a"+
+		"\u0124\3\2\2\2\u012a\u012b\3\2\2\2\u012bI\3\2\2\2\u012c\u012d\t\4\2\2"+
+		"\u012dK\3\2\2\2\35NPT[elsv\177\u008f\u00a4\u00a9\u00b2\u00c8\u00d3\u00da"+
+		"\u00df\u00ef\u00f4\u00ff\u010d\u0115\u011a\u0120\u0122\u0128\u012a";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -444,6 +444,18 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitCode_line([NotNull] Grammar1Parser.Code_lineContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.line_end_with_hs"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.line_end_with_hs"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.number"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
