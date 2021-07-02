@@ -7,6 +7,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Antlr4.Runtime.Misc;
 using Xunit.Abstractions;
+using StateSmith.Input.antlr4;
 
 //todolow look into this: https://www.antlr.org/api/Java/org/antlr/v4/runtime/TokenStreamRewriter.html
 
@@ -39,30 +40,6 @@ namespace StateSmithTest
             return walker.textState;
         }
 
-
-        class MyVisitor : Grammar1BaseVisitor<string>
-        {
-            private int deIndentSize = 0;
-
-            public override string VisitTerminal(ITerminalNode node)
-            {
-                if (node.Symbol != null)
-                {
-                    return node.Symbol.Text;
-                }
-                return "";
-            }
-
-            public override string VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
-            {
-                return base.VisitExpandable_identifier(context);
-            }
-
-            public override string VisitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context)
-            {
-                return base.VisitLine_end_with_hs(context);
-            }
-        }
 
         [Fact]
         public void StateNameOnly()
@@ -150,8 +127,8 @@ namespace StateSmithTest
             textState.behaviors[0].order.Should().Be(null);
             textState.behaviors[0].triggers.Count.Should().Be(1);
             textState.behaviors[0].guardCode.Should().Be(null);
-            textState.behaviors[0].actionCode.Should().Be("var += 3;\n" +
-                                                          "if (func(123))\n" +
+            textState.behaviors[0].actionCode.Should().Be("var += 3;\r\n" +
+                                                          "if (func(123))\r\n" +
                                                           "    stuff( func(8 * 2) );");
         }
 
@@ -221,6 +198,7 @@ namespace StateSmithTest
                 return code;
             }
 
+
             private static string TryGetBracedActionCode(Grammar1Parser.Action_codeContext action_codeContext)
             {
                 var any_code = action_codeContext.braced_expression()?.any_code();
@@ -230,39 +208,14 @@ namespace StateSmithTest
                     return null;
                 }
 
-                var index = 0;
-                string result = "";
+                var visitor = new DeindentExpandVisitor();
 
-                Grammar1Parser.Code_elementContext[] code_elements = any_code.code_element();
-
-                //output text until newline found
-                while (index < code_elements.Length)
+                foreach (var item in any_code.code_element())
                 {
-                    var element = code_elements[index];
-                    index++;
-
-                    result += element.GetText();
-                    if (element.Start.Type == Grammar1Parser.LINE_ENDER)
-                    {
-                        break;
-                    }
+                    visitor.Visit(item);
                 }
 
-                //output text until newline found
-                while (index < code_elements.Length)
-                {
-                    var element = code_elements[index];
-                    index++;
-
-                    result += element.GetText();
-                    if (element.Start.Type == Grammar1Parser.LINE_ENDER)
-                    {
-                        break;
-                    }
-                }
-
-
-                return action_codeContext.braced_expression()?.any_code()?.GetText();
+                return visitor.stringBuilder.ToString().Trim();
             }
 
             public override void EnterTrigger_id([NotNull] Grammar1Parser.Trigger_idContext context)

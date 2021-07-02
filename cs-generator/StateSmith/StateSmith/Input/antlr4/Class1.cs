@@ -1,0 +1,62 @@
+﻿using Antlr4.Runtime.Tree;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
+
+namespace StateSmith.Input.antlr4
+{
+    public class DeindentExpandVisitor : Grammar1BaseVisitor<string>
+    {
+        private bool firstLineEndingFound = false;
+
+        private int deIndentSize = 0;
+        public StringBuilder stringBuilder = new StringBuilder();
+
+        public override string VisitTerminal(ITerminalNode node)
+        {
+            if (node.Symbol != null)
+            {
+                Append(node.Symbol.Text);
+            }
+            return "";
+        }
+
+        public override string VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
+        {
+            //TODO
+            return base.VisitExpandable_identifier(context);
+        }
+
+        public string deindent(string str)
+        {
+            if (str.Length < deIndentSize)
+            {
+                return str;
+            }
+
+            return str.Substring(deIndentSize);
+        }
+
+        public override string VisitLine_end_with_hs([NotNull] Grammar1Parser.Line_end_with_hsContext context)
+        {
+            var trailingSpace = context.ohs()?.GetText() ?? "";
+
+            if (firstLineEndingFound == false)
+            {
+                deIndentSize = trailingSpace.Length;
+                firstLineEndingFound = true;
+            }
+
+            Append(context.LINE_ENDER().GetText());
+            Append(deindent(trailingSpace));
+
+            return "";
+        }
+
+        void Append(string str)
+        {
+            stringBuilder.Append(str);
+        }
+    }
+}
