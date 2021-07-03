@@ -8,21 +8,47 @@ namespace StateSmith.Input.antlr4
 {
     public class StateParser
     {
-        public static TextState Parse(string stateLabel)
+        public TextState ParseStateLabel(string stateLabel)
         {
-            //https://github.com/antlr/antlr4/blob/master/doc/csharp-target.md
+            Grammar1Parser parser = BuildParserForString(stateLabel);
 
-            ICharStream stream = CharStreams.fromString(stateLabel);
-            ITokenSource lexer = new Grammar1Lexer(stream);
-            ITokenStream tokens = new CommonTokenStream(lexer);
-            Grammar1Parser parser = new Grammar1Parser(tokens);
-            parser.BuildParseTree = true;
+            //FIXME detect and output all errors
             IParseTree tree = parser.state_defn();
-            TextStateWalker walker = new TextStateWalker();
-            ParseTreeWalker.Default.Walk(walker, tree);
+            TextStateWalker walker = WalkTree(tree);
             walker.textState.tree = tree;
+            walker.textState.behaviors = walker.behaviors;
 
             return walker.textState;
+        }
+
+        public List<TextBehavior> ParseEdgeLabel(string edgeLabel)
+        {
+            Grammar1Parser parser = BuildParserForString(edgeLabel);
+
+            //FIXME detect and output all errors
+            IParseTree tree = parser.nl_behaviors();
+            TextStateWalker walker = WalkTree(tree);
+            return walker.behaviors;
+        }
+
+        private static TextStateWalker WalkTree(IParseTree tree)
+        {
+            TextStateWalker walker = new TextStateWalker();
+            ParseTreeWalker.Default.Walk(walker, tree);
+            return walker;
+        }
+
+        private static Grammar1Parser BuildParserForString(string inputString)
+        {
+            ICharStream stream = CharStreams.fromString(inputString);
+            ITokenSource lexer = new Grammar1Lexer(stream);
+            ITokenStream tokens = new CommonTokenStream(lexer);
+            Grammar1Parser parser = new Grammar1Parser(tokens)
+            {
+                BuildParseTree = true
+            };
+
+            return parser;
         }
     }
 }

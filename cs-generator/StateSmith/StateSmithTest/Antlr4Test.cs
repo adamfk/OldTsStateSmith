@@ -16,6 +16,7 @@ namespace StateSmithTest
     public class Antlr4Test
     {
         ITestOutputHelper output;
+        StateParser parser = new StateParser();
 
         public Antlr4Test(ITestOutputHelper output)
         {
@@ -28,7 +29,7 @@ namespace StateSmithTest
             string input = @"
                 SOME_SM_STATE_NAME
             ";
-            var textState = StateParser.Parse(input);
+            var textState = parser.ParseStateLabel(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(0);
         }
@@ -42,7 +43,7 @@ namespace StateSmithTest
                 SOME_SM_STATE_NAME
                 11. MY_EVENT [some_guard( ""my }str with spaces"" ) && blah] / my_action();
             ";
-            var textState = StateParser.Parse(input);
+            var textState = parser.ParseStateLabel(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be("11");
@@ -60,7 +61,7 @@ namespace StateSmithTest
                 [ true ] / { }
                 event / { action_code(123); }
             ";
-            var textState = StateParser.Parse(input);
+            var textState = parser.ParseStateLabel(input);
             textState.stateName.Should().Be("a_lowercase_state_name");
             textState.behaviors.Count.Should().Be(2);
             textState.behaviors[0].order.Should().Be(null);
@@ -83,7 +84,7 @@ namespace StateSmithTest
                   action_code(123);
                 }
             ";
-            var textState = StateParser.Parse(input);
+            var textState = parser.ParseStateLabel(input);
             textState.stateName.Should().Be("$ORTHO_STATE");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
@@ -105,7 +106,7 @@ namespace StateSmithTest
                     }
                 }
             ";
-            var textState = StateParser.Parse(input);
+            var textState = parser.ParseStateLabel(input);
             textState.stateName.Should().Be("$ORTHO_STATE");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
@@ -120,5 +121,30 @@ namespace StateSmithTest
                                                           );
         }
 
+        [Fact]
+        public void EdgeDeIndentMultilineAction()
+        {
+            string input = @"
+                event / { var += 3;
+                    if (func(123))
+                        stuff( func(8 * 2) );
+                    if (true) {
+                        a = ""hello there"";
+                    }
+                }
+            ";
+            var behaviors = parser.ParseEdgeLabel(input);
+            behaviors.Count.Should().Be(1);
+            behaviors[0].order.Should().Be(null);
+            behaviors[0].triggers.Count.Should().Be(1);
+            behaviors[0].guardCode.Should().Be(null);
+            behaviors[0].actionCode.Should().Be("var += 3;\r\n" +
+                                                "if (func(123))\r\n" +
+                                                "    stuff( func(8 * 2) );\r\n" +
+                                                "if (true) {\r\n" +
+                                                "    a = \"hello there\";\r\n" +
+                                                "}"
+                                                );
+        }
     }
 }

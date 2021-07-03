@@ -15,7 +15,6 @@ namespace StateSmith.Input
 
         private void ProcessTopNode(DiagramNode topNode)
         {
-            var parser = new NodeLabelTextParser();
 
         }
 

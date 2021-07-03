@@ -24,17 +24,7 @@ namespace StateSmith.Input.antlr4
     {
         public TextState textState = new TextState();
         TextBehavior currentBehavior;
-
-        public override void EnterEveryRule([NotNull] ParserRuleContext context)
-        {
-            //Console.WriteLine("EnterEveryRule: " + context);
-        }
-
-
-        public override void ExitEveryRule([NotNull] ParserRuleContext context)
-        {
-            //Console.WriteLine("ExitEveryRule: " + context);
-        }
+        public List<TextBehavior> behaviors = new List<TextBehavior>();
 
 
         public override void EnterState_name([NotNull] Grammar1Parser.State_nameContext context)
@@ -56,7 +46,7 @@ namespace StateSmith.Input.antlr4
             currentBehavior.order = context.order()?.number()?.GetText();
             currentBehavior.guardCode = context.guard()?.guard_code()?.GetText().Trim();
             currentBehavior.actionCode = GetActionCodeText(context.action()?.action_code());
-            textState.behaviors.Add(currentBehavior);
+            behaviors.Add(currentBehavior);
         }
 
         private string GetActionCodeText(Grammar1Parser.Action_codeContext action_codeContext)
