@@ -8,6 +8,7 @@ namespace StateSmith.Input.antlr4
     public class TextState
     {
         public string stateName;
+        public bool stateNameIsGlobal = false;
         public List<TextBehavior> behaviors = new List<TextBehavior>();
         public IParseTree tree;
     }
@@ -27,9 +28,20 @@ namespace StateSmith.Input.antlr4
         public List<TextBehavior> behaviors = new List<TextBehavior>();
 
 
-        public override void EnterState_name([NotNull] Grammar1Parser.State_nameContext context)
+        public override void EnterState_id([NotNull] Grammar1Parser.State_idContext context)
         {
-            textState.stateName = context.IDENTIFIER().GetText();
+            string stateName;
+            if (context.global_id() == null)
+            {
+                stateName = context.IDENTIFIER().GetText();
+            }
+            else
+            {
+                stateName = context.global_id().IDENTIFIER().GetText();
+                textState.stateNameIsGlobal = true;
+            }
+
+            textState.stateName = stateName;
         }
 
 

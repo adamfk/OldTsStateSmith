@@ -60,6 +60,66 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOhs([NotNull] Grammar1Parser.OhsContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.node"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNode([NotNull] Grammar1Parser.NodeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.node"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNode([NotNull] Grammar1Parser.NodeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.statemachine_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.statemachine_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.notes_node"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNotes_node([NotNull] Grammar1Parser.Notes_nodeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.notes_node"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNotes_node([NotNull] Grammar1Parser.Notes_nodeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_behaviors"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterState_behaviors([NotNull] Grammar1Parser.State_behaviorsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.state_behaviors"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitState_behaviors([NotNull] Grammar1Parser.State_behaviorsContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.ortho_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOrtho_defn([NotNull] Grammar1Parser.Ortho_defnContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.ortho_defn"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOrtho_defn([NotNull] Grammar1Parser.Ortho_defnContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_defn"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -72,17 +132,41 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitState_defn([NotNull] Grammar1Parser.State_defnContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_name"/>.
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.global_id"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterState_name([NotNull] Grammar1Parser.State_nameContext context) { }
+	public virtual void EnterGlobal_id([NotNull] Grammar1Parser.Global_idContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="Grammar1Parser.state_name"/>.
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.global_id"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitState_name([NotNull] Grammar1Parser.State_nameContext context) { }
+	public virtual void ExitGlobal_id([NotNull] Grammar1Parser.Global_idContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.state_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterState_id([NotNull] Grammar1Parser.State_idContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.state_id"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitState_id([NotNull] Grammar1Parser.State_idContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.ortho_order"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.ortho_order"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.nl_behaviors"/>.
 	/// <para>The default implementation does nothing.</para>

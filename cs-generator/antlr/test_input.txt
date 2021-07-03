@@ -1,5 +1,5 @@
-$ORTHO_STATE
-event / { var += 3;
-    if (func(123))
-        stuff( func(8 * 2) );
+$ORTHO : #BASIC
+event / {
+    var += 3;
+    stuff( func(8 * 2) );
 }

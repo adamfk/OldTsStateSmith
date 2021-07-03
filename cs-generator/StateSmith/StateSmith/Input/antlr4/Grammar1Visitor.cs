@@ -44,17 +44,59 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOhs([NotNull] Grammar1Parser.OhsContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.node"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNode([NotNull] Grammar1Parser.NodeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.statemachine_defn"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.notes_node"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNotes_node([NotNull] Grammar1Parser.Notes_nodeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.state_behaviors"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitState_behaviors([NotNull] Grammar1Parser.State_behaviorsContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.ortho_defn"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOrtho_defn([NotNull] Grammar1Parser.Ortho_defnContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.state_defn"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitState_defn([NotNull] Grammar1Parser.State_defnContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="Grammar1Parser.state_name"/>.
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.global_id"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitState_name([NotNull] Grammar1Parser.State_nameContext context);
+	Result VisitGlobal_id([NotNull] Grammar1Parser.Global_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.state_id"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitState_id([NotNull] Grammar1Parser.State_idContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.ortho_order"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.nl_behaviors"/>.
 	/// </summary>

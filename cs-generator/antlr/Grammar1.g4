@@ -1,33 +1,40 @@
 grammar Grammar1;
 
 /*
+    todolow allow tags
 
-Why are we capturing horizontal white space?
-
-Things we need to parse out:
-- state name
-- behaviors
-
-expansions:
-expansions should be expanded fully beforehand so we can expand as needed easily during listening.
-
-- expansion_var_candidates
-    - name
-- expansion_function_candidates
-    - name, arguments
-*/
-
-/*
     NOTES!
     Lexing rules are very important and should be used with care!
-
  */
 optional_any_space: (HWS | line_end_with_hs)*;
 ohs: HWS? ;
 
-state_defn:
+node:
+    notes_node
+    |
+    state_defn
+    |
+    ortho_defn
+    |
+    statemachine_defn
+    ;
+
+statemachine_defn:
+    '$STATEMACHINE'
+    ohs
+    ':'
+    ohs
+    IDENTIFIER
+    ;
+
+notes_node:
     optional_any_space
-    state_name
+    '$NOTES'
+    .*?
+    EOF
+    ;
+
+state_behaviors:
     ohs
     (
         nl_behaviors
@@ -38,8 +45,40 @@ state_defn:
     EOF
     ;
 
-state_name: 
-    IDENTIFIER ;
+//$ORTHO 1 : BASIC
+ortho_defn:
+    optional_any_space
+    '$ORTHO'
+    ohs
+    ortho_order?
+    ohs
+    ':'
+    ohs
+    state_id
+    state_behaviors
+    ;
+
+//examples:
+//PRESSED
+state_defn:
+    optional_any_space
+    state_id
+    state_behaviors
+    ;
+
+global_id:
+    '#'
+    IDENTIFIER
+    ;
+
+state_id:
+    global_id
+    |
+    IDENTIFIER;
+
+ortho_order:
+    number
+    ;
 
 nl_behaviors:
     nl_behavior+ ;

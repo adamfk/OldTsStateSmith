@@ -27,6 +27,56 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitOhs(Grammar1Parser.OhsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#node}.
+	 * @param ctx the parse tree
+	 */
+	void enterNode(Grammar1Parser.NodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#node}.
+	 * @param ctx the parse tree
+	 */
+	void exitNode(Grammar1Parser.NodeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#statemachine_defn}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatemachine_defn(Grammar1Parser.Statemachine_defnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#statemachine_defn}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatemachine_defn(Grammar1Parser.Statemachine_defnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#notes_node}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotes_node(Grammar1Parser.Notes_nodeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#notes_node}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotes_node(Grammar1Parser.Notes_nodeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#state_behaviors}.
+	 * @param ctx the parse tree
+	 */
+	void enterState_behaviors(Grammar1Parser.State_behaviorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#state_behaviors}.
+	 * @param ctx the parse tree
+	 */
+	void exitState_behaviors(Grammar1Parser.State_behaviorsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#ortho_defn}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrtho_defn(Grammar1Parser.Ortho_defnContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#ortho_defn}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrtho_defn(Grammar1Parser.Ortho_defnContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#state_defn}.
 	 * @param ctx the parse tree
 	 */
@@ -37,15 +87,35 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitState_defn(Grammar1Parser.State_defnContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Grammar1Parser#state_name}.
+	 * Enter a parse tree produced by {@link Grammar1Parser#global_id}.
 	 * @param ctx the parse tree
 	 */
-	void enterState_name(Grammar1Parser.State_nameContext ctx);
+	void enterGlobal_id(Grammar1Parser.Global_idContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Grammar1Parser#state_name}.
+	 * Exit a parse tree produced by {@link Grammar1Parser#global_id}.
 	 * @param ctx the parse tree
 	 */
-	void exitState_name(Grammar1Parser.State_nameContext ctx);
+	void exitGlobal_id(Grammar1Parser.Global_idContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#state_id}.
+	 * @param ctx the parse tree
+	 */
+	void enterState_id(Grammar1Parser.State_idContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#state_id}.
+	 * @param ctx the parse tree
+	 */
+	void exitState_id(Grammar1Parser.State_idContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#ortho_order}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrtho_order(Grammar1Parser.Ortho_orderContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#ortho_order}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrtho_order(Grammar1Parser.Ortho_orderContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#nl_behaviors}.
 	 * @param ctx the parse tree
