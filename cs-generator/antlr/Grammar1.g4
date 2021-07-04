@@ -3,6 +3,8 @@ grammar Grammar1;
 /*
     todolow allow tags
 
+    todolow - look into using LEXER rules _like_ `COLON` instead of chars like ':' in parsing rules.
+
     NOTES!
     Lexing rules are very important and should be used with care!
  */
@@ -91,6 +93,19 @@ state_id:
 
 ortho_order:
     number
+    ;
+
+edge:
+    optional_any_space
+    edge_behaviors?
+    optional_any_space
+    EOF
+    ;
+
+edge_behaviors:
+    behavior
+    ohs
+    nl_behaviors?
     ;
 
 nl_behaviors:
@@ -210,11 +225,11 @@ Should NOT match here:
 
 member_access_operator:
     (
-        '.' // foo.bar
+        PERIOD // foo.bar
         |
-        '::' //foo::bar
+        COLON COLON //foo::bar
         |
-        '->' //foo->bar. todolow this can conflict with Java lambda.
+        (DASH GT) //foo->bar. todolow this can conflict with Java lambda.
     )
     ;
 
@@ -304,7 +319,7 @@ naked_action_code_elements:
     member_access | //must come before identifier to prevent bad expansions: `obj.no_expand_here`
     expandable_identifier |
     number |
-    CODE_SYMBOL |
+    code_symbol |
     group_expression |
     HWS
     ;
@@ -318,7 +333,7 @@ code_line_element:
     member_access | //must come before identifier to prevent bad expansions: `obj.no_expand_here`
     expandable_identifier |
     number |
-    CODE_SYMBOL |
+    code_symbol |
     group_expression |
     square_brace_expression |
     braced_expression |
@@ -334,9 +349,8 @@ line_end_with_hs: LINE_ENDER ohs;
 
 IDENTIFIER  :   IDENTIFIER_NON_DIGIT   (   IDENTIFIER_NON_DIGIT | DIGIT  )*  ;
 
-
 number :
-    ('-' | '+')?
+    (DASH | PLUS)?
     DIGIT+
     (
         PERIOD
@@ -373,8 +387,23 @@ DIGIT :   [0-9]  ;
 
 PERIOD: '.' ;
 COMMA: ',' ;
-CODE_SYMBOL: 
-    [-~!%^&*+=:;/<>?|] | PERIOD ;    //don't include braces/parenthesis as those need to be grouped
-    //don't include comma because we need to be able to parse function arguments
+PLUS : '+' ;
+DASH : '-' ;
+COLON : ':' ;
+GT : '>' ;
+LT : '<' ;
+OTHER_SYMBOLS: 
+    [~!%^&*=:;/?|];  //don't include braces/parenthesis as those need to be grouped
+
+code_symbol:
+    PERIOD |
+    COMMA |
+    PLUS |
+    DASH |
+    COLON |
+    GT |
+    LT |
+    OTHER_SYMBOLS
+    ;
 
 HWS : [ \t]+ ;

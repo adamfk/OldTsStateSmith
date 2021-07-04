@@ -192,6 +192,30 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.edge"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterEdge([NotNull] Grammar1Parser.EdgeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.edge"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitEdge([NotNull] Grammar1Parser.EdgeContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.edge_behaviors"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterEdge_behaviors([NotNull] Grammar1Parser.Edge_behaviorsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.edge_behaviors"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitEdge_behaviors([NotNull] Grammar1Parser.Edge_behaviorsContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.nl_behaviors"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -587,6 +611,18 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitString([NotNull] Grammar1Parser.StringContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_symbol"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterCode_symbol([NotNull] Grammar1Parser.Code_symbolContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.code_symbol"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitCode_symbol([NotNull] Grammar1Parser.Code_symbolContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

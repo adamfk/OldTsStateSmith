@@ -110,6 +110,18 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.edge"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEdge([NotNull] Grammar1Parser.EdgeContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.edge_behaviors"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEdge_behaviors([NotNull] Grammar1Parser.Edge_behaviorsContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.nl_behaviors"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -307,4 +319,10 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitString([NotNull] Grammar1Parser.StringContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.code_symbol"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitCode_symbol([NotNull] Grammar1Parser.Code_symbolContext context);
 }

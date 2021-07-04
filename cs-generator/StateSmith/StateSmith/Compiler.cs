@@ -13,7 +13,7 @@ namespace StateSmith
         {
             YedParser yedParser = new YedParser();
             Expander expander = new Expander();
-            StateParser stateParser = new StateParser();
+            LabelParser stateParser = new LabelParser();
 
         }
     }

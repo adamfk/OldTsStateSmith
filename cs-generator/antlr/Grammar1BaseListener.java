@@ -171,6 +171,30 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEdge(Grammar1Parser.EdgeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEdge(Grammar1Parser.EdgeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEdge_behaviors(Grammar1Parser.Edge_behaviorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEdge_behaviors(Grammar1Parser.Edge_behaviorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNl_behaviors(Grammar1Parser.Nl_behaviorsContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -562,6 +586,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitString(Grammar1Parser.StringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCode_symbol(Grammar1Parser.Code_symbolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCode_symbol(Grammar1Parser.Code_symbolContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

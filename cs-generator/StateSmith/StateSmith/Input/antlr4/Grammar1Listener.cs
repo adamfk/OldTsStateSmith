@@ -161,6 +161,26 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOrtho_order([NotNull] Grammar1Parser.Ortho_orderContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.edge"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEdge([NotNull] Grammar1Parser.EdgeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.edge"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEdge([NotNull] Grammar1Parser.EdgeContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.edge_behaviors"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEdge_behaviors([NotNull] Grammar1Parser.Edge_behaviorsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.edge_behaviors"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEdge_behaviors([NotNull] Grammar1Parser.Edge_behaviorsContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.nl_behaviors"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -490,4 +510,14 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitString([NotNull] Grammar1Parser.StringContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.code_symbol"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterCode_symbol([NotNull] Grammar1Parser.Code_symbolContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.code_symbol"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitCode_symbol([NotNull] Grammar1Parser.Code_symbolContext context);
 }

@@ -1,3 +1,1 @@
-                $ORTHO : a_lowercase_state_name
-                [ true ] / { }
-                event / { action_code(123); }
+event / var -= 3

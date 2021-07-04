@@ -5,41 +5,6 @@ using System.Collections.Generic;
 
 namespace StateSmith.Input.antlr4
 {
-    public class Node
-    {
-        public IParseTree tree;
-    }
-
-    public class StateMachineNode : Node
-    {
-        public string name;
-    }
-
-    public class StateNode : Node
-    {
-        public string stateName;
-        public bool stateNameIsGlobal = false;
-        public List<NodeBehavior> behaviors = new List<NodeBehavior>();
-    }
-
-    public class OrthoStateNode : StateNode
-    {
-        public string order;
-    }
-
-    public class NotesNode : Node
-    {
-        public string notes;
-    }
-
-    public class NodeBehavior
-    {
-        public List<string> triggers = new List<string>();
-        public string order;
-        public string guardCode;
-        public string actionCode;
-    }
-
     public class NodeEdgeWalker : Grammar1BaseListener
     {
         public Node node;
@@ -51,6 +16,14 @@ namespace StateSmith.Input.antlr4
         /// </summary>
         NodeBehavior currentBehavior;
         public List<NodeBehavior> behaviors = new List<NodeBehavior>();
+
+        public override void EnterEveryRule([NotNull] ParserRuleContext context)
+        {
+            if (context.exception != null)
+            {
+                int x = 8;
+            }
+        }
 
         public override void EnterStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context)
         {

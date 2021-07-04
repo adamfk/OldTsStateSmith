@@ -16,11 +16,16 @@ namespace StateSmithTest
     public class Antlr4Test
     {
         ITestOutputHelper output;
-        StateParser parser = new StateParser();
+        LabelParser parser = new LabelParser();
 
         public Antlr4Test(ITestOutputHelper output)
         {
             this.output = output;
+        }
+
+        private void AssertNoErrors()
+        {
+            parser.errorListener.errors.Count.Should().Be(0);
         }
 
         [Fact]
@@ -29,9 +34,16 @@ namespace StateSmithTest
             string input = @"
                 SOME_SM_STATE_NAME
             ";
-            var textState = (StateNode)parser.ParseNodeLabel(input);
+            var textState = (StateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(0);
+        }
+
+        private Node ParseNodeWithNoErrors(string input)
+        {
+            var result = parser.ParseNodeLabel(input);
+            AssertNoErrors();
+            return result;
         }
 
         [Fact]
@@ -43,7 +55,7 @@ namespace StateSmithTest
                 SOME_SM_STATE_NAME
                 11. MY_EVENT [some_guard( ""my }str with spaces"" ) && blah] / my_action();
             ";
-            var textState = (StateNode)parser.ParseNodeLabel(input);
+            var textState = (StateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("SOME_SM_STATE_NAME");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be("11");
@@ -61,7 +73,7 @@ namespace StateSmithTest
                 [ true ] / { }
                 event / { action_code(123); }
             ";
-            var textState = (StateNode)parser.ParseNodeLabel(input);
+            var textState = (StateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("a_lowercase_state_name");
             textState.behaviors.Count.Should().Be(2);
             textState.behaviors[0].order.Should().Be(null);
@@ -84,7 +96,7 @@ namespace StateSmithTest
                   action_code(123);
                 }
             ";
-            var textState = (StateNode)parser.ParseNodeLabel(input);
+            var textState = (StateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("STATE123");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
@@ -106,7 +118,7 @@ namespace StateSmithTest
                     }
                 }
             ";
-            var textState = (StateNode)parser.ParseNodeLabel(input);
+            var textState = (StateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("OVEN_OFF");
             textState.behaviors.Count.Should().Be(1);
             textState.behaviors[0].order.Should().Be(null);
@@ -134,6 +146,7 @@ namespace StateSmithTest
                 }
             ";
             var behaviors = parser.ParseEdgeLabel(input);
+            AssertNoErrors();
             behaviors.Count.Should().Be(1);
             behaviors[0].order.Should().Be(null);
             behaviors[0].triggers.Count.Should().Be(1);
@@ -155,7 +168,7 @@ namespace StateSmithTest
                 [ true ] / { }
                 event / { action_code(123); }
             ";
-            var textState = (OrthoStateNode)parser.ParseNodeLabel(input);
+            var textState = (OrthoStateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("a_lowercase_state_name");
             textState.order.Should().Be(null);
             textState.behaviors.Count.Should().Be(2);
@@ -178,7 +191,7 @@ namespace StateSmithTest
                 [ true ] / { }
                 event / { action_code(123); }
             ";
-            var textState = (OrthoStateNode)parser.ParseNodeLabel(input);
+            var textState = (OrthoStateNode)ParseNodeWithNoErrors(input);
             textState.stateName.Should().Be("a_lowercase_state_name");
             textState.order.Should().Be("26.7");
             textState.behaviors.Count.Should().Be(2);
@@ -199,7 +212,7 @@ namespace StateSmithTest
             string input = @"
                 $STATEMACHINE : MicrowaveSm
             ";
-            var node = (StateMachineNode)parser.ParseNodeLabel(input);
+            var node = (StateMachineNode)ParseNodeWithNoErrors(input);
             node.name.Should().Be("MicrowaveSm");
         }
 
@@ -208,7 +221,7 @@ namespace StateSmithTest
         {
             string input = "$NOTES this is my note!!! /* Not an actual comment test\n" +
                             "Another line of 2134 \"notes\"\n";
-            var node = (NotesNode)parser.ParseNodeLabel(input);
+            var node = (NotesNode)ParseNodeWithNoErrors(input);
             node.notes.Should().Be("this is my note!!! /* Not an actual comment test\n" +
                             "Another line of 2134 \"notes\"");
         }

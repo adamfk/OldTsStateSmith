@@ -137,6 +137,26 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitOrtho_order(Grammar1Parser.Ortho_orderContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#edge}.
+	 * @param ctx the parse tree
+	 */
+	void enterEdge(Grammar1Parser.EdgeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#edge}.
+	 * @param ctx the parse tree
+	 */
+	void exitEdge(Grammar1Parser.EdgeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#edge_behaviors}.
+	 * @param ctx the parse tree
+	 */
+	void enterEdge_behaviors(Grammar1Parser.Edge_behaviorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#edge_behaviors}.
+	 * @param ctx the parse tree
+	 */
+	void exitEdge_behaviors(Grammar1Parser.Edge_behaviorsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#nl_behaviors}.
 	 * @param ctx the parse tree
 	 */
@@ -466,4 +486,14 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitString(Grammar1Parser.StringContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#code_symbol}.
+	 * @param ctx the parse tree
+	 */
+	void enterCode_symbol(Grammar1Parser.Code_symbolContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#code_symbol}.
+	 * @param ctx the parse tree
+	 */
+	void exitCode_symbol(Grammar1Parser.Code_symbolContext ctx);
 }
