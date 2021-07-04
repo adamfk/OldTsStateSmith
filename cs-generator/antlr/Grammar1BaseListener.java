@@ -39,6 +39,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSome_ws(Grammar1Parser.Some_wsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSome_ws(Grammar1Parser.Some_wsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNode(Grammar1Parser.NodeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -58,6 +70,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStatemachine_defn(Grammar1Parser.Statemachine_defnContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotes_text(Grammar1Parser.Notes_textContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotes_text(Grammar1Parser.Notes_textContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -9,6 +9,8 @@ grammar Grammar1;
 optional_any_space: (HWS | line_end_with_hs)*;
 ohs: HWS? ;
 
+some_ws: (HWS | LINE_ENDER)+ ;
+
 node:
     notes_node
     |
@@ -20,17 +22,27 @@ node:
     ;
 
 statemachine_defn:
+    optional_any_space
     '$STATEMACHINE'
     ohs
     ':'
     ohs
     IDENTIFIER
+    optional_any_space
+    EOF
+    ;
+
+notes_text:
+    .*?
     ;
 
 notes_node:
     optional_any_space
     '$NOTES'
-    .*?
+    (
+        some_ws
+        notes_text
+    )?
     EOF
     ;
 
@@ -42,7 +54,6 @@ state_behaviors:
         optional_any_space
     )
     optional_any_space
-    EOF
     ;
 
 //$ORTHO 1 : BASIC
@@ -56,6 +67,7 @@ ortho_defn:
     ohs
     state_id
     state_behaviors
+    EOF
     ;
 
 //examples:
@@ -64,6 +76,7 @@ state_defn:
     optional_any_space
     state_id
     state_behaviors
+    EOF
     ;
 
 global_id:

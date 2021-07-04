@@ -51,6 +51,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitOhs([NotNull] Grammar1Parser.OhsContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.some_ws"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSome_ws([NotNull] Grammar1Parser.Some_wsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.some_ws"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSome_ws([NotNull] Grammar1Parser.Some_wsContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.node"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -70,6 +80,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.notes_text"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNotes_text([NotNull] Grammar1Parser.Notes_textContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.notes_text"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNotes_text([NotNull] Grammar1Parser.Notes_textContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.notes_node"/>.
 	/// </summary>

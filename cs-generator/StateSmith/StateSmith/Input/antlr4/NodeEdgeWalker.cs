@@ -1,19 +1,38 @@
 ﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace StateSmith.Input.antlr4
 {
-    public class TextState
+    public class Node
     {
-        public string stateName;
-        public bool stateNameIsGlobal = false;
-        public List<TextBehavior> behaviors = new List<TextBehavior>();
         public IParseTree tree;
     }
 
-    public class TextBehavior
+    public class StateMachineNode : Node
+    {
+        public string name;
+    }
+
+    public class StateNode : Node
+    {
+        public string stateName;
+        public bool stateNameIsGlobal = false;
+        public List<NodeBehavior> behaviors = new List<NodeBehavior>();
+    }
+
+    public class OrthoStateNode : StateNode
+    {
+        public string order;
+    }
+
+    public class NotesNode : Node
+    {
+        public string notes;
+    }
+
+    public class NodeBehavior
     {
         public List<string> triggers = new List<string>();
         public string order;
@@ -21,12 +40,48 @@ namespace StateSmith.Input.antlr4
         public string actionCode;
     }
 
-    public class TextStateWalker : Grammar1BaseListener
+    public class NodeEdgeWalker : Grammar1BaseListener
     {
-        public TextState textState = new TextState();
-        TextBehavior currentBehavior;
-        public List<TextBehavior> behaviors = new List<TextBehavior>();
+        public Node node;
+        public StateNode stateNode;
+        public OrthoStateNode orthoStateNode;
 
+        /// <summary>
+        /// done separately for parsing edges as well
+        /// </summary>
+        NodeBehavior currentBehavior;
+        public List<NodeBehavior> behaviors = new List<NodeBehavior>();
+
+        public override void EnterStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context)
+        {
+            var stateMachineNode = new StateMachineNode();
+            stateMachineNode.name = context.IDENTIFIER().GetText();
+            node = stateMachineNode;
+        }
+
+        public override void EnterState_defn([NotNull] Grammar1Parser.State_defnContext context)
+        {
+            stateNode = new StateNode();
+            node = stateNode;
+        }
+
+        public override void EnterOrtho_defn([NotNull] Grammar1Parser.Ortho_defnContext context)
+        {
+            orthoStateNode = new OrthoStateNode();
+            node = orthoStateNode;
+            stateNode = orthoStateNode;
+
+            orthoStateNode.order = context.ortho_order()?.number()?.GetText();
+        }
+
+        public override void EnterNotes_node([NotNull] Grammar1Parser.Notes_nodeContext context)
+        {
+            var notesNode = new NotesNode();
+            notesNode.notes = context.notes_text()?.GetText()?.Trim();
+            node = notesNode;
+        }
+
+        //---------------------------
 
         public override void EnterState_id([NotNull] Grammar1Parser.State_idContext context)
         {
@@ -38,23 +93,16 @@ namespace StateSmith.Input.antlr4
             else
             {
                 stateName = context.global_id().IDENTIFIER().GetText();
-                textState.stateNameIsGlobal = true;
+                stateNode.stateNameIsGlobal = true;
             }
 
-            textState.stateName = stateName;
+            stateNode.stateName = stateName;
         }
-
 
 
         public override void EnterBehavior([NotNull] Grammar1Parser.BehaviorContext context)
         {
-            // Skip empty behaviors which may occur because the grammar is allowed to be fully optional: `behavior: order? triggers? guard? action? ;`
-            if (context.ChildCount == 0)
-            {
-                return;
-            }
-
-            currentBehavior = new TextBehavior();
+            currentBehavior = new NodeBehavior();
             currentBehavior.order = context.order()?.number()?.GetText();
             currentBehavior.guardCode = context.guard()?.guard_code()?.GetText().Trim();
             currentBehavior.actionCode = GetActionCodeText(context.action()?.action_code());

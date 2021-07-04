@@ -27,6 +27,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitOhs(Grammar1Parser.OhsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#some_ws}.
+	 * @param ctx the parse tree
+	 */
+	void enterSome_ws(Grammar1Parser.Some_wsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#some_ws}.
+	 * @param ctx the parse tree
+	 */
+	void exitSome_ws(Grammar1Parser.Some_wsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#node}.
 	 * @param ctx the parse tree
 	 */
@@ -46,6 +56,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStatemachine_defn(Grammar1Parser.Statemachine_defnContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#notes_text}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotes_text(Grammar1Parser.Notes_textContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#notes_text}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotes_text(Grammar1Parser.Notes_textContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#notes_node}.
 	 * @param ctx the parse tree

@@ -44,6 +44,12 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitOhs([NotNull] Grammar1Parser.OhsContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.some_ws"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitSome_ws([NotNull] Grammar1Parser.Some_wsContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.node"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -55,6 +61,12 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.notes_text"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNotes_text([NotNull] Grammar1Parser.Notes_textContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.notes_node"/>.
 	/// </summary>

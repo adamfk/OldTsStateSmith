@@ -8,32 +8,36 @@ namespace StateSmith.Input.antlr4
 {
     public class StateParser
     {
-        public TextState ParseStateLabel(string stateLabel)
+        public Node ParseNodeLabel(string stateLabel)
         {
             Grammar1Parser parser = BuildParserForString(stateLabel);
 
             //FIXME detect and output all errors
-            IParseTree tree = parser.state_defn();
-            TextStateWalker walker = WalkTree(tree);
-            walker.textState.tree = tree;
-            walker.textState.behaviors = walker.behaviors;
+            IParseTree tree = parser.node();
+            NodeEdgeWalker walker = WalkTree(tree);
+            walker.node.tree = tree;
 
-            return walker.textState;
+            if (walker.node is StateNode stateNode)
+            {
+                stateNode.behaviors = walker.behaviors;
+            }
+
+            return walker.node;
         }
 
-        public List<TextBehavior> ParseEdgeLabel(string edgeLabel)
+        public List<NodeBehavior> ParseEdgeLabel(string edgeLabel)
         {
             Grammar1Parser parser = BuildParserForString(edgeLabel);
 
             //FIXME detect and output all errors
             IParseTree tree = parser.nl_behaviors();
-            TextStateWalker walker = WalkTree(tree);
+            NodeEdgeWalker walker = WalkTree(tree);
             return walker.behaviors;
         }
 
-        private static TextStateWalker WalkTree(IParseTree tree)
+        private static NodeEdgeWalker WalkTree(IParseTree tree)
         {
-            TextStateWalker walker = new TextStateWalker();
+            NodeEdgeWalker walker = new NodeEdgeWalker();
             ParseTreeWalker.Default.Walk(walker, tree);
             return walker;
         }
