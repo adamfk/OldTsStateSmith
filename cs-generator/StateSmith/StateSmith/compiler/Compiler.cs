@@ -10,19 +10,41 @@ namespace StateSmith.Compiler
     public class Compiler
     {
         public List<Vertex> rootVertices = new List<Vertex>();
+        private Dictionary<Input.DiagramNode, Vertex> diagramVertexMap = new Dictionary<Input.DiagramNode, Vertex>();
 
         public void CompileFile(string filepath)
         {
             YedParser yedParser = new YedParser();
-            Expander expander = new Expander();
+            Expander expander = new Expander(); //FIXME use for nodes and edges
 
             yedParser.Parse(filepath);
-            List<Input.DiagramNode> rootNodes = yedParser.GetRootNodes();
-            List<Input.DiagramEdge> edges = yedParser.GetEdges();
 
-            foreach (var node in rootNodes)
+            foreach (var node in yedParser.GetRootNodes())
             {
                 rootVertices.Add(ProcessNode(node, parentVertex: null));
+            }
+
+            foreach (var edge in yedParser.GetEdges())
+            {
+                ProcessEdge(edge);
+            }
+        }
+
+        private void ProcessEdge(Input.DiagramEdge edge)
+        {
+            var sourceVertex = diagramVertexMap[edge.source];
+            var targetVertex = diagramVertexMap[edge.target];
+
+            LabelParser labelParser = new LabelParser();
+            List<NodeBehavior> nodeBehaviors = labelParser.ParseEdgeLabel(edge.label);
+
+            foreach (var nodeBehavior in nodeBehaviors)
+            {
+                var behavior = ConvertBehavior(nodeBehavior);
+                behavior.transitionTarget = targetVertex;
+                sourceVertex.behaviors.Add(behavior);
+
+                //FIXME I believe this code will fail if there is an edge to an unrecognized diagram node like an image.
             }
         }
 
@@ -82,11 +104,13 @@ namespace StateSmith.Compiler
                             }
                         }
 
+                        ConvertBehaviors(thisVertex, stateNode);
                         break;
                     }
             }
 
             thisVertex.yedId = diagramNode.id;
+            diagramVertexMap.Add(diagramNode, thisVertex);
 
             if (parentVertex != null)
             {
@@ -100,6 +124,33 @@ namespace StateSmith.Compiler
             }
 
             return thisVertex;
+        }
+
+        private void ConvertBehaviors(Vertex vertex, StateNode stateNode)
+        {
+            foreach (var nodeBehavior in stateNode.behaviors)
+            {
+                Behavior behavior = ConvertBehavior(nodeBehavior);
+
+                vertex.behaviors.Add(behavior);
+            }
+        }
+
+        private static Behavior ConvertBehavior(NodeBehavior nodeBehavior)
+        {
+            var behavior = new Behavior
+            {
+                actionCode = nodeBehavior.actionCode,
+                guardCode = nodeBehavior.guardCode,
+                triggers = nodeBehavior.triggers
+            };
+
+            if (nodeBehavior.order != null)
+            {
+                behavior.order = Double.Parse(nodeBehavior.order);
+            }
+
+            return behavior;
         }
 
         private static void SetStateFromStateNode(StateNode stateNode, State state)

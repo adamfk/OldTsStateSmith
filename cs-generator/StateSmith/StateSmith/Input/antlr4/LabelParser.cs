@@ -63,7 +63,6 @@ namespace StateSmith.Input.antlr4
             {
                 BuildParseTree = true
             };
-            parser.Trace = true;
             parser.AddErrorListener(errorListener);
 
             return parser;
