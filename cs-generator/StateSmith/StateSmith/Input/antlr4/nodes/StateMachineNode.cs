@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace StateSmith.Input.antlr4
 {
-
     public class StateMachineNode : Node
     {
         public string name;

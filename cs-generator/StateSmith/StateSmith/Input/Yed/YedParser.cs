@@ -15,6 +15,7 @@ namespace StateSmith.Input.Yed
     {
         public Dictionary<string, DiagramNode> nodeMap = new Dictionary<string, DiagramNode>();
         public List<DiagramEdge> edges = new List<DiagramEdge>();
+        public List<DiagramNode> roots = new List<DiagramNode>();
 
         private XmlTextReader reader;
         private DiagramNode currentNode = null;
@@ -32,6 +33,16 @@ namespace StateSmith.Input.Yed
             {
                 HandleRead();
             }
+        }
+
+        public List<DiagramNode> GetRootNodes()
+        {
+            return roots;
+        }
+
+        public List<DiagramEdge> GetEdges()
+        {
+            return edges;
         }
 
         private void HandleRead()
@@ -104,7 +115,11 @@ namespace StateSmith.Input.Yed
             currentNode.parent = parentNode;
             nodeMap.Add(currentNode.id, currentNode);   //we should have the ID by now. Use it to add to map.
 
-            if (parentNode != null)
+            if (parentNode == null)
+            {
+                roots.Add(currentNode);
+            }
+            else
             {
                 parentNode.children.Add(currentNode);
             }

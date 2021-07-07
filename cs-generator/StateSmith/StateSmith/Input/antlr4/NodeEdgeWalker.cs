@@ -17,14 +17,6 @@ namespace StateSmith.Input.antlr4
         NodeBehavior currentBehavior;
         public List<NodeBehavior> behaviors = new List<NodeBehavior>();
 
-        public override void EnterEveryRule([NotNull] ParserRuleContext context)
-        {
-            if (context.exception != null)
-            {
-                int x = 8;
-            }
-        }
-
         public override void EnterStatemachine_defn([NotNull] Grammar1Parser.Statemachine_defnContext context)
         {
             var stateMachineNode = new StateMachineNode();

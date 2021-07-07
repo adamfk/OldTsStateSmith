@@ -7,9 +7,8 @@ using System.Linq;
 
 namespace StateSmith.Input
 {
-
     /// <summary>
-    /// Some type of drawing node. Could end up being a Hsm State, a direction, a comment, ...
+    /// Some type of drawing node. Could end up being a Hsm State, a directive, a comment, ...
     /// This will originally come from yEd diagrams, but will eventually come from parsing draw.io diagrams.
     /// </summary>
     public class DiagramNode
