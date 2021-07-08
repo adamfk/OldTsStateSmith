@@ -468,6 +468,18 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunction_args([NotNull] Grammar1Parser.Function_argsContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.function_arg_code"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterFunction_arg_code([NotNull] Grammar1Parser.Function_arg_codeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.function_arg_code"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitFunction_arg_code([NotNull] Grammar1Parser.Function_arg_codeContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.function_arg"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

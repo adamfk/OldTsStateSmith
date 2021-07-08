@@ -248,6 +248,12 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunction_args([NotNull] Grammar1Parser.Function_argsContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.function_arg_code"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunction_arg_code([NotNull] Grammar1Parser.Function_arg_codeContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.function_arg"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

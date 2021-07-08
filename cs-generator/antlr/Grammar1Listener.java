@@ -367,6 +367,16 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitFunction_args(Grammar1Parser.Function_argsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#function_arg_code}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction_arg_code(Grammar1Parser.Function_arg_codeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#function_arg_code}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction_arg_code(Grammar1Parser.Function_arg_codeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#function_arg}.
 	 * @param ctx the parse tree
 	 */

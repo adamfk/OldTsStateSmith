@@ -8,22 +8,9 @@ using System.Linq;
 
 namespace StateSmith.Input.antlr4
 {
-    public class FunctionArg
-    {
-        public string leading_ws;
-        public string argument;
-    }
-
-    public class FunctionArgs
-    {
-        public List<FunctionArg> list = new List<FunctionArg>();
-    }
-
     public class ExpandingVisitor : Grammar1BaseVisitor<string>
     {
         public Expander expander;
-
-        private Stack<FunctionArgs> functionArgsStack = new Stack<FunctionArgs>();
 
         public ExpandingVisitor(Expander expander)
         {
@@ -41,71 +28,49 @@ namespace StateSmith.Input.antlr4
 
         public override string VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
         {
-            string result = (context.ohs()?.GetText() ?? "");
+            string result = context.ohs()?.GetText() ?? "";
             string identifier = context.IDENTIFIER().GetText();
             identifier = expander.TryExpandVariableExpansion(identifier);
-            result += (identifier);
+            result += identifier;
 
             return result;
-        }
-
-        public override string VisitMember_function_call([NotNull] Grammar1Parser.Member_function_callContext context)
-        {
-            functionArgsStack.Push(new FunctionArgs());
-            var result = base.VisitMember_function_call(context);
-            functionArgsStack.Pop(); //unused here
-
-            return result;
-        }
-
-        public override string VisitFunction_arg([NotNull] Grammar1Parser.Function_argContext context)
-        {
-            var arg = new FunctionArg
-            {
-                leading_ws = context.optional_any_space()?.GetText() ?? "",
-                argument = ""
-            };
-
-            foreach (var code_element in context.code_element())
-            {
-                arg.argument += code_element.Accept(this);
-            }
-
-            functionArgsStack.Peek().list.Add(arg);
-
-            return arg.leading_ws + arg.argument;
         }
 
         public override string VisitExpandable_function_call([NotNull] Grammar1Parser.Expandable_function_callContext context)
         {
             var result = context.ohs()?.Accept(this) ?? "";
 
-            functionArgsStack.Push(new FunctionArgs());
-
+            //manually get identifier so that we don't visit `VisitExpandable_identifier()` and potentially get a variable expansion.
             var identifier = context.expandable_identifier().GetText();
-            if (expander.HasMethodName(identifier) == false)
+            if (expander.HasMethodName(identifier))
             {
-                result += identifier;
-                result += context.braced_function_args().Accept(this);
-                functionArgsStack.Pop();
+                result = ExpandFunctionCall(context, result, identifier);
             }
             else
             {
-                context.braced_function_args().Accept(this);
-
-                var args = functionArgsStack.Pop();
-
-                var stringArgs = new string[args.list.Count];
-
-                for (int i = 0; i < stringArgs.Length; i++)
-                {
-                    stringArgs[i] = args.list[i].argument;
-                }
-
-                var expandedCode = expander.TryExpandMethodExpansion(identifier, stringArgs);
-                result += expandedCode;
+                result += identifier;
+                result += context.braced_function_args().Accept(this);
             }
 
+            return result;
+        }
+
+        private string ExpandFunctionCall(Grammar1Parser.Expandable_function_callContext context, string result, string identifier)
+        {
+            //We can't just visit the `function_args` rule because it includes commas and additional white space.
+            //We need to manually visit each `function_arg_code` rule
+            var functionArgContexts = context.braced_function_args().function_args()?.function_arg();
+
+            var stringArgs = new string[functionArgContexts?.Length ?? 0];
+
+            for (int i = 0; i < stringArgs.Length; i++)
+            {
+                var argContext = functionArgContexts[i];
+                stringArgs[i] = argContext.function_arg_code().Accept(this);
+            }
+
+            var expandedCode = expander.TryExpandMethodExpansion(identifier, stringArgs);
+            result += expandedCode;
             return result;
         }
 

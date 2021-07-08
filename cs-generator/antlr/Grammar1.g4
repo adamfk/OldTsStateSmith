@@ -275,9 +275,13 @@ function_args:
     )*
     ;
 
+function_arg_code:
+    code_element+
+    ;
+
 function_arg:
     optional_any_space
-    code_element+
+    function_arg_code
     ;
 
 leading_optional_any_space:

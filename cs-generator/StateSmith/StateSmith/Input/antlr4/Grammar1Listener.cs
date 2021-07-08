@@ -391,6 +391,16 @@ public interface IGrammar1Listener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitFunction_args([NotNull] Grammar1Parser.Function_argsContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.function_arg_code"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterFunction_arg_code([NotNull] Grammar1Parser.Function_arg_codeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.function_arg_code"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitFunction_arg_code([NotNull] Grammar1Parser.Function_arg_codeContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.function_arg"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

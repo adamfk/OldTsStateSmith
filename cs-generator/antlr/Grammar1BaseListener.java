@@ -447,6 +447,18 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunction_arg_code(Grammar1Parser.Function_arg_codeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunction_arg_code(Grammar1Parser.Function_arg_codeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterFunction_arg(Grammar1Parser.Function_argContext ctx) { }
 	/**
 	 * {@inheritDoc}
