@@ -235,10 +235,10 @@ member_access_operator:
     ;
 
 member_access:
-    ohs
+    optional_any_space
     member_access_operator
 
-    ohs
+    optional_any_space
     (
         //no expansion checking here because this belongs to something else. `foo->bar`. `foo` should be checked for expansion though.
         IDENTIFIER

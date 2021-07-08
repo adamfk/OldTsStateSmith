@@ -103,9 +103,34 @@ namespace StateSmithTest
             var expander = new Expander();
             ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
             expanderFileReflection.AddAllExpansions(new MyExpansions());
-            var result = ExpandingVisitor.ParseAndExpandCode(expander, "mult( mult( 2, 4 ), mult(1, 10))");
+            ExpandingVisitor.ParseAndExpandCode(expander, "mult( mult( 2, 4 ), mult(1, 10))").Should().Be("80");
+        }
 
-            result.Should().Be("80");
+        [Fact]
+        public void ShouldNotAffectMethods()
+        {
+            var expander = new Expander();
+            ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
+            expanderFileReflection.AddAllExpansions(new MyExpansions());
+
+            var code = "obj->mult(3, 10)";
+            ExpandingVisitor.ParseAndExpandCode(expander, code).Should().Be(code);
+
+            //detect member access with crazy whitespace
+            code = @"obj
+                        ->
+                           mult(3, 10)";
+            ExpandingVisitor.ParseAndExpandCode(expander, code).Should().Be(code);
+
+            code = "obj.mult(3, 10)";
+            ExpandingVisitor.ParseAndExpandCode(expander, code).Should().Be(code);
+
+            code = "Obj::mult(3, 10)";
+            ExpandingVisitor.ParseAndExpandCode(expander, code).Should().Be(code);
+
+            //not really valid code in this case, but still should expand it
+            code = "Obj mult(3, 10)";
+            ExpandingVisitor.ParseAndExpandCode(expander, code).Should().Be("Obj 30");
         }
     }
 }

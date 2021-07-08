@@ -1910,6 +1910,7 @@ public partial class Grammar1Parser : Parser {
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case T__4:
+			case LINE_ENDER:
 			case IDENTIFIER:
 			case STAR_COMMENT:
 			case STRING:
@@ -2104,11 +2105,11 @@ public partial class Grammar1Parser : Parser {
 	}
 
 	public partial class Member_accessContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public OhsContext[] ohs() {
-			return GetRuleContexts<OhsContext>();
+		[System.Diagnostics.DebuggerNonUserCode] public Optional_any_spaceContext[] optional_any_space() {
+			return GetRuleContexts<Optional_any_spaceContext>();
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public OhsContext ohs(int i) {
-			return GetRuleContext<OhsContext>(i);
+		[System.Diagnostics.DebuggerNonUserCode] public Optional_any_spaceContext optional_any_space(int i) {
+			return GetRuleContext<Optional_any_spaceContext>(i);
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public Member_access_operatorContext member_access_operator() {
 			return GetRuleContext<Member_access_operatorContext>(0);
@@ -2148,11 +2149,11 @@ public partial class Grammar1Parser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			State = 281;
-			ohs();
+			optional_any_space();
 			State = 282;
 			member_access_operator();
 			State = 283;
-			ohs();
+			optional_any_space();
 			State = 286;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,23,Context) ) {
@@ -3117,39 +3118,21 @@ public partial class Grammar1Parser : Parser {
 		try {
 			State = 359;
 			ErrorHandler.Sync(this);
-			switch (TokenStream.LA(1)) {
-			case T__4:
-			case T__6:
-			case T__9:
-			case IDENTIFIER:
-			case LINE_COMMENT:
-			case STAR_COMMENT:
-			case STRING:
-			case TICK_STRING:
-			case DIGIT:
-			case PERIOD:
-			case PLUS:
-			case DASH:
-			case COLON:
-			case GT:
-			case LT:
-			case OTHER_SYMBOLS:
-			case HWS:
+			switch ( Interpreter.AdaptivePredict(TokenStream,29,Context) ) {
+			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
 				State = 357;
 				code_line_element();
 				}
 				break;
-			case LINE_ENDER:
+			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 358;
 				line_end_with_hs();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4071,9 +4054,9 @@ public partial class Grammar1Parser : Parser {
 		'\x19', '\x2', '\x2', '\x118', '\x11A', '\a', '\x1B', '\x2', '\x2', '\x119', 
 		'\x114', '\x3', '\x2', '\x2', '\x2', '\x119', '\x115', '\x3', '\x2', '\x2', 
 		'\x2', '\x119', '\x117', '\x3', '\x2', '\x2', '\x2', '\x11A', '\x39', 
-		'\x3', '\x2', '\x2', '\x2', '\x11B', '\x11C', '\x5', '\x4', '\x3', '\x2', 
+		'\x3', '\x2', '\x2', '\x2', '\x11B', '\x11C', '\x5', '\x2', '\x2', '\x2', 
 		'\x11C', '\x11D', '\x5', '\x38', '\x1D', '\x2', '\x11D', '\x120', '\x5', 
-		'\x4', '\x3', '\x2', '\x11E', '\x121', '\a', '\x10', '\x2', '\x2', '\x11F', 
+		'\x2', '\x2', '\x2', '\x11E', '\x121', '\a', '\x10', '\x2', '\x2', '\x11F', 
 		'\x121', '\x5', 'V', ',', '\x2', '\x120', '\x11E', '\x3', '\x2', '\x2', 
 		'\x2', '\x120', '\x11F', '\x3', '\x2', '\x2', '\x2', '\x121', ';', '\x3', 
 		'\x2', '\x2', '\x2', '\x122', '\x123', '\x5', '\x4', '\x3', '\x2', '\x123', 

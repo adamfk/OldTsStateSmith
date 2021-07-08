@@ -1659,6 +1659,7 @@ public class Grammar1Parser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__4:
+			case LINE_ENDER:
 			case IDENTIFIER:
 			case STAR_COMMENT:
 			case STRING:
@@ -1833,11 +1834,11 @@ public class Grammar1Parser extends Parser {
 	}
 
 	public static class Member_accessContext extends ParserRuleContext {
-		public List<OhsContext> ohs() {
-			return getRuleContexts(OhsContext.class);
+		public List<Optional_any_spaceContext> optional_any_space() {
+			return getRuleContexts(Optional_any_spaceContext.class);
 		}
-		public OhsContext ohs(int i) {
-			return getRuleContext(OhsContext.class,i);
+		public Optional_any_spaceContext optional_any_space(int i) {
+			return getRuleContext(Optional_any_spaceContext.class,i);
 		}
 		public Member_access_operatorContext member_access_operator() {
 			return getRuleContext(Member_access_operatorContext.class,0);
@@ -1867,11 +1868,11 @@ public class Grammar1Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(281);
-			ohs();
+			optional_any_space();
 			setState(282);
 			member_access_operator();
 			setState(283);
-			ohs();
+			optional_any_space();
 			setState(286);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
@@ -2676,39 +2677,21 @@ public class Grammar1Parser extends Parser {
 		try {
 			setState(359);
 			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__4:
-			case T__6:
-			case T__9:
-			case IDENTIFIER:
-			case LINE_COMMENT:
-			case STAR_COMMENT:
-			case STRING:
-			case TICK_STRING:
-			case DIGIT:
-			case PERIOD:
-			case PLUS:
-			case DASH:
-			case COLON:
-			case GT:
-			case LT:
-			case OTHER_SYMBOLS:
-			case HWS:
+			switch ( getInterpreter().adaptivePredict(_input,29,_ctx) ) {
+			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(357);
 				code_line_element();
 				}
 				break;
-			case LINE_ENDER:
+			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(358);
 				line_end_with_hs();
 				}
 				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -3417,8 +3400,8 @@ public class Grammar1Parser extends Parser {
 		"\2\2\2\u0112\u0110\3\2\2\2\u0112\u0113\3\2\2\2\u0113\67\3\2\2\2\u0114"+
 		"\u011a\7\26\2\2\u0115\u0116\7\32\2\2\u0116\u011a\7\32\2\2\u0117\u0118"+
 		"\7\31\2\2\u0118\u011a\7\33\2\2\u0119\u0114\3\2\2\2\u0119\u0115\3\2\2\2"+
-		"\u0119\u0117\3\2\2\2\u011a9\3\2\2\2\u011b\u011c\5\4\3\2\u011c\u011d\5"+
-		"8\35\2\u011d\u0120\5\4\3\2\u011e\u0121\7\20\2\2\u011f\u0121\5V,\2\u0120"+
+		"\u0119\u0117\3\2\2\2\u011a9\3\2\2\2\u011b\u011c\5\2\2\2\u011c\u011d\5"+
+		"8\35\2\u011d\u0120\5\2\2\2\u011e\u0121\7\20\2\2\u011f\u0121\5V,\2\u0120"+
 		"\u011e\3\2\2\2\u0120\u011f\3\2\2\2\u0121;\3\2\2\2\u0122\u0123\5\4\3\2"+
 		"\u0123\u0124\7\20\2\2\u0124=\3\2\2\2\u0125\u0126\5\4\3\2\u0126\u0127\7"+
 		"\7\2\2\u0127\u0128\5X-\2\u0128\u0129\7\b\2\2\u0129?\3\2\2\2\u012a\u012b"+
