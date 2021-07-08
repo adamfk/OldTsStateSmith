@@ -14,7 +14,6 @@ namespace StateSmith.Compiler
     {
         public List<Vertex> rootVertices = new List<Vertex>();
         private Dictionary<Input.DiagramNode, Vertex> diagramVertexMap = new Dictionary<Input.DiagramNode, Vertex>();
-        public Expander expander = new Expander();
 
         public void CompileFile(string filepath)
         {
@@ -57,7 +56,6 @@ namespace StateSmith.Compiler
             var targetVertex = diagramVertexMap[edge.target];
 
             LabelParser labelParser = new LabelParser();
-            labelParser.expander = expander;
             List<NodeBehavior> nodeBehaviors = labelParser.ParseEdgeLabel(edge.label);
 
             PrintAndThrowIfEdgeParseFail(edge, sourceVertex, targetVertex, labelParser);
@@ -124,6 +122,32 @@ namespace StateSmith.Compiler
             });
         }
 
+        public static void ExpandBehavior(Expander expander, Behavior behavior)
+        {
+            if (behavior.actionCode != null)
+            {
+                behavior.actionCode = ExpandingVisitor.ParseAndExpandCode(expander, behavior.actionCode);
+            }
+
+            if (behavior.guardCode != null)
+            {
+                behavior.guardCode = ExpandingVisitor.ParseAndExpandCode(expander, behavior.guardCode);
+            }
+        }
+
+        public void ExpandAllBehaviors(Expander expander)
+        {
+            foreach (var root in rootVertices)
+            {
+                VisitVertices<Vertex>(root, vertex => {
+                    foreach (var behavior in vertex.behaviors)
+                    {
+                        ExpandBehavior(expander, behavior);
+                    }
+                });
+            }
+        }
+
         private Vertex ProcessNode(Input.DiagramNode diagramNode, Vertex parentVertex)
         {
             if (diagramNode.label == null || diagramNode.label.Trim() == "")
@@ -132,7 +156,6 @@ namespace StateSmith.Compiler
             }
 
             LabelParser labelParser = new LabelParser();
-            labelParser.expander = expander;
             Node node = labelParser.ParseNodeLabel(diagramNode.label);
             PrintAndThrowIfNodeParseFail(diagramNode, parentVertex, labelParser);
 

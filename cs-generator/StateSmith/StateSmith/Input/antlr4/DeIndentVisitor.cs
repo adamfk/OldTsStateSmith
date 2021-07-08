@@ -8,7 +8,7 @@ using System.Text;
 namespace StateSmith.Input.antlr4
 {
 
-    public class DeIndentExpandVisitor : Grammar1BaseVisitor<int>
+    public class DeIndentVisitor : Grammar1BaseVisitor<int>
     {
         /// <summary>
         /// It is more efficient to just use a StringBuilder field rather than
@@ -21,8 +21,6 @@ namespace StateSmith.Input.antlr4
         private int deIndentSize = 0;
 
         public StringBuilder stringBuilder = new StringBuilder();
-
-        public Expander expander = new Expander();
 
         public override int VisitTerminal(ITerminalNode node)
         {
@@ -37,7 +35,6 @@ namespace StateSmith.Input.antlr4
         {
             Append(context.ohs()?.GetText() ?? "");
             string identifier = context.IDENTIFIER().GetText();
-            identifier = expander.TryExpandVariableExpansion(identifier);
             Append(identifier);
 
             return UNUSED;
@@ -74,7 +71,4 @@ namespace StateSmith.Input.antlr4
             stringBuilder.Append(str);
         }
     }
-
-
-
 }

@@ -11,7 +11,6 @@ namespace StateSmith.Input.antlr4
         public Node node;
         public StateNode stateNode;
         public OrthoStateNode orthoStateNode;
-        public Expander expander = new Expander();
 
         /// <summary>
         /// done separately for parsing edges as well
@@ -98,8 +97,7 @@ namespace StateSmith.Input.antlr4
                 return null;
             }
 
-            var visitor = new DeIndentExpandVisitor();
-            visitor.expander = expander;
+            var visitor = new DeIndentVisitor();
 
             foreach (var item in any_code.code_element())
             {

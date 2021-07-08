@@ -303,7 +303,8 @@ member_function_call:
     braced_function_args
     ;
 
-any_code: 
+any_code:
+    ohs
     code_element* ;
 
 code_element: 

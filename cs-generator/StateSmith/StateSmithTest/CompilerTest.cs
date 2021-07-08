@@ -144,9 +144,11 @@ namespace StateSmithTest
             const string filepath = "../../../../../../examples/specifications/Tiny1.graphml";
 
             Compiler compiler = new Compiler();
-            ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(compiler.expander);
+            var expander = new Expander();
+            ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
             expanderFileReflection.AddAllExpansions(new Tiny1Expansions());
             compiler.CompileFile(filepath);
+            compiler.ExpandAllBehaviors(expander);
 
             compiler.rootVertices.Count.Should().Be(2);
 
