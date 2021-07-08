@@ -4,6 +4,7 @@ using System.Text;
 using Xunit;
 using FluentAssertions;
 using StateSmith.Input.Expansions;
+using StateSmith.Input.antlr4;
 
 namespace StateSmithTest
 {
@@ -81,6 +82,30 @@ namespace StateSmithTest
             expander.TryExpandMethodExpansion("set_mode", new string[] { "GRUNKLE" }).Should().Be("set_mode(ENUM_PREFIX_GRUNKLE)");
             expander.TryExpandMethodExpansion("set_mode", new string[] { "STAN" }).Should().Be("set_mode(ENUM_PREFIX_STAN)");
             expander.TryExpandMethodExpansion("func", new string[] { }).Should().Be("123");
+        }
+    }
+
+    public class ExpandingVisitorTest
+    {
+        private class MyExpansions : UserExpansionScriptBase
+        {
+            string mult(string a_str, string b_str)
+            {
+                int a = int.Parse(a_str);
+                int b = int.Parse(b_str);
+                return $"{a*b}";
+            }
+        }
+
+        [Fact]
+        public void Recursive()
+        {
+            var expander = new Expander();
+            ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
+            expanderFileReflection.AddAllExpansions(new MyExpansions());
+            var result = ExpandingVisitor.ParseAndExpandCode(expander, "mult( mult( 2, 4 ), mult(1, 10))");
+
+            result.Should().Be("80");
         }
     }
 }

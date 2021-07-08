@@ -408,7 +408,7 @@ OTHER_SYMBOLS:
 
 code_symbol:
     PERIOD |
-    COMMA |
+    // COMMA | //can't include because otherwise it messes up function arguments
     PLUS |
     DASH |
     COLON |
