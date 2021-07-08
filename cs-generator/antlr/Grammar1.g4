@@ -120,13 +120,14 @@ nl_behavior:
 behavior:
     order?
     ( 
-        triggers guard
+        triggers guard action?
         |
-        triggers
+        triggers action?
         |
-        guard
+        guard action?
+        |
+        action
     )
-    action?
     ;
 
 

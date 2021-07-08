@@ -4,6 +4,9 @@ using StateSmith.Input.Yed;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Linq;
+using StateSmith.compiler;
 
 namespace StateSmith.Compiler
 {
@@ -28,6 +31,24 @@ namespace StateSmith.Compiler
             {
                 ProcessEdge(edge);
             }
+
+            foreach (var v in rootVertices)
+            {
+                if (v is NamedVertex namedVertex)
+                {
+                    SetupDescendants(namedVertex);
+                }
+            }
+        }
+
+        public List<NamedVertex> GetNamedVertices(string name)
+        {
+            return rootVertices.Descendants(name);
+        }
+
+        public NamedVertex GetVertex(string name)
+        {
+            return rootVertices.Descendant(name);
         }
 
         private void ProcessEdge(Input.DiagramEdge edge)
@@ -37,6 +58,25 @@ namespace StateSmith.Compiler
 
             LabelParser labelParser = new LabelParser();
             List<NodeBehavior> nodeBehaviors = labelParser.ParseEdgeLabel(edge.label);
+            
+            if (labelParser.HasError())
+            {
+                foreach (var error in labelParser.GetErrors())
+                {
+                    Console.WriteLine(error.BuildMessage());
+
+                }
+            }
+
+
+
+            if (nodeBehaviors.Count == 0)
+            {
+                sourceVertex.behaviors.Add(new Behavior()
+                {
+                    transitionTarget = targetVertex
+                });
+            }
 
             foreach (var nodeBehavior in nodeBehaviors)
             {
@@ -46,6 +86,32 @@ namespace StateSmith.Compiler
 
                 //FIXME I believe this code will fail if there is an edge to an unrecognized diagram node like an image.
             }
+        }
+
+        private static void VisitVertices<T>(Vertex vertex, Action<T> action) where T : Vertex
+        {
+            if (typeof(T).IsAssignableFrom(vertex.GetType()))
+            {
+                action((T)vertex);
+            }
+
+            foreach (var child in vertex.children)
+            {
+                VisitVertices<T>(child, action);
+            }
+        }
+
+        private static void SetupDescendants(NamedVertex parentVertex)
+        {
+            VisitVertices<NamedVertex>(parentVertex, vertex => {
+                //add this vertex to ancestors
+                var parent = vertex.parent;
+                while (parent != null)
+                {
+                    parent.namedDescendants.AddIfMissing(vertex.name, vertex);
+                    parent = parent.parent;
+                }
+            });
         }
 
         private Vertex ProcessNode(Input.DiagramNode diagramNode, Vertex parentVertex)
@@ -58,6 +124,7 @@ namespace StateSmith.Compiler
             LabelParser labelParser = new LabelParser();
             Node node = labelParser.ParseNodeLabel(diagramNode.label);
             Vertex thisVertex;
+            bool visitChildren = true;
 
             switch (node)
             {
@@ -69,6 +136,7 @@ namespace StateSmith.Compiler
                         var noteVertex = new NotesVertex();
                         noteVertex.notes = notesNode.notes;
                         thisVertex = noteVertex;
+                        visitChildren = false;
                         break;
                     }
 
@@ -118,9 +186,12 @@ namespace StateSmith.Compiler
                 parentVertex.children.Add(thisVertex);
             }
 
-            foreach (var child in diagramNode.children)
+            if (visitChildren)
             {
-                ProcessNode(child, thisVertex);
+                foreach (var child in diagramNode.children)
+                {
+                    ProcessNode(child, thisVertex);
+                }
             }
 
             return thisVertex;

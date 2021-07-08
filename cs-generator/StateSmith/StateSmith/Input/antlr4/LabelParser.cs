@@ -7,13 +7,38 @@ using System.Text;
 
 namespace StateSmith.Input.antlr4
 {
+    public class Error
+    {
+        public IToken offendingSymbol;
+        public int line;
+        public int column;
+        public string message;
+        public RecognitionException exception;
+
+        public string BuildMessage()
+        {
+            if (exception != null)
+            {
+                return exception.Message;
+            }
+
+            return $"{message} at line {line} column {column}. Offending symbol: `{offendingSymbol.Text}`";
+        }
+    }
+
     public class ErrorListener : IAntlrErrorListener<IToken>
     {
-        public List<string> errors = new List<string>();
+        public List<Error> errors = new List<Error>();
 
         public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            errors.Add(msg);
+            errors.Add(new Error() {
+                offendingSymbol = offendingSymbol,
+                line = line,
+                column = charPositionInLine,
+                message = msg,
+                exception = e
+            });
         }
     }
 
@@ -37,11 +62,20 @@ namespace StateSmith.Input.antlr4
             return walker.node;
         }
 
+        public bool HasError()
+        {
+            return errorListener.errors.Count > 0;
+        }
+
+        public List<Error> GetErrors()
+        {
+            return errorListener.errors;
+        }
+
         public List<NodeBehavior> ParseEdgeLabel(string edgeLabel)
         {
             Grammar1Parser parser = BuildParserForString(edgeLabel);
 
-            //FIXME detect and output all errors
             IParseTree tree = parser.edge();
             NodeEdgeWalker walker = WalkTree(tree);
             return walker.behaviors;

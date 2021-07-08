@@ -1,1 +1,1 @@
-event / var -= 3
+/ initial_action();
