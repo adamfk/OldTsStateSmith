@@ -85,7 +85,7 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT2" },
-                        guardCode = "some_guard(123)",
+                        guardCode = "some_guard(200)",
                         transitionTarget = C2
                     }
                 }
@@ -125,6 +125,18 @@ namespace StateSmithTest
             string a_count => AutoVarName;
 
             string set_mode(string mode) => $"set_mode(MODE_{mode})";
+
+            string some_guard(string count)
+            {
+                int int_count = int.Parse(count);
+
+                if (int_count > 100)
+                {
+                    int_count += 1000;
+                }
+
+                return $"some_guard({int_count})";
+            }
 
             string b_exit()
             {
@@ -215,7 +227,7 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT2" },
-                        guardCode = "some_guard(123)",
+                        guardCode = "some_guard(1200)",
                         transitionTarget = C2
                     }
                 }
