@@ -128,7 +128,7 @@ namespace StateSmithTest
 
             string b_exit()
             {
-                return "state_b_exit()";
+                return "b_exit_count++";
             }
         }
         #pragma warning restore IDE1006 // Naming Styles
@@ -210,7 +210,7 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         triggers = new List<string>() { "exit" },
-                        actionCode = "b_exit();",
+                        actionCode = "b_exit_count++;",
                     },
                     new Behavior()
                     {

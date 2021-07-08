@@ -480,6 +480,30 @@ public partial class Grammar1BaseListener : IGrammar1Listener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunction_arg([NotNull] Grammar1Parser.Function_argContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.leading_optional_any_space"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterLeading_optional_any_space([NotNull] Grammar1Parser.Leading_optional_any_spaceContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.leading_optional_any_space"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitLeading_optional_any_space([NotNull] Grammar1Parser.Leading_optional_any_spaceContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="Grammar1Parser.trailing_optional_any_space"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTrailing_optional_any_space([NotNull] Grammar1Parser.Trailing_optional_any_spaceContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="Grammar1Parser.trailing_optional_any_space"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTrailing_optional_any_space([NotNull] Grammar1Parser.Trailing_optional_any_spaceContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="Grammar1Parser.braced_function_args"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

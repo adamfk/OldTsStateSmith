@@ -254,6 +254,18 @@ public interface IGrammar1Visitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFunction_arg([NotNull] Grammar1Parser.Function_argContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.leading_optional_any_space"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitLeading_optional_any_space([NotNull] Grammar1Parser.Leading_optional_any_spaceContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="Grammar1Parser.trailing_optional_any_space"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTrailing_optional_any_space([NotNull] Grammar1Parser.Trailing_optional_any_spaceContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="Grammar1Parser.braced_function_args"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

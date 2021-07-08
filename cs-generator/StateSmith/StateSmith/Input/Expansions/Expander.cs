@@ -74,6 +74,11 @@ namespace StateSmith.Input.Expansions
             return keys;
         }
 
+        public bool HasMethodName(string name)
+        {
+            return methodExpansions.ContainsKey(name);
+        }
+
         public string[] GetMethodNames()
         {
             var keys = new string[methodExpansions.Count];

@@ -280,11 +280,20 @@ function_arg:
     code_element+
     ;
 
+leading_optional_any_space:
+    optional_any_space
+    ;
+
+trailing_optional_any_space:
+    optional_any_space
+    ;
+
+
 braced_function_args:
     '('
-    optional_any_space
+    leading_optional_any_space
     function_args?
-    optional_any_space
+    trailing_optional_any_space
     ')'
     ;
 

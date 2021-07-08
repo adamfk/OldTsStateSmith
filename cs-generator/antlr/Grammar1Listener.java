@@ -377,6 +377,26 @@ public interface Grammar1Listener extends ParseTreeListener {
 	 */
 	void exitFunction_arg(Grammar1Parser.Function_argContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#leading_optional_any_space}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeading_optional_any_space(Grammar1Parser.Leading_optional_any_spaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#leading_optional_any_space}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeading_optional_any_space(Grammar1Parser.Leading_optional_any_spaceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Grammar1Parser#trailing_optional_any_space}.
+	 * @param ctx the parse tree
+	 */
+	void enterTrailing_optional_any_space(Grammar1Parser.Trailing_optional_any_spaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Grammar1Parser#trailing_optional_any_space}.
+	 * @param ctx the parse tree
+	 */
+	void exitTrailing_optional_any_space(Grammar1Parser.Trailing_optional_any_spaceContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Grammar1Parser#braced_function_args}.
 	 * @param ctx the parse tree
 	 */

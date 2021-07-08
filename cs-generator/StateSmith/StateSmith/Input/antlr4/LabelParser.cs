@@ -77,11 +77,11 @@ namespace StateSmith.Input.antlr4
             return walker.behaviors;
         }
 
-        public void ParseAndVisitAnyCode(Grammar1BaseVisitor<int> visitor, string code)
+        public string ParseAndVisitAnyCode(Grammar1BaseVisitor<string> visitor, string code)
         {
             Grammar1Parser parser = BuildParserForString(code);
             IParseTree tree = parser.any_code();
-            visitor.Visit(tree);
+            return visitor.Visit(tree);
         }
 
         private NodeEdgeWalker WalkTree(IParseTree tree)

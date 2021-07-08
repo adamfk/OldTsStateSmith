@@ -459,6 +459,30 @@ public class Grammar1BaseListener implements Grammar1Listener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLeading_optional_any_space(Grammar1Parser.Leading_optional_any_spaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeading_optional_any_space(Grammar1Parser.Leading_optional_any_spaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTrailing_optional_any_space(Grammar1Parser.Trailing_optional_any_spaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTrailing_optional_any_space(Grammar1Parser.Trailing_optional_any_spaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBraced_function_args(Grammar1Parser.Braced_function_argsContext ctx) { }
 	/**
 	 * {@inheritDoc}
