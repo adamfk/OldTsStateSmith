@@ -17,11 +17,6 @@ namespace StateSmith.Input.antlr4
 
         public string BuildMessage()
         {
-            if (exception != null)
-            {
-                return exception.Message;
-            }
-
             return $"{message} at line {line} column {column}. Offending symbol: `{offendingSymbol.Text}`";
         }
     }

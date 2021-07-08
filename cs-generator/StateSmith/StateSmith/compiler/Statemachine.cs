@@ -9,5 +9,9 @@ namespace StateSmith.Compiler
     /// </summary>
     public class Statemachine : NamedVertex
     {
+        public override void Accept(VertexVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

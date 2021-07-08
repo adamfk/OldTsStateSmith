@@ -58,17 +58,8 @@ namespace StateSmith.Compiler
 
             LabelParser labelParser = new LabelParser();
             List<NodeBehavior> nodeBehaviors = labelParser.ParseEdgeLabel(edge.label);
-            
-            if (labelParser.HasError())
-            {
-                foreach (var error in labelParser.GetErrors())
-                {
-                    Console.WriteLine(error.BuildMessage());
 
-                }
-            }
-
-
+            PrintAndThrowIfEdgeParseFail(edge, sourceVertex, targetVertex, labelParser);
 
             if (nodeBehaviors.Count == 0)
             {
@@ -85,6 +76,24 @@ namespace StateSmith.Compiler
                 sourceVertex.behaviors.Add(behavior);
 
                 //FIXME I believe this code will fail if there is an edge to an unrecognized diagram node like an image.
+            }
+        }
+
+        private static void PrintAndThrowIfEdgeParseFail(Input.DiagramEdge edge, Vertex sourceVertex, Vertex targetVertex, LabelParser labelParser)
+        {
+            if (labelParser.HasError())
+            {
+                string fromString = VertexPathDescriber.Describe(sourceVertex);
+                string toString = VertexPathDescriber.Describe(targetVertex);
+                string fullMessage = $"Failed parsing edge from `{fromString}` to `{toString}`. Diagram id:{edge.id}.\n";
+                foreach (var error in labelParser.GetErrors())
+                {
+                    fullMessage += error.BuildMessage() + "\n";
+                }
+
+                Console.WriteLine(fullMessage);
+
+                throw new ArgumentException(fullMessage);
             }
         }
 
@@ -123,6 +132,8 @@ namespace StateSmith.Compiler
 
             LabelParser labelParser = new LabelParser();
             Node node = labelParser.ParseNodeLabel(diagramNode.label);
+            PrintAndThrowIfNodeParseFail(diagramNode, parentVertex, labelParser);
+
             Vertex thisVertex;
             bool visitChildren = true;
 
@@ -195,6 +206,23 @@ namespace StateSmith.Compiler
             }
 
             return thisVertex;
+        }
+
+        private static void PrintAndThrowIfNodeParseFail(Input.DiagramNode diagramNode, Vertex parentVertex, LabelParser labelParser)
+        {
+            if (labelParser.HasError())
+            {
+                string parentPath = VertexPathDescriber.Describe(parentVertex);
+                string fullMessage = $"Failed parsing node label. Parent path: `{parentPath}`.\n<label>\n{diagramNode.label}\n</label>\nDiagram id:`{diagramNode.id}`.\n";
+                foreach (var error in labelParser.GetErrors())
+                {
+                    fullMessage += error.BuildMessage() + "\n";
+                }
+
+                Console.WriteLine(fullMessage);
+
+                throw new ArgumentException(fullMessage);
+            }
         }
 
         private void ConvertBehaviors(Vertex vertex, StateNode stateNode)
