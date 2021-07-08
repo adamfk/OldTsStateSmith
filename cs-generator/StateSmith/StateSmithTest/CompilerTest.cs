@@ -11,13 +11,8 @@ namespace StateSmithTest
 {
     public class CompilerTest
     {
-        private void AssertNode()
-        {
-
-        }
-
         [Fact]
-        public void Test()
+        public void Tiny1()
         {
             string filepath = "../../../../../../examples/specifications/Tiny1.graphml";
 
@@ -33,16 +28,15 @@ namespace StateSmithTest
             var B = compiler.GetVertex("B");
             var C2 = compiler.GetVertex("C2");
 
+            ///////////
             Tiny1.name.Should().Be("Tiny1");
-            Tiny1.children.Count.Should().Be(4);
-            Tiny1.Child("A").Should().Be(A);
-            Tiny1.Child("B").Should().Be(B);
-            Tiny1.Child("C2").Should().Be(C2);
-
             Tiny1.yedId.Should().Be("n0");
+            Tiny1.children.Count.Should().Be(4);
+            Tiny1.behaviors.Should().BeEmpty();
 
+            ////////////
             var Tiny1InitialState = Tiny1.ChildType<InitialState>();
-            Tiny1InitialState.children.Count.Should().Be(0);
+            Tiny1InitialState.children.Should().BeEmpty();
             Tiny1InitialState.yedId.Should().Be("n0::n1");
             Tiny1InitialState.behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
@@ -52,96 +46,71 @@ namespace StateSmithTest
                         transitionTarget = A,
                         actionCode = "initial_action();"
                     }
-                });
+                }
+            );
 
-            var expected = new Statemachine()
-            {
-                name = "Tiny1",
-                nameIsGloballyUnique = true,
-                yedId = "n0",
-                children = new List<Vertex>()
+            ////////////
+            Tiny1.Child("A").Should().Be(A);
+            A.children.Should().BeEmpty();
+            A.yedId.Should().Be("n0::n0");
+            A.behaviors.Should().BeEquivalentTo(
+                new List<Behavior>()
                 {
-                    new InitialState()
+                    new Behavior()
                     {
+                        triggers = new List<string>(){ "enter" },
+                        actionCode = "a_entry();"
+                    },
+                    new Behavior()
+                    {
+                        triggers = new List<string>(){ "EVENT1" },
+                        transitionTarget = B
+                    },
+                }
+            );
 
-                    },
-                    new State()
+            ////////////
+            Tiny1.Child("B").Should().Be(B);
+            B.children.Should().BeEmpty();
+            B.yedId.Should().Be("n0::n2");
+            B.behaviors.Should().BeEquivalentTo(
+                new List<Behavior>()
+                {
+                    new Behavior()
                     {
-                        name = "A",
-                        yedId = "n0::n0",
-                        behaviors = new List<Behavior>()
-                        {
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "enter"
-                                },
-                                actionCode = "a_entry();",
-                            },
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "EVENT1"
-                                },
-                                transitionTarget = B
-                            }
-                        }
+                        triggers = new List<string>() { "exit" },
+                        actionCode = "b_exit();",
                     },
-                    new State()
+                    new Behavior()
                     {
-                        name = "B",
-                        yedId = "n0::n2",
-                        behaviors = new List<Behavior>()
-                        {
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "exit"
-                                },
-                                actionCode = "b_entry();",
-                            },
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "EVENT2"
-                                },
-                                guardCode = "some_guard(123)",
-                                transitionTarget = C2
-                            }
-                        }
-                    },
-                   new State()
-                    {
-                        name = "C2",
-                        yedId = "n0::n3",
-                        behaviors = new List<Behavior>()
-                        {
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "EVENT2"
-                                },
-                                actionCode = "event2_stuff(\"abc\");",
-                            },
-                            new Behavior()
-                            {
-                                triggers = new List<string>()
-                                {
-                                    "EVENT11"
-                                },
-                                order = 1,
-                                transitionTarget = A
-                            }
-                        }
+                        triggers = new List<string>() { "EVENT2" },
+                        guardCode = "some_guard(123)",
+                        transitionTarget = C2
                     }
                 }
-            };
+            );
 
+
+            ////////////
+            Tiny1.Child("C2").Should().Be(C2);
+            C2.children.Should().BeEmpty();
+            C2.yedId.Should().Be("n0::n3");
+            C2.behaviors.Should().BeEquivalentTo(
+                new List<Behavior>()
+                {
+                    new Behavior()
+                    {
+                        triggers = new List<string>() { "EVENT2" },
+                        actionCode = "event2_stuff(\"abc\");",
+                    },
+                    new Behavior()
+                    {
+                        triggers = new List<string>() { "EVENT1" },
+                        order = 1,
+                        transitionTarget = A
+                    }
+                }
+            );
         }
     }
 }
