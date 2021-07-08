@@ -1,1 +1,2 @@
-/ initial_action();
+A
+enter / a_count += 1;

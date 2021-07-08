@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime.Tree;
+using StateSmith.Input.Expansions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -21,6 +22,8 @@ namespace StateSmith.Input.antlr4
 
         public StringBuilder stringBuilder = new StringBuilder();
 
+        public Expander expander = new Expander();
+
         public override int VisitTerminal(ITerminalNode node)
         {
             if (node.Symbol != null)
@@ -33,7 +36,9 @@ namespace StateSmith.Input.antlr4
         public override int VisitExpandable_identifier([NotNull] Grammar1Parser.Expandable_identifierContext context)
         {
             Append(context.ohs()?.GetText() ?? "");
-            Append(context.IDENTIFIER().GetText()); //FIXME put int expansions here
+            string identifier = context.IDENTIFIER().GetText();
+            identifier = expander.TryExpandVariableExpansion(identifier);
+            Append(identifier);
 
             return UNUSED;
         }

@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using StateSmith.Input.Expansions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,8 @@ namespace StateSmith.Input.antlr4
     {
         public ErrorListener errorListener = new ErrorListener();
 
+        public Expander expander = new Expander();
+
         public Node ParseNodeLabel(string stateLabel)
         {
             Grammar1Parser parser = BuildParserForString(stateLabel);
@@ -76,9 +79,10 @@ namespace StateSmith.Input.antlr4
             return walker.behaviors;
         }
 
-        private static NodeEdgeWalker WalkTree(IParseTree tree)
+        private NodeEdgeWalker WalkTree(IParseTree tree)
         {
             NodeEdgeWalker walker = new NodeEdgeWalker();
+            walker.expander = expander;
             ParseTreeWalker.Default.Walk(walker, tree);
             return walker;
         }

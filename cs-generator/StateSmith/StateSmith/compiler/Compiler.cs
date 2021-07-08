@@ -14,11 +14,11 @@ namespace StateSmith.Compiler
     {
         public List<Vertex> rootVertices = new List<Vertex>();
         private Dictionary<Input.DiagramNode, Vertex> diagramVertexMap = new Dictionary<Input.DiagramNode, Vertex>();
+        public Expander expander = new Expander();
 
         public void CompileFile(string filepath)
         {
             YedParser yedParser = new YedParser();
-            Expander expander = new Expander(); //FIXME use for nodes and edges
 
             yedParser.Parse(filepath);
 
@@ -57,6 +57,7 @@ namespace StateSmith.Compiler
             var targetVertex = diagramVertexMap[edge.target];
 
             LabelParser labelParser = new LabelParser();
+            labelParser.expander = expander;
             List<NodeBehavior> nodeBehaviors = labelParser.ParseEdgeLabel(edge.label);
 
             PrintAndThrowIfEdgeParseFail(edge, sourceVertex, targetVertex, labelParser);
@@ -131,6 +132,7 @@ namespace StateSmith.Compiler
             }
 
             LabelParser labelParser = new LabelParser();
+            labelParser.expander = expander;
             Node node = labelParser.ParseNodeLabel(diagramNode.label);
             PrintAndThrowIfNodeParseFail(diagramNode, parentVertex, labelParser);
 

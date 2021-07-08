@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using StateSmith.Input.Expansions;
 using System.Collections.Generic;
 
 namespace StateSmith.Input.antlr4
@@ -10,6 +11,7 @@ namespace StateSmith.Input.antlr4
         public Node node;
         public StateNode stateNode;
         public OrthoStateNode orthoStateNode;
+        public Expander expander = new Expander();
 
         /// <summary>
         /// done separately for parsing edges as well
@@ -87,7 +89,7 @@ namespace StateSmith.Input.antlr4
         }
 
 
-        private static string TryGetBracedActionCode(Grammar1Parser.Action_codeContext action_codeContext)
+        private string TryGetBracedActionCode(Grammar1Parser.Action_codeContext action_codeContext)
         {
             var any_code = action_codeContext.braced_expression()?.any_code();
 
@@ -97,6 +99,7 @@ namespace StateSmith.Input.antlr4
             }
 
             var visitor = new DeIndentExpandVisitor();
+            visitor.expander = expander;
 
             foreach (var item in any_code.code_element())
             {
