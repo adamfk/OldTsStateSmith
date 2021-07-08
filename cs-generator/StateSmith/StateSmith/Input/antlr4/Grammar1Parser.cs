@@ -2900,9 +2900,7 @@ public partial class Grammar1Parser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public OhsContext ohs() {
 			return GetRuleContext<OhsContext>(0);
 		}
-		[System.Diagnostics.DebuggerNonUserCode] public Expandable_identifierContext expandable_identifier() {
-			return GetRuleContext<Expandable_identifierContext>(0);
-		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(Grammar1Parser.IDENTIFIER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public Braced_function_argsContext braced_function_args() {
 			return GetRuleContext<Braced_function_argsContext>(0);
 		}
@@ -2939,7 +2937,7 @@ public partial class Grammar1Parser : Parser {
 			State = 342;
 			ohs();
 			State = 343;
-			expandable_identifier();
+			Match(IDENTIFIER);
 			State = 344;
 			braced_function_args();
 			}
@@ -4114,7 +4112,7 @@ public partial class Grammar1Parser : Parser {
 		'\x154', '\x155', '\x3', '\x2', '\x2', '\x2', '\x155', '\x156', '\x5', 
 		'P', ')', '\x2', '\x156', '\x157', '\a', '\b', '\x2', '\x2', '\x157', 
 		'S', '\x3', '\x2', '\x2', '\x2', '\x158', '\x159', '\x5', '\x4', '\x3', 
-		'\x2', '\x159', '\x15A', '\x5', '<', '\x1F', '\x2', '\x15A', '\x15B', 
+		'\x2', '\x159', '\x15A', '\a', '\x10', '\x2', '\x2', '\x15A', '\x15B', 
 		'\x5', 'R', '*', '\x2', '\x15B', 'U', '\x3', '\x2', '\x2', '\x2', '\x15C', 
 		'\x15D', '\x5', '\x4', '\x3', '\x2', '\x15D', '\x15E', '\a', '\x10', '\x2', 
 		'\x2', '\x15E', '\x15F', '\x5', 'R', '*', '\x2', '\x15F', 'W', '\x3', 

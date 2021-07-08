@@ -75,13 +75,13 @@ namespace StateSmithTest
             expander.TryExpandVariableExpansion("hit_count").Should().Be("sm->vars.hit_count");
             expander.TryExpandVariableExpansion("jump_count").Should().Be("sm->vars.jump_count");
 
-            expander.GetMethodNames().Should().BeEquivalentTo(new string[] {
+            expander.GetFunctionNames().Should().BeEquivalentTo(new string[] {
                 "set_mode",
                 "func",
             });
-            expander.TryExpandMethodExpansion("set_mode", new string[] { "GRUNKLE" }).Should().Be("set_mode(ENUM_PREFIX_GRUNKLE)");
-            expander.TryExpandMethodExpansion("set_mode", new string[] { "STAN" }).Should().Be("set_mode(ENUM_PREFIX_STAN)");
-            expander.TryExpandMethodExpansion("func", new string[] { }).Should().Be("123");
+            expander.TryExpandFunctionExpansion("set_mode", new string[] { "GRUNKLE" }).Should().Be("set_mode(ENUM_PREFIX_GRUNKLE)");
+            expander.TryExpandFunctionExpansion("set_mode", new string[] { "STAN" }).Should().Be("set_mode(ENUM_PREFIX_STAN)");
+            expander.TryExpandFunctionExpansion("func", new string[] { }).Should().Be("123");
         }
     }
 

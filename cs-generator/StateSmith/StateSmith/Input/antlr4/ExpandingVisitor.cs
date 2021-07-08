@@ -40,22 +40,22 @@ namespace StateSmith.Input.antlr4
         {
             var result = context.ohs()?.Accept(this) ?? "";
 
-            //manually get identifier so that we don't visit `VisitExpandable_identifier()` and potentially get a variable expansion.
-            var identifier = context.expandable_identifier().GetText();
-            if (expander.HasMethodName(identifier))
+            var functionName = context.IDENTIFIER().GetText();
+
+            if (expander.HasFunctionName(functionName))
             {
-                result = ExpandFunctionCall(context, result, identifier);
+                result = ExpandFunctionCall(context, result, functionName);
             }
             else
             {
-                result += identifier;
+                result += functionName;
                 result += context.braced_function_args().Accept(this);
             }
 
             return result;
         }
 
-        private string ExpandFunctionCall(Grammar1Parser.Expandable_function_callContext context, string result, string identifier)
+        private string ExpandFunctionCall(Grammar1Parser.Expandable_function_callContext context, string result, string functionName)
         {
             //We can't just visit the `function_args` rule because it includes commas and additional white space.
             //We need to manually visit each `function_arg_code` rule
@@ -69,7 +69,7 @@ namespace StateSmith.Input.antlr4
                 stringArgs[i] = argContext.function_arg_code().Accept(this);
             }
 
-            var expandedCode = expander.TryExpandMethodExpansion(identifier, stringArgs);
+            var expandedCode = expander.TryExpandFunctionExpansion(functionName, stringArgs);
             result += expandedCode;
             return result;
         }

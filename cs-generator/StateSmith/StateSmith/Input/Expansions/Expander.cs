@@ -9,7 +9,7 @@ namespace StateSmith.Input.Expansions
     public class Expander
     {
         private Dictionary<string, string> variableExpansions = new Dictionary<string, string>();
-        private Dictionary<string, ExpansionMethod> methodExpansions = new Dictionary<string, ExpansionMethod>();
+        private Dictionary<string, ExpansionFunction> functionExpansions = new Dictionary<string, ExpansionFunction>();
 
         private void ThrowIfExpansionNameAlreadyUsed(string expansionName)
         {
@@ -19,9 +19,9 @@ namespace StateSmith.Input.Expansions
                 throw new ArgumentException($"Expansion name `{expansionName}` already has a variable mapping");
             }
 
-            if (methodExpansions.ContainsKey(expansionName))
+            if (functionExpansions.ContainsKey(expansionName))
             {
-                throw new ArgumentException($"Expansion name `{expansionName}` already has a method mapping");
+                throw new ArgumentException($"Expansion name `{expansionName}` already has a function mapping");
             }
         }
 
@@ -38,10 +38,10 @@ namespace StateSmith.Input.Expansions
             variableExpansions.Add(name, code);
         }
 
-        public void AddExpansionMethod(string name, object userObject, MethodInfo method)
+        public void AddExpansionFunction(string name, object userObject, MethodInfo method)
         {
             ThrowIfExpansionNameAlreadyUsed(name);
-            methodExpansions.Add(name, new ExpansionMethod(name, userObject, method));
+            functionExpansions.Add(name, new ExpansionFunction(name, userObject, method));
         }
 
         public string TryExpandVariableExpansion(string name)
@@ -54,15 +54,15 @@ namespace StateSmith.Input.Expansions
             return variableExpansions[name];
         }
 
-        public string TryExpandMethodExpansion(string name, string[] arguments)
+        public string TryExpandFunctionExpansion(string name, string[] arguments)
         {
-            if (methodExpansions.ContainsKey(name) == false)
+            if (functionExpansions.ContainsKey(name) == false)
             {
                 return name;
             }
 
-            var method = methodExpansions[name];
-            var code = method.Evaluate(arguments);
+            var function = functionExpansions[name];
+            var code = function.Evaluate(arguments);
             code = ExpandCodeSpecialTokens(name, code);
             return code;
         }
@@ -74,15 +74,15 @@ namespace StateSmith.Input.Expansions
             return keys;
         }
 
-        public bool HasMethodName(string name)
+        public bool HasFunctionName(string name)
         {
-            return methodExpansions.ContainsKey(name);
+            return functionExpansions.ContainsKey(name);
         }
 
-        public string[] GetMethodNames()
+        public string[] GetFunctionNames()
         {
-            var keys = new string[methodExpansions.Count];
-            methodExpansions.Keys.CopyTo(keys, 0);
+            var keys = new string[functionExpansions.Count];
+            functionExpansions.Keys.CopyTo(keys, 0);
             return keys;
         }
     }

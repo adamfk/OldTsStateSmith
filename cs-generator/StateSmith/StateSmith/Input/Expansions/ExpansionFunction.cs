@@ -5,13 +5,13 @@ using System.Reflection;
 
 namespace StateSmith.Input.Expansions
 {
-    public class ExpansionMethod
+    public class ExpansionFunction
     {
         public string Name { get; }
         private object methodObject;
         private MethodInfo methodInfo;
 
-        public ExpansionMethod(string name, object methodObject, MethodInfo methodInfo)
+        public ExpansionFunction(string name, object methodObject, MethodInfo methodInfo)
         {
             this.methodObject = methodObject;
             this.methodInfo = methodInfo;

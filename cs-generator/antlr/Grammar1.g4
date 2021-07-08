@@ -305,7 +305,7 @@ braced_function_args:
 // `foo (123)` will not be allowed, but `foo(123)` will be.
 expandable_function_call:
     ohs 
-    expandable_identifier
+    IDENTIFIER
     braced_function_args
     ;
 

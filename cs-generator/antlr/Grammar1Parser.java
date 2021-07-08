@@ -2499,9 +2499,7 @@ public class Grammar1Parser extends Parser {
 		public OhsContext ohs() {
 			return getRuleContext(OhsContext.class,0);
 		}
-		public Expandable_identifierContext expandable_identifier() {
-			return getRuleContext(Expandable_identifierContext.class,0);
-		}
+		public TerminalNode IDENTIFIER() { return getToken(Grammar1Parser.IDENTIFIER, 0); }
 		public Braced_function_argsContext braced_function_args() {
 			return getRuleContext(Braced_function_argsContext.class,0);
 		}
@@ -2528,7 +2526,7 @@ public class Grammar1Parser extends Parser {
 			setState(342);
 			ohs();
 			setState(343);
-			expandable_identifier();
+			match(IDENTIFIER);
 			setState(344);
 			braced_function_args();
 			}
@@ -3437,8 +3435,8 @@ public class Grammar1Parser extends Parser {
 		"O\3\2\2\2\u014e\u014f\5\2\2\2\u014fQ\3\2\2\2\u0150\u0151\7\7\2\2\u0151"+
 		"\u0153\5N(\2\u0152\u0154\5H%\2\u0153\u0152\3\2\2\2\u0153\u0154\3\2\2\2"+
 		"\u0154\u0155\3\2\2\2\u0155\u0156\5P)\2\u0156\u0157\7\b\2\2\u0157S\3\2"+
-		"\2\2\u0158\u0159\5\4\3\2\u0159\u015a\5<\37\2\u015a\u015b\5R*\2\u015bU"+
-		"\3\2\2\2\u015c\u015d\5\4\3\2\u015d\u015e\7\20\2\2\u015e\u015f\5R*\2\u015f"+
+		"\2\2\u0158\u0159\5\4\3\2\u0159\u015a\7\20\2\2\u015a\u015b\5R*\2\u015b"+
+		"U\3\2\2\2\u015c\u015d\5\4\3\2\u015d\u015e\7\20\2\2\u015e\u015f\5R*\2\u015f"+
 		"W\3\2\2\2\u0160\u0164\5\4\3\2\u0161\u0163\5Z.\2\u0162\u0161\3\2\2\2\u0163"+
 		"\u0166\3\2\2\2\u0164\u0162\3\2\2\2\u0164\u0165\3\2\2\2\u0165Y\3\2\2\2"+
 		"\u0166\u0164\3\2\2\2\u0167\u016a\5^\60\2\u0168\u016a\5b\62\2\u0169\u0167"+

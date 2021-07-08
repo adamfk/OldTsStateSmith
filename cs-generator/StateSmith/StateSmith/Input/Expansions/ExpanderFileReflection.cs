@@ -102,7 +102,7 @@ namespace StateSmith.Input.Expansions
                 expansionName = attribute.Name;
             }
 
-            expander.AddExpansionMethod(expansionName, userObject, method);
+            expander.AddExpansionFunction(expansionName, userObject, method);
         }
 
         private void AddFieldExpansions(object userObject, FieldInfo[] fields)
