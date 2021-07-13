@@ -14,19 +14,11 @@
 
 enum EventId
 {
-    EventId_DO = 1, //to fit with Trigger Id
+    EventId_DO,
     EventId_ROOT_ONLY,
     EventId_A_ONLY,
     EventId_ROOT_A,
-};
-
-enum TriggerId
-{
-    TriggerId_EXIT,
-    // TriggerId_DO = EventId_DO,
-    // TriggerId_EV1 = EventId_EV1,
-    // ....
-    TriggerId__COUNT = EventId_ROOT_A + 1,
+    EventId__COUNT
 };
 
 typedef struct MySm MySm;
@@ -50,7 +42,8 @@ struct MySm
 {
     enum MySm_StateId state_id;
     enum EventId current_event;
-    BehaviorFunc current_behaviors[TriggerId__COUNT];
+    BehaviorFunc current_behaviors[EventId__COUNT];
+    void (*current_exit_function)(MySm* sm);
 
     struct {
         int count;
@@ -128,7 +121,7 @@ static void ROOT_enter(MySm* sm)
 {
     printf("%s\n", __func__);
 
-    sm->current_behaviors[TriggerId_EXIT] = ROOT_exit;
+    sm->current_exit_function = ROOT_exit;
     sm->current_behaviors[EventId_ROOT_A] = ROOT_handle_ROOT_A;
     sm->current_behaviors[EventId_ROOT_ONLY] = ROOT_handle_ROOT_ONLY;
 }
@@ -146,10 +139,9 @@ static BehaviorFuncStruct ROOT_handle_ROOT_A(MySm* sm)
     //transition to A
     //Execute transition action if any.
     //Exit up to Least Common Ancestor (LCA).
-    while (sm->current_behaviors[TriggerId_EXIT] != ROOT_exit)
+    while (sm->current_exit_function != ROOT_exit)
     {
-        BehaviorFunc exit_function = sm->current_behaviors[TriggerId_EXIT];
-        exit_function(sm);
+        sm->current_exit_function(sm);
     }
 
     //Enter towards A
@@ -209,7 +201,7 @@ static void A_enter(MySm* sm)
     printf("%s\n", __func__);
 
     // Add State A event listeners
-    sm->current_behaviors[TriggerId_EXIT] = A_exit;
+    sm->current_exit_function = A_exit;
     sm->current_behaviors[EventId_A_ONLY] = A_handle_A_ONLY;
     sm->current_behaviors[EventId_ROOT_A] = A_handle_ROOT_A;
 }
@@ -219,7 +211,7 @@ static void A_exit(MySm* sm)
     printf("%s\n", __func__);
 
     // Remove State A event listeners
-    sm->current_behaviors[TriggerId_EXIT] = ROOT_exit;
+    sm->current_exit_function = ROOT_exit;
     sm->current_behaviors[EventId_A_ONLY] = NULL;   // no ancestors to listen to this event
     sm->current_behaviors[EventId_ROOT_A] = ROOT_handle_ROOT_A;
 }
@@ -246,12 +238,14 @@ int main(void)
     MySm_start(&sm);
 
     MySm_dispatch_event(&sm, EventId_ROOT_ONLY);
+
     MySm_dispatch_event(&sm, EventId_ROOT_A);
+    
     MySm_dispatch_event(&sm, EventId_ROOT_A);
     MySm_dispatch_event(&sm, EventId_ROOT_A);
     MySm_dispatch_event(&sm, EventId_ROOT_A);
     MySm_dispatch_event(&sm, EventId_ROOT_A);
 
-    printf("ALL DONE!\n");
+    printf("\nALL DONE!\n");
     return 0;
 }
