@@ -149,7 +149,6 @@ namespace StateSmithTest
         #pragma warning restore RCS1018 // Add accessibility modifiers (or vice versa).
         #pragma warning restore RCS1213 // Remove unused member declaration.
 
-
         [Fact]
         public void ExpandedTiny1()
         {
@@ -159,6 +158,8 @@ namespace StateSmithTest
             var expander = new Expander();
             ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
             expanderFileReflection.AddAllExpansions(new Tiny1Expansions());
+            //FIXME add events
+            //FIXME check for valid events in diagram
             compiler.CompileFile(filepath);
             compiler.ExpandAllBehaviors(expander);
 

@@ -13,6 +13,7 @@ namespace StateSmith.Compiler
     public class Compiler
     {
         public List<Vertex> rootVertices = new List<Vertex>();
+        private List<string> eventNames = new List<string>();
         private Dictionary<Input.DiagramNode, Vertex> diagramVertexMap = new Dictionary<Input.DiagramNode, Vertex>();
 
         public void CompileFile(string filepath)
@@ -37,6 +38,15 @@ namespace StateSmith.Compiler
                 {
                     SetupDescendants(namedVertex);
                 }
+            }
+        }
+
+        public void AddEventName(string eventName)
+        {
+            // Don't worry about O(N) look up cost for now as we don't expect many events.
+            if (eventNames.Contains(eventName) == false)
+            {
+                eventNames.Add(eventName);
             }
         }
 
