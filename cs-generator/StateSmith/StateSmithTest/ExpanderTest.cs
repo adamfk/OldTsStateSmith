@@ -61,7 +61,7 @@ namespace StateSmithTest
             Expander expander = new Expander();
             var userExpansions = new ExpansionsExample();
             ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
-
+            userExpansions.varsPath = "sm->vars.";
             expanderFileReflection.AddAllExpansions(userExpansions);
 
             expander.GetVariableNames().Should().BeEquivalentTo(new string[] { 

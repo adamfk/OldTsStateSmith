@@ -157,7 +157,9 @@ namespace StateSmithTest
             Compiler compiler = new Compiler();
             var expander = new Expander();
             ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
-            expanderFileReflection.AddAllExpansions(new Tiny1Expansions());
+            Tiny1Expansions userExpansions = new Tiny1Expansions();
+            userExpansions.varsPath = "sm->vars.";
+            expanderFileReflection.AddAllExpansions(userExpansions);
             //FIXME add events
             //FIXME check for valid events in diagram
             compiler.CompileFile(filepath);

@@ -1,5 +1,5 @@
 ﻿using StateSmith.Input.Expansions;
-using StateSmith.output;
+using StateSmith.output.UserConfig;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +15,7 @@ namespace StateSmithTest.roslyn
     }
 
     /// <summary>
-    /// Glue configuration for generating C99 code
+    /// Render configuration for generating C code. Must implement <see cref="IRenderConfigC"/>.
     /// </summary>
     public class OvenC : OvenCommon, IRenderConfigC
     {
@@ -43,48 +43,37 @@ namespace StateSmithTest.roslyn
 
         public class Expansions : CommonExpansions
         {
-            string set_mode(string mode) => $"set_mode(MODE_{mode})";
+            public string set_mode(string mode) => $"set_mode(MODE_{mode})";
         }
     }
 
 
 
     /// <summary>
-    /// Glue configuration for generating javscript code
+    /// configuration for generating javscript code
     /// </summary>
-    public class OvenJs : DefaultRenderConfigJs
+    public class OvenJs : OvenCommon, IRenderConfigJs
     {
-        public override string VariableDeclarations => DeIndentTrim(@"
+        public string VariableDeclarations => DeIndentTrim(@"
             count = 0;
             flag = false;
             ");
 
-        // Allow re-use via composition and not just inheritance
-        public class Common : OvenCommon { }
-
         public class Expansions : CommonExpansions
         {
-            string set_mode(string mode) => $"set_mode(SomeEnum.{mode})";
+            public string set_mode(string mode) => $"set_mode(SomeEnum.{mode})";
         }
     }
 
-    public class ABC : OvenJs
-    {
-        public ABC()
-        {
-            
-        }
-
-    }
 
     /// <summary>
     /// User expansions that apply to both javascript and C99
     /// </summary>
     public class CommonExpansions : UserExpansionScriptBase
     {
-        string a_count => AutoVarName;
+        public string a_count => AutoVarName;
 
-        string some_guard(string count)
+        public string some_guard(string count)
         {
             int int_count = int.Parse(count);
 
@@ -96,7 +85,7 @@ namespace StateSmithTest.roslyn
             return $"some_guard({int_count})";
         }
 
-        string b_exit()
+        public string b_exit()
         {
             return "b_exit_count++";
         }

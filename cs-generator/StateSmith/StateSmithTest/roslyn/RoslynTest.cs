@@ -25,7 +25,9 @@ namespace StateSmithTest
 
             Expander expander = new Expander();
             ExpanderFileReflection expanderFileReflection = new ExpanderFileReflection(expander);
-            expanderFileReflection.AddAllExpansions(codeCompilationResult.createdObject);
+            var expansionObject = (UserExpansionScriptBase)codeCompilationResult.createdObject;
+            expansionObject.varsPath = "sm->vars.";
+            expanderFileReflection.AddAllExpansions(expansionObject);
 
             expander.GetVariableNames().Should().BeEquivalentTo(new string[] {
                 "time",

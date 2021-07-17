@@ -12,18 +12,18 @@ namespace StateSmith.Input.Expansions
         private Expander expander;
 
         private HashSet<MethodInfo> propertyMethods = new HashSet<MethodInfo>();
-        private HashSet<FieldInfo> propertyFields = new HashSet<FieldInfo>();
 
         public ExpanderFileReflection(Expander expander)
         {
             this.expander = expander;
         }
 
-        public void AddAllExpansions(object userObject)
+        public void AddAllExpansions(UserExpansionScriptBase userObject)
         {
             var fields = userObject.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
             AddFieldExpansions(userObject, fields);
 
+            // Must be done before methods are added. Code that adds method expansions explains more.
             var propertyInfos = userObject.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
             AddPropertyExpansions(userObject, propertyInfos);
 
@@ -31,7 +31,7 @@ namespace StateSmith.Input.Expansions
             AddMethodExpansions(userObject, methods);
         }
 
-        private void AddPropertyExpansions(object userObject, PropertyInfo[] propertyInfos)
+        private void AddPropertyExpansions(UserExpansionScriptBase userObject, PropertyInfo[] propertyInfos)
         {
             foreach (var p in propertyInfos)
             {
@@ -39,7 +39,7 @@ namespace StateSmith.Input.Expansions
             }
         }
 
-        private void AddMethodExpansions(object userObject, MethodInfo[] methods)
+        private void AddMethodExpansions(UserExpansionScriptBase userObject, MethodInfo[] methods)
         {
             foreach (var method in methods)
             {
@@ -47,7 +47,7 @@ namespace StateSmith.Input.Expansions
             }
         }
 
-        private void ProcessProperty(object userObject, PropertyInfo property)
+        private void ProcessProperty(UserExpansionScriptBase userObject, PropertyInfo property)
         {
             if (property.PropertyType != typeof(string))
             {
@@ -60,9 +60,13 @@ namespace StateSmith.Input.Expansions
                 return; //only care about getter properties
             }
 
+            if (ShouldSkipInheritedMember(property.DeclaringType))
+            {
+                return;
+            }
+
             propertyMethods.Add(getMethodInfo);
 
-            
             string expansionName = property.Name;
             var expansionNameAttributes = property.GetCustomAttributes(typeof(ExpansionNameAttribute), inherit: false);
 
@@ -76,7 +80,12 @@ namespace StateSmith.Input.Expansions
             expander.AddVariableExpansion(expansionName, code);
         }
 
-        private void ProcessMethod(object userObject, MethodInfo method)
+        private bool ShouldSkipInheritedMember(Type declaringType)
+        {
+            return declaringType == typeof(UserExpansionScriptBase) || declaringType == typeof(System.Object);
+        }
+
+        private void ProcessMethod(UserExpansionScriptBase userObject, MethodInfo method)
         {
             if (method.ReturnType != typeof(string))
             {
@@ -88,7 +97,7 @@ namespace StateSmith.Input.Expansions
                 return; //we don't want compiler generated methods for properties like `get_get_time`
             }
 
-            if (method.DeclaringType == typeof(System.Object))
+            if (ShouldSkipInheritedMember(method.DeclaringType))
             {
                 return;
             }
@@ -105,7 +114,7 @@ namespace StateSmith.Input.Expansions
             expander.AddExpansionFunction(expansionName, userObject, method);
         }
 
-        private void AddFieldExpansions(object userObject, FieldInfo[] fields)
+        private void AddFieldExpansions(UserExpansionScriptBase userObject, FieldInfo[] fields)
         {
             foreach (var field in fields)
             {
@@ -115,10 +124,15 @@ namespace StateSmith.Input.Expansions
 
         
 
-        private void ProcessField(object userObject, FieldInfo field)
+        private void ProcessField(UserExpansionScriptBase userObject, FieldInfo field)
         {
             //we only care about fields of type string
             if (field.FieldType != typeof(string))
+            {
+                return;
+            }
+
+            if (ShouldSkipInheritedMember(field.DeclaringType))
             {
                 return;
             }
