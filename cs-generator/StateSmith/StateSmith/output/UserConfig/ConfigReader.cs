@@ -9,14 +9,17 @@ using System.Linq;
 
 namespace StateSmith.output.UserConfig
 {
-    class Reader
+    class ConfigReader
     {
-        Expander expander = new Expander();
+        Expander expander;
         ExpanderFileReflection expanderFileReflection;
-        
-        public Reader()
+        private readonly string expansionVarsPath;
+
+        public ConfigReader(Expander expander, string expansionVarsPath)
         {
             expanderFileReflection = new ExpanderFileReflection(expander);
+            this.expansionVarsPath = expansionVarsPath;
+            this.expander = expander;
         }
 
         private void FindExpansionsFromFields(object configObject)
@@ -37,6 +40,7 @@ namespace StateSmith.output.UserConfig
         {
             if (expansionObject != null)
             {
+                expansionObject.varsPath = expansionVarsPath;
                 expanderFileReflection.AddAllExpansions(expansionObject);
             }
         }

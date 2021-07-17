@@ -23,6 +23,12 @@ namespace StateSmith.output
 
     public class ExternalCodeCompiler
     {
+        /// <summary>
+        /// Note that type name must include any namespaces as well!
+        /// </summary>
+        /// <param name="sourceCode"></param>
+        /// <param name="typeName"></param>
+        /// <returns></returns>
         public CodeCompilationResult CompileCode(string sourceCode, string typeName)
         {
             AssemblyCacher assemblyCacher = new AssemblyCacher(sourceCode);
@@ -56,16 +62,15 @@ namespace StateSmith.output
 
         private static void TryLoadAssemblyCreateObject(string typeName, byte[] assemblyBytes, CodeCompilationResult codeCompilationResult)
         {
-            try
+            Assembly assembly = Assembly.Load(assemblyBytes);
+            Type type = assembly.GetType(typeName);
+
+            if (type == null)
             {
-                Assembly assembly = Assembly.Load(assemblyBytes);
-                Type type = assembly.GetType(typeName);
-                codeCompilationResult.createdObject = Activator.CreateInstance(type);
+                throw new ArgumentException($"Could not load type {typeName} from assembly. Are you missing the namespace in the name?"); //TODO error handling
             }
-            catch (BadImageFormatException ex)
-            {
-                Console.WriteLine(ex);
-            }
+
+            codeCompilationResult.createdObject = Activator.CreateInstance(type);
         }
 
         private static byte[] CompileCodeToAssembly(string sourceCode, CodeCompilationResult codeCompilationResult)

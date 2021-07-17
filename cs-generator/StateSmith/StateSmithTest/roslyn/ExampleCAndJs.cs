@@ -21,20 +21,22 @@ namespace StateSmithTest.roslyn
     {
         public string HFileTop => DeIndentTrim(@"
             /**
-             * Blah blah blah
+             * This is a header for the .h file
              */
             #include <stdbool.h>
             #include <stdint.h>
-            #include ""some_stuff.h""     //escaping double quotes is unfortunate, but not too bad for now
+            #include ""some_stuff.h""
             ");
+            //escaping double quotes is unfortunate, but not too bad for now
 
         public string CFileTop => DeIndentTrim(@"
             /**
-             * Blah blah blah
+             * This is a header for the .c file
              */
-            #include <stdbool.h>
-            #include ""my_stuff.h""     //escaping double quotes is unfortunate, but not too bad for now
+            #include <stddef.h>
+            #include ""my_stuff.h""
             ");
+            //escaping double quotes is unfortunate, but not too bad for now
 
         public string VariableDeclarations => DeIndentTrim(@"
             uint16_t count = 0;
