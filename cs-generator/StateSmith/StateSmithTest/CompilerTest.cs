@@ -6,10 +6,12 @@ using FluentAssertions;
 using StateSmith;
 using StateSmith.Compiler;
 using StateSmith.compiler;
+using static StateSmithTest.VertexTestHelpers;
 using StateSmith.Input.Expansions;
 
 namespace StateSmithTest
 {
+
     public class CompilerTest
     {
         [Fact]
@@ -39,86 +41,50 @@ namespace StateSmithTest
             var Tiny1InitialState = Tiny1.ChildType<InitialState>();
             Tiny1InitialState.Children.Should().BeEmpty();
             Tiny1InitialState.DiagramId.Should().Be("n0::n1");
-            Tiny1InitialState.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        transitionTarget = A,
-                        actionCode = "initial_action();",
-                        owningVertex = Tiny1InitialState,
-                    }
-                }
-            );
+            {
+                var owner = Tiny1InitialState;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(1);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, transitionTarget: A, actionCode: "initial_action();");
+            }
+
 
             ////////////
             Tiny1.Child("A").Should().Be(A);
             A.Children.Should().BeEmpty();
             A.DiagramId.Should().Be("n0::n0");
-            A.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>(){ "enter" },
-                        actionCode = "a_count += 1;",
-                        owningVertex = A,
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>(){ "EVENT1" },
-                        transitionTarget = B,
-                        owningVertex = A,
-                    },
-                }
-            );
+            {
+                var owner = A;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: TriggerList("enter"), actionCode: "a_count += 1;");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget: B, triggers: TriggerList("EVENT1"));
+            }
 
             ////////////
             Tiny1.Child("B").Should().Be(B);
             B.Children.Should().BeEmpty();
             B.DiagramId.Should().Be("n0::n2");
-            B.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "exit" },
-                        actionCode = "b_exit();",
-                        owningVertex = B,
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT2" },
-                        guardCode = "some_guard(200)",
-                        transitionTarget = C2,
-                        owningVertex = B,
-                    }
-                }
-            );
+            {
+                var owner = B;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: new List<string>() { "exit" }, actionCode: "b_exit();");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget: C2, triggers: TriggerList("EVENT2"), guardCode: "some_guard(200)");
+            }
 
 
             ////////////
             Tiny1.Child("C2").Should().Be(C2);
             C2.Children.Should().BeEmpty();
             C2.DiagramId.Should().Be("n0::n3");
-            C2.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT2" },
-                        actionCode = "set_mode(SAUCEY);",
-                        owningVertex = C2,
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT1" },
-                        order = 1,
-                        transitionTarget = A,
-                        owningVertex = C2,
-                    }
-                }
-            );
+            {
+                var owner = C2;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: new List<string>() { "EVENT2" }, actionCode: "set_mode(SAUCEY);");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget: A, triggers: TriggerList("EVENT1"), order: 1);
+            }
         }
 
 
@@ -191,86 +157,50 @@ namespace StateSmithTest
             var Tiny1InitialState = Tiny1.ChildType<InitialState>();
             Tiny1InitialState.Children.Should().BeEmpty();
             Tiny1InitialState.DiagramId.Should().Be("n0::n1");
-            Tiny1InitialState.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        transitionTarget = A,
-                        actionCode = "initial_action();",
-                        owningVertex = Tiny1InitialState
-                    }
-                }
-            );
+            {
+                var owner = Tiny1InitialState;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(1);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, transitionTarget: A, actionCode: "initial_action();");
+            }
+
 
             ////////////
             Tiny1.Child("A").Should().Be(A);
             A.Children.Should().BeEmpty();
             A.DiagramId.Should().Be("n0::n0");
-            A.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>(){ "enter" },
-                        actionCode = "sm->vars.a_count += 1;",
-                        owningVertex = A
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>(){ "EVENT1" },
-                        transitionTarget = B,
-                        owningVertex = A
-                    },
-                }
-            );
+            {
+                var owner = A;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: TriggerList("enter"), actionCode: "sm->vars.a_count += 1;");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget:B, triggers: TriggerList("EVENT1"));
+            }
 
             ////////////
             Tiny1.Child("B").Should().Be(B);
             B.Children.Should().BeEmpty();
             B.DiagramId.Should().Be("n0::n2");
-            B.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "exit" },
-                        actionCode = "b_exit_count++;",
-                        owningVertex = B
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT2" },
-                        guardCode = "some_guard(1200)",
-                        transitionTarget = C2,
-                        owningVertex = B
-                    }
-                }
-            );
+            {
+                var owner = B;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: new List<string>() { "exit" }, actionCode: "b_exit_count++;");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget: C2, triggers: TriggerList("EVENT2"), guardCode: "some_guard(1200)");
+            }
 
 
             ////////////
             Tiny1.Child("C2").Should().Be(C2);
             C2.Children.Should().BeEmpty();
             C2.DiagramId.Should().Be("n0::n3");
-            C2.Behaviors.Should().BeEquivalentTo(
-                new List<Behavior>()
-                {
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT2" },
-                        actionCode = "set_mode(MODE_SAUCEY);",
-                        owningVertex = C2
-                    },
-                    new Behavior()
-                    {
-                        triggers = new List<string>() { "EVENT1" },
-                        order = 1,
-                        transitionTarget = A,
-                        owningVertex = C2
-                    }
-                }
-            );
+            {
+                var owner = C2;
+                var behaviors = owner.Behaviors;
+                behaviors.Count.Should().Be(2);
+                behaviors[0].ShouldBeExactly(owningVertex: owner, triggers: new List<string>() { "EVENT2" }, actionCode: "set_mode(MODE_SAUCEY);");
+                behaviors[1].ShouldBeExactly(owningVertex: owner, transitionTarget: A, triggers: TriggerList("EVENT1"), order: 1);
+            }
         }
     }
 }

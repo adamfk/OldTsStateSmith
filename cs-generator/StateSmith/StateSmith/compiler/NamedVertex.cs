@@ -1,5 +1,9 @@
-﻿namespace StateSmith.Compiler
+﻿using System.Diagnostics;
+
+namespace StateSmith.Compiler
 {
+    //[DebuggerDisplay(Name = "{name}")]
+
     public class NamedVertex : Vertex
     {
         public string name;
@@ -8,6 +12,11 @@
         public override void Accept(VertexVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override string ToString()
+        {
+            return GetType().Name + ": " + name;
         }
     }
 }

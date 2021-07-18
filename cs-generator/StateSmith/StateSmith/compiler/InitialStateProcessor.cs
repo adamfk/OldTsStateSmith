@@ -18,7 +18,7 @@ namespace StateSmith.Compiler
                 return;
             }
 
-            var newTarget = initialStateTransition.transitionTarget;
+            var newTarget = initialStateTransition.TransitionTarget;
 
             var parentIncomingTransitions = parent.IncomingTransitions.ToList();
             foreach (var incomingTransition in parentIncomingTransitions)
@@ -26,7 +26,7 @@ namespace StateSmith.Compiler
                 //transitions to parent will be moved to transitions to initial state target
 
                 //validate behavior variables. TODO low cleanup. Seems confusing.
-                if (incomingTransition.transitionTarget != parent)
+                if (incomingTransition.TransitionTarget != parent)
                 {
                     throw new BehaviorValidationException(incomingTransition, "Inconsistent behavior 549846");
                 }

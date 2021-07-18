@@ -1,5 +1,6 @@
 ﻿using StateSmith.compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace StateSmith.Compiler
 {
@@ -57,7 +58,7 @@ namespace StateSmith.Compiler
 
         internal void AddIncomingTransition(Behavior behavior)
         {
-            if (behavior.transitionTarget != this)
+            if (behavior.TransitionTarget != this)
             {
                 throw new BehaviorValidationException(behavior, "Inconsistent data structure. Behavior target must match incoming target");
             }
@@ -66,13 +67,8 @@ namespace StateSmith.Compiler
 
         public Behavior AddTransitionTo(Vertex target)
         {
-            var behavior = new Behavior()
-            {
-                owningVertex = this,
-                transitionTarget = target
-            };
+            var behavior = new Behavior(owningVertex: this, transitionTarget: target);
             AddBehavior(behavior);
-            target._incomingTransitions.Add(behavior);
 
             return behavior;
         }
@@ -90,7 +86,7 @@ namespace StateSmith.Compiler
 
             foreach (var childBehavior in child.Behaviors)
             {
-                var target = childBehavior.transitionTarget;
+                var target = childBehavior.TransitionTarget;
                 if (target != null)
                 {
                     target._incomingTransitions.RemoveOrThrow(childBehavior);
@@ -102,5 +98,6 @@ namespace StateSmith.Compiler
                 throw new VertexValidationException(child, "cannot safely remove child as it still has incoming transitions");
             }
         }
+
     }
 }

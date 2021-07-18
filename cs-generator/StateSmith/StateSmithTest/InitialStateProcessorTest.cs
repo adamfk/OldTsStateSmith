@@ -29,14 +29,14 @@ namespace StateSmithTest.InitialStateProcessor
         {
             compiler.SetupRoots();
             s2.IncomingTransitions.Count.Should().Be(1);
-            s2.IncomingTransitions[0].owningVertex.Should().Be(s1);
+            s2.IncomingTransitions[0].OwningVertex.Should().Be(s1);
             s2.Children.Count.Should().Be(2);
             s2_1.IncomingTransitions.Count.Should().Be(1);
 
             compiler.SimplifyInitialStates();
             s2.IncomingTransitions.Count.Should().Be(0);
             s2_1.IncomingTransitions.Count.Should().Be(1);
-            s2_1.IncomingTransitions[0].owningVertex.Should().Be(s1);
+            s2_1.IncomingTransitions[0].OwningVertex.Should().Be(s1);
 
             s2.Children.Count.Should().Be(1);
         }

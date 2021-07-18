@@ -79,17 +79,6 @@ namespace StateSmith.Compiler
         {
             return rootVertices.Descendant(name);
         }
-
-        private void TryTrackIncoming(Vertex source, Vertex target, Behavior behavior)
-        {
-            if (target == null)
-            {
-                return;
-            }
-
-            target.AddIncomingTransition(behavior);
-        }
-
         
 
         private void ProcessEdge(Input.DiagramEdge edge)
@@ -104,26 +93,18 @@ namespace StateSmith.Compiler
 
             if (nodeBehaviors.Count == 0)
             {
-                Behavior behavior = new Behavior();
-                SetupBehavior(sourceVertex, targetVertex, behavior);
+                sourceVertex.AddBehavior(new Behavior(owningVertex: sourceVertex, transitionTarget: targetVertex));
             }
 
             foreach (var nodeBehavior in nodeBehaviors)
             {
-                var behavior = ConvertBehavior(nodeBehavior);
-                SetupBehavior(sourceVertex, targetVertex, behavior);
+                var behavior = ConvertBehavior(owningVertex: sourceVertex, targetVertex: targetVertex, nodeBehavior: nodeBehavior);
+                sourceVertex.AddBehavior(behavior);
 
                 //FIXME I believe this code will fail if there is an edge to an unrecognized diagram node like an image.
             }
         }
 
-        private void SetupBehavior(Vertex sourceVertex, Vertex targetVertex, Behavior behavior)
-        {
-            behavior.transitionTarget = targetVertex;
-            sourceVertex.AddBehavior(behavior);
-            behavior.owningVertex = sourceVertex;
-            TryTrackIncoming(sourceVertex, targetVertex, behavior);
-        }
 
         private static void PrintAndThrowIfEdgeParseFail(Input.DiagramEdge edge, Vertex sourceVertex, Vertex targetVertex, LabelParser labelParser)
         {
@@ -300,16 +281,14 @@ namespace StateSmith.Compiler
         {
             foreach (var nodeBehavior in stateNode.behaviors)
             {
-                Behavior behavior = ConvertBehavior(nodeBehavior);
-                behavior.owningVertex = vertex;
-
+                Behavior behavior = ConvertBehavior(vertex, nodeBehavior);
                 vertex.AddBehavior(behavior);
             }
         }
 
-        private static Behavior ConvertBehavior(NodeBehavior nodeBehavior)
+        private static Behavior ConvertBehavior(Vertex owningVertex, NodeBehavior nodeBehavior, Vertex targetVertex = null)
         {
-            var behavior = new Behavior
+            var behavior = new Behavior(owningVertex: owningVertex, transitionTarget: targetVertex)
             {
                 actionCode = nodeBehavior.actionCode,
                 guardCode = nodeBehavior.guardCode,
