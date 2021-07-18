@@ -14,7 +14,7 @@ namespace StateSmith.Compiler
         /// </summary>
         public string? DiagramId { get; set; }
 
-        public Vertex _owningVertex;
+        internal Vertex _owningVertex;
         public Vertex OwningVertex => _owningVertex;
 
         /// <summary>
