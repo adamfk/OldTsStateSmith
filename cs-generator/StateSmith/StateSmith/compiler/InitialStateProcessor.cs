@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace StateSmith.Compiler
 {
@@ -6,20 +7,20 @@ namespace StateSmith.Compiler
     {
         public override void Visit(InitialState initialState)
         {
-            var parent = initialState._parent;
+            var parent = initialState.Parent;
 
             var initialStateTransition = ValidateInitialState(initialState);
 
             // don't process simplification if this is the root initial state
             //TODO low. Create method to detect if parent is root/state machine.
-            if (parent._parent == null)
+            if (parent.Parent == null)
             {
                 return;
             }
 
             var newTarget = initialStateTransition.transitionTarget;
 
-            var parentIncomingTransitions = new List<Behavior>(parent._incomingTransitions); //copy so that we can modify original
+            var parentIncomingTransitions = parent.IncomingTransitions.ToList();
             foreach (var incomingTransition in parentIncomingTransitions)
             {
                 //transitions to parent will be moved to transitions to initial state target
@@ -44,7 +45,7 @@ namespace StateSmith.Compiler
                 throw new VertexValidationException(initialState, "Initial states vertices cannot contain children.");
             }
 
-            var parent = initialState._parent;
+            var parent = initialState.Parent;
             if (parent == null)
             {
                 throw new VertexValidationException(initialState, "Initial states must have a parent state.");
@@ -55,7 +56,7 @@ namespace StateSmith.Compiler
                 throw new VertexValidationException(initialState, "Initial states must have exactly one behavior for now");
             }
 
-            var behavior = initialState._behaviors[0];
+            var behavior = initialState.Behaviors[0];
 
             if (behavior.HasGuardCode())
             {

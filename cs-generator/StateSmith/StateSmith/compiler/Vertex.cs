@@ -10,13 +10,22 @@ namespace StateSmith.Compiler
         internal Vertex _parent;
         public Vertex Parent => _parent;
 
+        /// <summary>
+        /// data structure may change
+        /// </summary>
         internal List<Vertex> _children = new List<Vertex>();
         public IReadOnlyList<Vertex> Children => _children;
 
+        /// <summary>
+        /// data structure may change
+        /// </summary>
         internal List<Behavior> _behaviors = new List<Behavior>();
         public IReadOnlyList<Behavior> Behaviors => _behaviors;
 
-        public HashList<string, NamedVertex> namedDescendants = new HashList<string, NamedVertex>();
+        /// <summary>
+        /// data structure may change
+        /// </summary>
+        internal HashList<string, NamedVertex> _namedDescendants = new HashList<string, NamedVertex>();
 
         /// <summary>
         /// data structure may change
@@ -30,6 +39,15 @@ namespace StateSmith.Compiler
         }
 
         public abstract void Accept(VertexVisitor visitor);
+
+        public List<NamedVertex> DescendantsWithName(string name)
+        {
+            List<NamedVertex> list = new List<NamedVertex>();
+            var matches = _namedDescendants.GetValuesOrEmpty(name);
+            list.AddRange(matches);
+
+            return list;
+        }
 
 
         internal void RemoveIncomingTransition(Behavior behavior)
@@ -53,7 +71,7 @@ namespace StateSmith.Compiler
                 owningVertex = this,
                 transitionTarget = target
             };
-            _behaviors.Add(behavior);
+            AddBehavior(behavior);
             target._incomingTransitions.Add(behavior);
 
             return behavior;
@@ -70,7 +88,7 @@ namespace StateSmith.Compiler
             _children.RemoveOrThrow(child);
             child._parent = null;
 
-            foreach (var childBehavior in child._behaviors)
+            foreach (var childBehavior in child.Behaviors)
             {
                 var target = childBehavior.transitionTarget;
                 if (target != null)

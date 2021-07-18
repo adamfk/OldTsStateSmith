@@ -179,7 +179,7 @@ namespace StateSmith.Compiler
             while (vertex != null)
             {
                 reversedVertices.Push(vertex);
-                vertex = vertex._parent;
+                vertex = vertex.Parent;
             }
 
             return reversedVertices;

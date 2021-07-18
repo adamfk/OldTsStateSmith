@@ -160,11 +160,11 @@ namespace StateSmith.Compiler
         {
             VisitVertices<NamedVertex>(parentVertex, vertex => {
                 //add this vertex to ancestors
-                var parent = vertex._parent;
+                var parent = vertex.Parent;
                 while (parent != null)
                 {
-                    parent.namedDescendants.AddIfMissing(vertex.name, vertex);
-                    parent = parent._parent;
+                    parent._namedDescendants.AddIfMissing(vertex.name, vertex);
+                    parent = parent.Parent;
                 }
             });
         }
@@ -187,7 +187,7 @@ namespace StateSmith.Compiler
             foreach (var root in rootVertices)
             {
                 VisitVertices<Vertex>(root, vertex => {
-                    foreach (var behavior in vertex._behaviors)
+                    foreach (var behavior in vertex.Behaviors)
                     {
                         ExpandBehavior(expander, behavior);
                     }

@@ -7,6 +7,9 @@ using System.Linq;
 
 namespace StateSmith.compiler
 {
+    /// <summary>
+    /// Helper extension methods
+    /// </summary>
     public static class VertexLinqHelpers
     {
         public static List<NamedVertex> Descendants(this IEnumerable<Vertex> vertices, string name)
@@ -14,21 +17,13 @@ namespace StateSmith.compiler
             List<NamedVertex> list = vertices.OfType<NamedVertex>().Where(v => v.name == name).ToList();
             foreach (var v in vertices)
             {
-                var matches = v.Descendants(name);
+                var matches = v.DescendantsWithName(name);
                 list.AddRange(matches);
             }
 
             return list;
         }
 
-        public static List<NamedVertex> Descendants(this Vertex vertex, string name)
-        {
-            List<NamedVertex> list = new List<NamedVertex>();
-            var matches = vertex.namedDescendants.GetValuesOrEmpty(name);
-            list.AddRange(matches);
-
-            return list;
-        }
 
         public static NamedVertex Descendant(this IEnumerable<Vertex> vertices, string name)
         {
@@ -49,7 +44,7 @@ namespace StateSmith.compiler
 
         public static NamedVertex Descendant(this Vertex vertex, string name)
         {
-            var matches = vertex.Descendants(name);
+            var matches = vertex.DescendantsWithName(name);
 
             ThrowIfNotSingle(name, matches);
 
