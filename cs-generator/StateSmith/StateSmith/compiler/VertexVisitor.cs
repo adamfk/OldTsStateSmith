@@ -12,7 +12,79 @@ namespace StateSmith.Compiler
         public abstract void Visit(Statemachine v);
         public abstract void Visit(NotesVertex v);
         public abstract void Visit(InitialState v);
+
+        public static void VisitVertexChildren(Vertex v, VertexVisitor visitor)
+        {
+            //copy list so that we can remove children while iterating.
+            //TODO Not ideal. What if larger scale changes made? requires thought.
+            var childrenCopy = new List<Vertex>(v.children);
+            foreach (var child in childrenCopy)
+            {
+                child.Accept(visitor);
+            }
+        }
+
+        public virtual void VisitChildren(Vertex v)
+        {
+            VisitVertexChildren(v, this);
+        }
     }
+
+
+
+    public class DummyVertexVisitor : VertexVisitor
+    {
+        public override void Visit(Vertex v) { VisitChildren(v); }
+        public override void Visit(NamedVertex v) { VisitChildren(v); }
+        public override void Visit(OrthoState v) { VisitChildren(v); }
+        public override void Visit(Statemachine v) { VisitChildren(v); }
+        public override void Visit(NotesVertex v) { VisitChildren(v); }
+        public override void Visit(InitialState v) { VisitChildren(v); }
+        public override void Visit(State v) { VisitChildren(v); }
+    }
+
+    public abstract class OnlyVertexVisitor
+    {
+        public abstract void Visit(Vertex v);
+
+        public void Visit(NamedVertex v)
+        {
+            Visit((Vertex)v);
+        }
+
+        public void Visit(State v)
+        {
+            Visit((Vertex)v);
+        }
+
+        public void Visit(OrthoState v)
+        {
+            Visit((Vertex)v);
+        }
+        public void Visit(Statemachine v)
+        {
+            Visit((Vertex)v);
+        }
+        public void Visit(NotesVertex v)
+        {
+            Visit((Vertex)v);
+        }
+        public void Visit(InitialState v)
+        {
+            Visit((Vertex)v);
+        }
+    }
+
+    //public class LambdaVertexVisitor : VertexVisitor
+    //{
+    //    public abstract void Visit(Vertex v);
+    //    public abstract void Visit(NamedVertex v);
+    //    public abstract void Visit(State v);
+    //    public abstract void Visit(OrthoState v);
+    //    public abstract void Visit(Statemachine v);
+    //    public abstract void Visit(NotesVertex v);
+    //    public abstract void Visit(InitialState v);
+    //}
 
     public abstract class NamedVisitor : VertexVisitor
     {

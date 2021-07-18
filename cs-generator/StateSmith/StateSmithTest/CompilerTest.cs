@@ -45,7 +45,8 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         transitionTarget = A,
-                        actionCode = "initial_action();"
+                        actionCode = "initial_action();",
+                        owningVertex = Tiny1InitialState,
                     }
                 }
             );
@@ -60,12 +61,14 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         triggers = new List<string>(){ "enter" },
-                        actionCode = "a_count += 1;"
+                        actionCode = "a_count += 1;",
+                        owningVertex = A,
                     },
                     new Behavior()
                     {
                         triggers = new List<string>(){ "EVENT1" },
-                        transitionTarget = B
+                        transitionTarget = B,
+                        owningVertex = A,
                     },
                 }
             );
@@ -81,12 +84,14 @@ namespace StateSmithTest
                     {
                         triggers = new List<string>() { "exit" },
                         actionCode = "b_exit();",
+                        owningVertex = B,
                     },
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT2" },
                         guardCode = "some_guard(200)",
-                        transitionTarget = C2
+                        transitionTarget = C2,
+                        owningVertex = B,
                     }
                 }
             );
@@ -103,12 +108,14 @@ namespace StateSmithTest
                     {
                         triggers = new List<string>() { "EVENT2" },
                         actionCode = "set_mode(SAUCEY);",
+                        owningVertex = C2,
                     },
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT1" },
                         order = 1,
-                        transitionTarget = A
+                        transitionTarget = A,
+                        owningVertex = C2,
                     }
                 }
             );
@@ -190,7 +197,8 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         transitionTarget = A,
-                        actionCode = "initial_action();"
+                        actionCode = "initial_action();",
+                        owningVertex = Tiny1InitialState
                     }
                 }
             );
@@ -205,12 +213,14 @@ namespace StateSmithTest
                     new Behavior()
                     {
                         triggers = new List<string>(){ "enter" },
-                        actionCode = "sm->vars.a_count += 1;"
+                        actionCode = "sm->vars.a_count += 1;",
+                        owningVertex = A
                     },
                     new Behavior()
                     {
                         triggers = new List<string>(){ "EVENT1" },
-                        transitionTarget = B
+                        transitionTarget = B,
+                        owningVertex = A
                     },
                 }
             );
@@ -226,12 +236,14 @@ namespace StateSmithTest
                     {
                         triggers = new List<string>() { "exit" },
                         actionCode = "b_exit_count++;",
+                        owningVertex = B
                     },
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT2" },
                         guardCode = "some_guard(1200)",
-                        transitionTarget = C2
+                        transitionTarget = C2,
+                        owningVertex = B
                     }
                 }
             );
@@ -248,12 +260,14 @@ namespace StateSmithTest
                     {
                         triggers = new List<string>() { "EVENT2" },
                         actionCode = "set_mode(MODE_SAUCEY);",
+                        owningVertex = C2
                     },
                     new Behavior()
                     {
                         triggers = new List<string>() { "EVENT1" },
                         order = 1,
-                        transitionTarget = A
+                        transitionTarget = A,
+                        owningVertex = C2
                     }
                 }
             );

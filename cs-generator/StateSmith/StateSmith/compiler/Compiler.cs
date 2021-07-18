@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
 using StateSmith.compiler;
+using StateSmith.Input;
 
 namespace StateSmith.Compiler
 {
@@ -22,22 +23,41 @@ namespace StateSmith.Compiler
 
             yedParser.Parse(filepath);
 
-            foreach (var node in yedParser.GetRootNodes())
+            CompileDiagramNodesEdges(yedParser.GetRootNodes(), yedParser.GetEdges());
+        }
+
+        public void CompileDiagramNodesEdges(List<DiagramNode> rootNodes, List<DiagramEdge> edges)
+        {
+            foreach (var node in rootNodes)
             {
                 rootVertices.Add(ProcessNode(node, parentVertex: null));
             }
 
-            foreach (var edge in yedParser.GetEdges())
+            foreach (var edge in edges)
             {
                 ProcessEdge(edge);
             }
 
+            SetupRoots();
+        }
+
+        public void SetupRoots()
+        {
             foreach (var v in rootVertices)
             {
                 if (v is NamedVertex namedVertex)
                 {
                     SetupDescendants(namedVertex);
                 }
+            }
+        }
+
+        public void SimplifyInitialStates()
+        {
+            foreach (var v in rootVertices)
+            {
+                var processor = new InitialStateProcessor();
+                v.Accept(processor);
             }
         }
 
@@ -60,6 +80,18 @@ namespace StateSmith.Compiler
             return rootVertices.Descendant(name);
         }
 
+        private void TryTrackIncoming(Vertex source, Vertex target, Behavior behavior)
+        {
+            if (target == null)
+            {
+                return;
+            }
+
+            target.incomingTransitions.Add(behavior);
+        }
+
+        
+
         private void ProcessEdge(Input.DiagramEdge edge)
         {
             var sourceVertex = diagramVertexMap[edge.source];
@@ -72,20 +104,25 @@ namespace StateSmith.Compiler
 
             if (nodeBehaviors.Count == 0)
             {
-                sourceVertex.behaviors.Add(new Behavior()
-                {
-                    transitionTarget = targetVertex
-                });
+                Behavior behavior = new Behavior();
+                SetupBehavior(sourceVertex, targetVertex, behavior);
             }
 
             foreach (var nodeBehavior in nodeBehaviors)
             {
                 var behavior = ConvertBehavior(nodeBehavior);
-                behavior.transitionTarget = targetVertex;
-                sourceVertex.behaviors.Add(behavior);
+                SetupBehavior(sourceVertex, targetVertex, behavior);
 
                 //FIXME I believe this code will fail if there is an edge to an unrecognized diagram node like an image.
             }
+        }
+
+        private void SetupBehavior(Vertex sourceVertex, Vertex targetVertex, Behavior behavior)
+        {
+            behavior.transitionTarget = targetVertex;
+            sourceVertex.behaviors.Add(behavior);
+            behavior.owningVertex = sourceVertex;
+            TryTrackIncoming(sourceVertex, targetVertex, behavior);
         }
 
         private static void PrintAndThrowIfEdgeParseFail(Input.DiagramEdge edge, Vertex sourceVertex, Vertex targetVertex, LabelParser labelParser)
@@ -265,6 +302,7 @@ namespace StateSmith.Compiler
             foreach (var nodeBehavior in stateNode.behaviors)
             {
                 Behavior behavior = ConvertBehavior(nodeBehavior);
+                behavior.owningVertex = vertex;
 
                 vertex.behaviors.Add(behavior);
             }

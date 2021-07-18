@@ -9,6 +9,13 @@ namespace StateSmith.Compiler
     /// </summary>
     public class Statemachine : NamedVertex
     {
+        public Statemachine() { }
+
+        public Statemachine(string name)
+        {
+            this.name = name;
+        }
+
         public override void Accept(VertexVisitor visitor)
         {
             visitor.Visit(this);
