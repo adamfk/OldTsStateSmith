@@ -28,18 +28,17 @@ namespace StateSmithTest.InitialStateProcessor
         public void Test1()
         {
             compiler.SetupRoots();
-
-            s2.incomingTransitions.Count.Should().Be(1);
-            s2.incomingTransitions[0].owningVertex.Should().Be(s1);
-            s2.children.Count.Should().Be(2);
-            s2_1.incomingTransitions.Count.Should().Be(1);
+            s2.IncomingTransitions.Count.Should().Be(1);
+            s2.IncomingTransitions[0].owningVertex.Should().Be(s1);
+            s2.Children.Count.Should().Be(2);
+            s2_1.IncomingTransitions.Count.Should().Be(1);
 
             compiler.SimplifyInitialStates();
-            s2.incomingTransitions.Count.Should().Be(0);
-            s2_1.incomingTransitions.Count.Should().Be(1);
-            s2_1.incomingTransitions[0].owningVertex.Should().Be(s1);
+            s2.IncomingTransitions.Count.Should().Be(0);
+            s2_1.IncomingTransitions.Count.Should().Be(1);
+            s2_1.IncomingTransitions[0].owningVertex.Should().Be(s1);
 
-            s2.children.Count.Should().Be(1);
+            s2.Children.Count.Should().Be(1);
         }
 
         private void BuildTestGraph()
@@ -98,7 +97,7 @@ namespace StateSmithTest.InitialStateProcessor
         [Fact]
         public void Parent()
         {
-            initialStateVertex.parent = null;
+            initialStateVertex._parent = null;
             ExpectValidationException(exceptionMessagePart: "parent");
         }
 
@@ -112,14 +111,14 @@ namespace StateSmithTest.InitialStateProcessor
         [Fact]
         public void GuardCode()
         {
-            initialStateVertex.behaviors[0].guardCode = "some_code()";
+            initialStateVertex.Behaviors[0].guardCode = "some_code()";
             ExpectValidationException(exceptionMessagePart: "guard code");
         }
 
         [Fact]
         public void Trigger()
         {
-            initialStateVertex.behaviors[0].triggers.Add("do");
+            initialStateVertex.Behaviors[0].triggers.Add("do");
             ExpectValidationException(exceptionMessagePart: "trigger");
         }
 

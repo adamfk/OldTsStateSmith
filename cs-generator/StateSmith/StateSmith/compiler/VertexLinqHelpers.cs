@@ -85,24 +85,24 @@ namespace StateSmith.compiler
 
         public static IEnumerable<T> Children<T>(this Vertex vertex) where T : Vertex
         {
-            return vertex.children.OfType<T>();
+            return vertex.Children.OfType<T>();
         }
 
         public static IEnumerable<NamedVertex> NamedChildren(this Vertex vertex, string name)
         {
-            return vertex.children.OfType<NamedVertex>().Where(v => v.name == name);
+            return vertex.Children.OfType<NamedVertex>().Where(v => v.name == name);
         }
 
         public static NamedVertex Child(this Vertex vertex, string name)
         {
-             var list = vertex.children.OfType<NamedVertex>().Where(v => v.name == name).ToList();
+             var list = vertex.Children.OfType<NamedVertex>().Where(v => v.name == name).ToList();
             ThrowIfNotSingle(name, list);
             return list[0];
         }
 
         public static T ChildType<T>(this Vertex vertex) where T : Vertex
         {
-            var list = vertex.children.OfType<T>().ToList();
+            var list = vertex.Children.OfType<T>().ToList();
             ThrowIfNotSingle<T>(list);
             return list[0];
         }

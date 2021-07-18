@@ -87,7 +87,7 @@ namespace StateSmith.Compiler
                 return;
             }
 
-            target.incomingTransitions.Add(behavior);
+            target.AddIncomingTransition(behavior);
         }
 
         
@@ -120,7 +120,7 @@ namespace StateSmith.Compiler
         private void SetupBehavior(Vertex sourceVertex, Vertex targetVertex, Behavior behavior)
         {
             behavior.transitionTarget = targetVertex;
-            sourceVertex.behaviors.Add(behavior);
+            sourceVertex.AddBehavior(behavior);
             behavior.owningVertex = sourceVertex;
             TryTrackIncoming(sourceVertex, targetVertex, behavior);
         }
@@ -150,7 +150,7 @@ namespace StateSmith.Compiler
                 action((T)vertex);
             }
 
-            foreach (var child in vertex.children)
+            foreach (var child in vertex.Children)
             {
                 VisitVertices<T>(child, action);
             }
@@ -160,11 +160,11 @@ namespace StateSmith.Compiler
         {
             VisitVertices<NamedVertex>(parentVertex, vertex => {
                 //add this vertex to ancestors
-                var parent = vertex.parent;
+                var parent = vertex._parent;
                 while (parent != null)
                 {
                     parent.namedDescendants.AddIfMissing(vertex.name, vertex);
-                    parent = parent.parent;
+                    parent = parent._parent;
                 }
             });
         }
@@ -187,7 +187,7 @@ namespace StateSmith.Compiler
             foreach (var root in rootVertices)
             {
                 VisitVertices<Vertex>(root, vertex => {
-                    foreach (var behavior in vertex.behaviors)
+                    foreach (var behavior in vertex._behaviors)
                     {
                         ExpandBehavior(expander, behavior);
                     }
@@ -260,13 +260,12 @@ namespace StateSmith.Compiler
                     }
             }
 
-            thisVertex.yedId = diagramNode.id;
+            thisVertex.DiagramId = diagramNode.id;
             diagramVertexMap.Add(diagramNode, thisVertex);
 
             if (parentVertex != null)
             {
-                thisVertex.parent = parentVertex;
-                parentVertex.children.Add(thisVertex);
+                parentVertex.AddChild(thisVertex);
             }
 
             if (visitChildren)
@@ -304,7 +303,7 @@ namespace StateSmith.Compiler
                 Behavior behavior = ConvertBehavior(nodeBehavior);
                 behavior.owningVertex = vertex;
 
-                vertex.behaviors.Add(behavior);
+                vertex.AddBehavior(behavior);
             }
         }
 

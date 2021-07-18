@@ -17,7 +17,7 @@ namespace StateSmith.Compiler
         {
             //copy list so that we can remove children while iterating.
             //TODO Not ideal. What if larger scale changes made? requires thought.
-            var childrenCopy = new List<Vertex>(v.children);
+            var childrenCopy = new List<Vertex>(v.Children);
             foreach (var child in childrenCopy)
             {
                 child.Accept(visitor);
@@ -179,7 +179,7 @@ namespace StateSmith.Compiler
             while (vertex != null)
             {
                 reversedVertices.Push(vertex);
-                vertex = vertex.parent;
+                vertex = vertex._parent;
             }
 
             return reversedVertices;

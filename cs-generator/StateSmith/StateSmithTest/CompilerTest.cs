@@ -31,15 +31,15 @@ namespace StateSmithTest
 
             ///////////
             Tiny1.name.Should().Be("Tiny1");
-            Tiny1.yedId.Should().Be("n0");
-            Tiny1.children.Count.Should().Be(4);
-            Tiny1.behaviors.Should().BeEmpty();
+            Tiny1.DiagramId.Should().Be("n0");
+            Tiny1.Children.Count.Should().Be(4);
+            Tiny1.Behaviors.Should().BeEmpty();
 
             ////////////
             var Tiny1InitialState = Tiny1.ChildType<InitialState>();
-            Tiny1InitialState.children.Should().BeEmpty();
-            Tiny1InitialState.yedId.Should().Be("n0::n1");
-            Tiny1InitialState.behaviors.Should().BeEquivalentTo(
+            Tiny1InitialState.Children.Should().BeEmpty();
+            Tiny1InitialState.DiagramId.Should().Be("n0::n1");
+            Tiny1InitialState.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -53,9 +53,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("A").Should().Be(A);
-            A.children.Should().BeEmpty();
-            A.yedId.Should().Be("n0::n0");
-            A.behaviors.Should().BeEquivalentTo(
+            A.Children.Should().BeEmpty();
+            A.DiagramId.Should().Be("n0::n0");
+            A.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -75,9 +75,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("B").Should().Be(B);
-            B.children.Should().BeEmpty();
-            B.yedId.Should().Be("n0::n2");
-            B.behaviors.Should().BeEquivalentTo(
+            B.Children.Should().BeEmpty();
+            B.DiagramId.Should().Be("n0::n2");
+            B.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -99,9 +99,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("C2").Should().Be(C2);
-            C2.children.Should().BeEmpty();
-            C2.yedId.Should().Be("n0::n3");
-            C2.behaviors.Should().BeEquivalentTo(
+            C2.Children.Should().BeEmpty();
+            C2.DiagramId.Should().Be("n0::n3");
+            C2.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -183,15 +183,15 @@ namespace StateSmithTest
 
             ///////////
             Tiny1.name.Should().Be("Tiny1");
-            Tiny1.yedId.Should().Be("n0");
-            Tiny1.children.Count.Should().Be(4);
-            Tiny1.behaviors.Should().BeEmpty();
+            Tiny1.DiagramId.Should().Be("n0");
+            Tiny1.Children.Count.Should().Be(4);
+            Tiny1.Behaviors.Should().BeEmpty();
 
             ////////////
             var Tiny1InitialState = Tiny1.ChildType<InitialState>();
-            Tiny1InitialState.children.Should().BeEmpty();
-            Tiny1InitialState.yedId.Should().Be("n0::n1");
-            Tiny1InitialState.behaviors.Should().BeEquivalentTo(
+            Tiny1InitialState.Children.Should().BeEmpty();
+            Tiny1InitialState.DiagramId.Should().Be("n0::n1");
+            Tiny1InitialState.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -205,9 +205,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("A").Should().Be(A);
-            A.children.Should().BeEmpty();
-            A.yedId.Should().Be("n0::n0");
-            A.behaviors.Should().BeEquivalentTo(
+            A.Children.Should().BeEmpty();
+            A.DiagramId.Should().Be("n0::n0");
+            A.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -227,9 +227,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("B").Should().Be(B);
-            B.children.Should().BeEmpty();
-            B.yedId.Should().Be("n0::n2");
-            B.behaviors.Should().BeEquivalentTo(
+            B.Children.Should().BeEmpty();
+            B.DiagramId.Should().Be("n0::n2");
+            B.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()
@@ -251,9 +251,9 @@ namespace StateSmithTest
 
             ////////////
             Tiny1.Child("C2").Should().Be(C2);
-            C2.children.Should().BeEmpty();
-            C2.yedId.Should().Be("n0::n3");
-            C2.behaviors.Should().BeEquivalentTo(
+            C2.Children.Should().BeEmpty();
+            C2.DiagramId.Should().Be("n0::n3");
+            C2.Behaviors.Should().BeEquivalentTo(
                 new List<Behavior>()
                 {
                     new Behavior()

@@ -32,10 +32,10 @@ namespace StateSmith.Compiler
         public void RetargetTo(Vertex newTarget)
         {
             var oldTarget = transitionTarget;
-            oldTarget.incomingTransitions.RemoveOrThrow(this);
+            oldTarget.RemoveIncomingTransition(this);
 
             transitionTarget = newTarget;
-            newTarget.incomingTransitions.Add(this);
+            newTarget.AddIncomingTransition(this);
         }
     }
 }
