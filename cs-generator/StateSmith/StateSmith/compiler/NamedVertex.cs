@@ -2,12 +2,16 @@
 
 namespace StateSmith.Compiler
 {
-    //[DebuggerDisplay(Name = "{name}")]
-
     public class NamedVertex : Vertex
     {
-        public string name;
+        internal string _name;
+        public string Name => _name;
         public bool nameIsGloballyUnique = false;
+
+        public NamedVertex(string name)
+        {
+            this._name = name;
+        }
 
         public override void Accept(VertexVisitor visitor)
         {
@@ -16,7 +20,7 @@ namespace StateSmith.Compiler
 
         public override string ToString()
         {
-            return GetType().Name + ": " + name;
+            return GetType().Name + ": " + Name;
         }
     }
 }

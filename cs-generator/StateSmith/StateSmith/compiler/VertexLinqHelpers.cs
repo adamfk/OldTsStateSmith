@@ -14,7 +14,7 @@ namespace StateSmith.compiler
     {
         public static List<NamedVertex> Descendants(this IEnumerable<Vertex> vertices, string name)
         {
-            List<NamedVertex> list = vertices.OfType<NamedVertex>().Where(v => v.name == name).ToList();
+            List<NamedVertex> list = vertices.OfType<NamedVertex>().Where(v => v.Name == name).ToList();
             foreach (var v in vertices)
             {
                 var matches = v.DescendantsWithName(name);
@@ -85,12 +85,12 @@ namespace StateSmith.compiler
 
         public static IEnumerable<NamedVertex> NamedChildren(this Vertex vertex, string name)
         {
-            return vertex.Children.OfType<NamedVertex>().Where(v => v.name == name);
+            return vertex.Children.OfType<NamedVertex>().Where(v => v.Name == name);
         }
 
         public static NamedVertex Child(this Vertex vertex, string name)
         {
-             var list = vertex.Children.OfType<NamedVertex>().Where(v => v.name == name).ToList();
+             var list = vertex.Children.OfType<NamedVertex>().Where(v => v.Name == name).ToList();
             ThrowIfNotSingle(name, list);
             return list[0];
         }

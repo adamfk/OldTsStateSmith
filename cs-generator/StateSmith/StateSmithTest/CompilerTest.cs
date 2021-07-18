@@ -32,7 +32,7 @@ namespace StateSmithTest
             var C2 = compiler.GetVertex("C2");
 
             ///////////
-            Tiny1.name.Should().Be("Tiny1");
+            Tiny1.Name.Should().Be("Tiny1");
             Tiny1.DiagramId.Should().Be("n0");
             Tiny1.Children.Count.Should().Be(4);
             Tiny1.Behaviors.Should().BeEmpty();
@@ -148,7 +148,7 @@ namespace StateSmithTest
             var C2 = compiler.GetVertex("C2");
 
             ///////////
-            Tiny1.name.Should().Be("Tiny1");
+            Tiny1.Name.Should().Be("Tiny1");
             Tiny1.DiagramId.Should().Be("n0");
             Tiny1.Children.Count.Should().Be(4);
             Tiny1.Behaviors.Should().BeEmpty();

@@ -25,20 +25,55 @@ namespace StateSmithTest.InitialStateProcessor
         }
 
         [Fact]
-        public void Test1()
+        public void SingleReplacement()
         {
+            //before simplification
             compiler.SetupRoots();
+            s1.Behaviors[0].TransitionTarget.Should().Be(s2);
             s2.IncomingTransitions.Count.Should().Be(1);
             s2.IncomingTransitions[0].OwningVertex.Should().Be(s1);
-            s2.Children.Count.Should().Be(2);
+            s2.Children.Count.Should().Be(2, because: "should still have initial state");
             s2_1.IncomingTransitions.Count.Should().Be(1);
 
+            //do simplification and check
             compiler.SimplifyInitialStates();
-            s2.IncomingTransitions.Count.Should().Be(0);
+            s1.Behaviors[0].TransitionTarget.Should().Be(s2_1);
+
+            s2.IncomingTransitions.Should().BeEmpty(because: "moved to initial state target");
             s2_1.IncomingTransitions.Count.Should().Be(1);
             s2_1.IncomingTransitions[0].OwningVertex.Should().Be(s1);
 
-            s2.Children.Count.Should().Be(1);
+            s2.Children.Count.Should().Be(1, because: "initial state should be removed");
+        }
+
+        [Fact]
+        public void ReplacementChain()
+        {
+            var s2_1_1 = s2_1.AddChild(new State("s2_1_1"));
+            var s2_1_initial = s2_1.AddChild(new InitialState());
+            s2_1_initial.AddTransitionTo(s2_1_1);
+
+            //before simplification
+            compiler.SetupRoots();
+            s1.Behaviors[0].TransitionTarget.Should().Be(s2);
+            s2.IncomingTransitions.Count.Should().Be(1);
+            s2.IncomingTransitions[0].OwningVertex.Should().Be(s1);
+            s2.Children.Count.Should().Be(2, because: "should still have initial state");
+            s2_1.Children.Count.Should().Be(2, because: "should still have initial state");
+            s2_1.IncomingTransitions.Count.Should().Be(1);
+
+            //do simplification and check
+            compiler.SimplifyInitialStates();
+            s1.Behaviors[0].TransitionTarget.Should().Be(s2_1_1);
+
+            s2.IncomingTransitions.Should().BeEmpty(because: "moved to initial state target");
+            s2_1.IncomingTransitions.Should().BeEmpty(because: "moved to initial state target");
+
+            s2_1_1.IncomingTransitions.Count.Should().Be(1);
+            s2_1_1.IncomingTransitions[0].OwningVertex.Should().Be(s1);
+
+            s2.Children.Count.Should().Be(1, because: "initial state should be removed");
+            s2_1.Children.Count.Should().Be(1, because: "initial state should be removed");
         }
 
         private void BuildTestGraph()

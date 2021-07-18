@@ -144,7 +144,7 @@ namespace StateSmith.Compiler
                 var parent = vertex.Parent;
                 while (parent != null)
                 {
-                    parent._namedDescendants.AddIfMissing(vertex.name, vertex);
+                    parent._namedDescendants.AddIfMissing(vertex.Name, vertex);
                     parent = parent.Parent;
                 }
             });
@@ -206,8 +206,7 @@ namespace StateSmith.Compiler
 
                 case StateMachineNode stateMachineNode:
                     {
-                        var sm = new Statemachine();
-                        sm.name = stateMachineNode.name;
+                        var sm = new Statemachine(stateMachineNode.name);
                         sm.nameIsGloballyUnique = true;
                         thisVertex = sm;
                         break;
@@ -217,7 +216,7 @@ namespace StateSmith.Compiler
                     {
                         if (stateNode is OrthoStateNode orthoStateNode)
                         {
-                            var orthoState = new OrthoState();
+                            var orthoState = new OrthoState(stateNode.stateName);
                             thisVertex = orthoState;
                             orthoState.order = Double.Parse(orthoStateNode.order);
                             SetStateFromStateNode(stateNode, orthoState);
@@ -230,7 +229,7 @@ namespace StateSmith.Compiler
                             }
                             else
                             {
-                                var state = new State();
+                                var state = new State(stateNode.stateName);
                                 thisVertex = state;
                                 SetStateFromStateNode(stateNode, state);
                             }
@@ -305,7 +304,6 @@ namespace StateSmith.Compiler
 
         private static void SetStateFromStateNode(StateNode stateNode, State state)
         {
-            state.name = stateNode.stateName;
             state.nameIsGloballyUnique = stateNode.stateNameIsGlobal;
         }
     }

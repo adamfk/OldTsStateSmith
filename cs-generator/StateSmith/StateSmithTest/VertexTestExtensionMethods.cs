@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using StateSmith.Compiler;
+using FluentAssertions;
 
 namespace StateSmithTest
 {
@@ -10,6 +11,11 @@ namespace StateSmithTest
         {
             VertexTestHelpers.ExpectBehavior(behavior, diagramId: diagramId, owningVertex: owningVertex, transitionTarget: transitionTarget,
                 actionCode: actionCode, guardCode: guardCode, triggers: triggers, order: order);
+        }
+
+        public static void ShouldHaveNoIncomingTransitions(this Vertex vertex)
+        {
+            vertex.IncomingTransitions.Should().BeEmpty();
         }
     }
 }

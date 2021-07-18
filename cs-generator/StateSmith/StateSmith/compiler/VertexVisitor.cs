@@ -125,7 +125,7 @@ namespace StateSmith.Compiler
 
         public override void Visit(NamedVertex v)
         {
-            stringBuilder.Append($"{v.GetType().Name}:{v.name}");
+            stringBuilder.Append($"{v.GetType().Name}:{v.Name}");
         }
 
         public override void Visit(NotesVertex v)
