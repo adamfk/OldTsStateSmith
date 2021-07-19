@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace StateSmith.Compiler
@@ -43,48 +44,81 @@ namespace StateSmith.Compiler
         public override void Visit(State v) { VisitChildren(v); }
     }
 
-    public abstract class OnlyVertexVisitor
+    public abstract class OnlyVertexVisitor : VertexVisitor
     {
-        public abstract void Visit(Vertex v);
-
-        public void Visit(NamedVertex v)
+        public override void Visit(NamedVertex v)
         {
             Visit((Vertex)v);
         }
 
-        public void Visit(State v)
+        public override void Visit(State v)
         {
             Visit((Vertex)v);
         }
 
-        public void Visit(OrthoState v)
+        public override void Visit(OrthoState v)
         {
             Visit((Vertex)v);
         }
-        public void Visit(Statemachine v)
+        public override void Visit(Statemachine v)
         {
             Visit((Vertex)v);
         }
-        public void Visit(NotesVertex v)
+        public override void Visit(NotesVertex v)
         {
             Visit((Vertex)v);
         }
-        public void Visit(InitialState v)
+        public override void Visit(InitialState v)
         {
             Visit((Vertex)v);
         }
     }
 
-    //public class LambdaVertexVisitor : VertexVisitor
-    //{
-    //    public abstract void Visit(Vertex v);
-    //    public abstract void Visit(NamedVertex v);
-    //    public abstract void Visit(State v);
-    //    public abstract void Visit(OrthoState v);
-    //    public abstract void Visit(Statemachine v);
-    //    public abstract void Visit(NotesVertex v);
-    //    public abstract void Visit(InitialState v);
-    //}
+    public class LambdaVertexVisitor : OnlyVertexVisitor
+    {
+        public Action<Vertex> visitAction;
+
+        public override void Visit(Vertex v)
+        {
+            visitAction(v);
+        }
+    }
+
+    /// <summary>
+    /// Similar to Antlr4 walker. Automatically visits children. You just have
+    /// to listen to enter and exit callbacks.
+    /// </summary>
+    public class VertexWalker
+    {
+        LambdaVertexVisitor visitor = new LambdaVertexVisitor();
+        
+        public void Walk(Vertex graph)
+        {
+            visitor.visitAction = v =>
+            {
+                VertexEntered(v);
+                VertexVisitor.VisitVertexChildren(v, visitor);
+                VertexExited(v);
+            };
+            graph.Accept(visitor);
+        }
+
+        public virtual void VertexEntered(Vertex v) { }
+        public virtual void VertexExited(Vertex v) { }
+    }
+
+    public class LambdaVertexWalker : VertexWalker
+    {
+        public Action<Vertex> enterAction;
+        public Action<Vertex> exitAction;
+
+        public override void VertexEntered(Vertex v) {
+            enterAction(v);
+        }
+        public override void VertexExited(Vertex v) {
+            exitAction?.Invoke(v);
+        }
+    }
 
     public abstract class NamedVisitor : VertexVisitor
     {

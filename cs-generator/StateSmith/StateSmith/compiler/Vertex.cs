@@ -8,6 +8,9 @@ namespace StateSmith.Compiler
     {
         public string DiagramId { get; set; }
 
+        internal int _depth;
+        public int Depth => _depth;
+
         internal Vertex _parent;
         public Vertex Parent => _parent;
 
@@ -72,13 +75,45 @@ namespace StateSmith.Compiler
 
             return behavior;
         }
+
+        /// <summary>
+        /// NOTE! Must manually update descendants after calling.
+        /// </summary>
+        /// <param name="child"></param>
         public T AddChild<T>(T child) where T : Vertex
         {
+            if (child.Parent != null)
+            {
+                throw new VertexValidationException(child, "Cannot add a child that already has a parent");
+            }
+
             child._parent = this;
+            RenumberSubTreeDepth(child);
             _children.Add(child);
             return child;
         }
 
+        protected void RenumberSubTreeDepth(Vertex subTreeRoot)
+        {
+            subTreeRoot._depth = Depth + 1;
+
+            if (subTreeRoot.Children.Count == 0)
+            {
+                return;
+            }
+
+            LambdaVertexWalker walker = new LambdaVertexWalker
+            {
+                enterAction = v => v._depth = v.Parent.Depth + 1
+            };
+
+            walker.Walk(subTreeRoot);
+        }
+
+        /// <summary>
+        /// NOTE! Must manually update descendants after calling.
+        /// </summary>
+        /// <param name="child"></param>
         public void RemoveChild(Vertex child)
         {
             _children.RemoveOrThrow(child);
